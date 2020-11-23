@@ -8,6 +8,7 @@
     android:background="@color/colorPrimary"
     tools:context=".ui.home.activity.MainActivity">
 
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfPopular"
         android:layout_width="240dp"
