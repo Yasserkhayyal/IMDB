@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".ui.detail.activity.MovieDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:background="@color/colorOfGreen"
+            app:backgroundTint="@color/colorOfGreen"
+
+            android:backgroundTint="@color/colorOfGreen"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:id="@+id/movieDetailBackgroundImageView"
+            android:layout_alignParentTop="true"
+            />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:indicatorName="LineSpinFadeLoaderIndicator"
+            style="@style/AVLoadingIndicatorView"
+            app:indicatorColor="@color/colorOfGreen"
+            android:visibility="visible"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/detailBackgroundImageLoading"
+            android:layout_marginTop="@dimen/_50sdp"
+            />
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/_95sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:elevation="4dp"
+            android:id="@+id/movieDetailPosterImageView"
+            />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:indicatorName="LineSpinFadeLoaderIndicator"
+            style="@style/AVLoadingIndicatorView"
+            app:indicatorColor="@color/colorOfGreen"
+            android:visibility="visible"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:id="@+id/detailPosterImageLoading"
+            android:layout_marginTop="@dimen/_150sdp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_below="@id/movieDetailBackgroundImageView"
+            android:layout_toRightOf="@id/movieDetailPosterImageView"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            tools:text="Mohamed Morse Morse El Sayed Morse"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/amoiriFontBoldItalic"
+            android:textSize="@dimen/_15sdp"
+            android:id="@+id/movieDetailTitle"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/movieDetailTitle"
+            android:gravity="center"
+            android:layout_toRightOf="@id/movieDetailPosterImageView"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/movie_category_drawable"
+                android:text="Action"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:paddingVertical="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_20sdp"
+                android:elevation="4dp"
+                android:textAppearance="@style/amoiriFontRegular"
+                android:textSize="@dimen/_8ssp"
+
+                android:id="@+id/movieDetailCategoryTextView"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_8ssp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:background="@drawable/language_bg"
+                android:textColor="@color/colorOfGray"
+                android:text="EN"
+                android:gravity="center"
+                android:textAppearance="@style/amoiriFontRegular"
+                android:id="@+id/movieLanguageTextView"
+
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/movieDetailDescribtion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movieDetailPosterImageView"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/amoiriFontBoldItalic"
+            android:textSize="@dimen/_8ssp"
+            tools:text="Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/website_bg"
+            android:text="View Website"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/amoiriFontBoldItalic"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:layout_below="@id/movieDetailDescribtion"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_baseline_remove_red_eye_24"
+            android:drawablePadding="@dimen/_10sdp"
+            android:id="@+id/movieDetailWebsiteButton"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movieDetailWebsiteButton"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Similiar"
+            android:textAppearance="@style/amoiriFontBoldItalic"
+            android:textSize="@dimen/_13ssp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:id="@+id/similerTitleHeaderTextView"
+            />
+
+        <com.yarolegovich.discretescrollview.DiscreteScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_below="@id/similerTitleHeaderTextView"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/similarMovieDiscreteView"
+            />
+
+    </RelativeLayout>
+
+
+</androidx.core.widget.NestedScrollView>

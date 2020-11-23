@@ -14,13 +14,9 @@ class HomeViewModel : ViewModel(), MviViewModel<HomeIntent, HomeState> {
 
     private var intents: PublishSubject<HomeIntent> = PublishSubject.create()
 
+    private var homeAnnotateProcessor : HomeAnnotateProcessor = HomeAnnotateProcessor()
+
     private var states: Observable<HomeState> = getStatesObservableObject()
-
-    private lateinit var homeAnnotateProcessor : HomeAnnotateProcessor
-
-    init {
-        homeAnnotateProcessor = HomeAnnotateProcessor()
-    }
 
     override fun processIntents(listOfIntents: Observable<HomeIntent>) {
         listOfIntents?.subscribe(intents)
@@ -32,7 +28,7 @@ class HomeViewModel : ViewModel(), MviViewModel<HomeIntent, HomeState> {
 
     private fun getStatesObservableObject(): Observable<HomeState> {
         return intents?.map { convertIntentToActions(it) }
-            ?.compose(HomeAnnotateProcessor()?.homeViewModelAnnotateProcessor)
+            ?.compose(homeAnnotateProcessor?.homeViewModelAnnotateProcessor)
             ?.scan(HomeState() , resultMaker)
             ?.distinctUntilChanged()
             ?.replay(1)

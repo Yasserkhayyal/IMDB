@@ -1,20 +1,18 @@
 package com.morse.movie.ui.home.viewmodel
 
-import com.morse.movie.base.MviResult
 import com.morse.movie.remote.core.RetrofitBuilder
-import com.morse.movie.remote.entity.MovieResponse
-import com.morse.movie.remote.entity.Result
+import com.morse.movie.remote.entity.movieresponse.MovieResponse
+import com.morse.movie.remote.entity.movieresponse.Result
 import com.morse.movie.ui.home.entities.HomeAction
 import com.morse.movie.ui.home.entities.HomeResult
-import com.morse.movie.ui.home.entities.HomeState
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class HomeAnnotateProcessor {
 
@@ -24,16 +22,21 @@ class HomeAnnotateProcessor {
                 Observable.create<MovieResponse> {
 
                     CoroutineScope(Dispatchers.IO)?.launch {
-
-                        var response =
-                            RetrofitBuilder.getNetworkInteractor().getPopularMovie()?.await()
-                        it?.onNext(response)
+                        try {
+                            var response =
+                                RetrofitBuilder.getNetworkInteractor().getPopularMovie()?.await()
+                            it?.onNext(response)
+                        }catch (e : Exception){
+                            it?.onError(e)
+                        }
                     }
 
                 }
                     ?.map { HomeResult.Success(it?.results as ArrayList<Result> , 0 ) }
                     ?.cast(HomeResult::class.java)
-                    ?.onErrorReturn { HomeResult.Error(it , 0) }
+                    ?.onErrorReturn {
+                        HomeResult.Error(it , 0)
+                    }
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribeOn(Schedulers.computation())
                     ?.startWith(HomeResult.IsLoading(0))
@@ -48,10 +51,13 @@ class HomeAnnotateProcessor {
                 Observable.create<MovieResponse> {
 
                     CoroutineScope(Dispatchers.IO)?.launch {
-
-                        var response =
-                            RetrofitBuilder.getNetworkInteractor().getTopRatedMovie()?.await()
-                        it?.onNext(response)
+                        try {
+                            var response =
+                                RetrofitBuilder.getNetworkInteractor().getTopRatedMovie()?.await()
+                            it?.onNext(response)
+                        }catch (e : Exception){
+                            it?.onError(e)
+                        }
                     }
 
                 }
@@ -72,10 +78,13 @@ class HomeAnnotateProcessor {
                 Observable.create<MovieResponse> {
 
                     CoroutineScope(Dispatchers.IO)?.launch {
-
-                        var response =
-                            RetrofitBuilder.getNetworkInteractor().getIncomingMovie()?.await()
-                        it?.onNext(response)
+                        try {
+                            var response =
+                                RetrofitBuilder.getNetworkInteractor().getIncomingMovie()?.await()
+                            it?.onNext(response)
+                        }catch (e : Exception){
+                            it?.onError(e)
+                        }
                     }
 
                 }
@@ -95,10 +104,13 @@ class HomeAnnotateProcessor {
                 Observable.create<MovieResponse> {
 
                     CoroutineScope(Dispatchers.IO)?.launch {
-
-                        var response =
-                            RetrofitBuilder.getNetworkInteractor().getNowPlayingMovie()?.await()
-                        it?.onNext(response)
+                        try {
+                            var response =
+                                RetrofitBuilder.getNetworkInteractor().getNowPlayingMovie()?.await()
+                            it?.onNext(response)
+                        }catch (e : Exception){
+                            it?.onError(e)
+                        }
                     }
 
                 }

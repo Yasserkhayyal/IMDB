@@ -5,19 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.morse.movie.R
-import com.morse.movie.remote.entity.Result
+import com.morse.movie.remote.entity.movieresponse.Result
 import com.morse.movie.utils.*
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.movie_item.*
-import kotlinx.android.synthetic.main.movie_item.view.*
 import java.lang.Exception
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter (private var listener: MovieListener) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     private var listOfResults = arrayListOf<Result>()
+    private lateinit var movieListener : MovieListener
+
+    init {
+        movieListener = listener
+    }
 
     public fun submitNewMovies(results: ArrayList<Result>) {
         if (listOfResults?.size == 0) {
@@ -38,7 +42,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 
-        holder?.bindMovieToView(listOfResults?.get(position))
+        holder?.bindMovieToView(listOfResults?.get(position) , movieListener)
 
     }
 
@@ -50,7 +54,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         RecyclerView.ViewHolder(containerView!!), LayoutContainer {
 
 
-        public fun bindMovieToView(result: Result) {
+        public fun bindMovieToView(result: Result, listener: MovieListener) {
             loading?.makeItOn()
             movieName?.setText(result?.title)
             movieDate?.setText(result?.release_date?.bindFromDateForMovieReleqse())
@@ -66,6 +70,10 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             })
             progressValue?.setText("${result?.vote_average}")
             progress?.setProgress(result?.vote_average?.toInt()!!)
+            movieCard?.setOnClickListener {
+                listener?.onMovieClicks(it , result)
+            }
+
         }
 
 

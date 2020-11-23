@@ -1,12 +1,11 @@
 package com.morse.movie.remote.core
 
-import com.morse.movie.remote.entity.MovieResponse
-import com.morse.movie.utils.inCommingMovies
-import com.morse.movie.utils.nowplayingMovies
-import com.morse.movie.utils.popularMovies
-import com.morse.movie.utils.topRatedMovies
+import com.morse.movie.remote.entity.moviedetailresponse.MovieDetailResponse
+import com.morse.movie.remote.entity.movieresponse.MovieResponse
+import com.morse.movie.utils.*
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 open interface MoviesApi {
 
@@ -25,5 +24,13 @@ open interface MoviesApi {
     @Retry
     @GET(value = nowplayingMovies)
     public fun getNowPlayingMovie () : Deferred<MovieResponse>
+
+    @Retry
+    @GET(value = similarMovies)
+    public fun getSimilarMovies ( @Path("movie_id") movieId : Int ) : Deferred<MovieResponse>
+
+    @Retry
+    @GET(value = movieDetail)
+    public fun getMovieDetail ( @Path("movie_id") movieId : Int ) : Deferred<MovieDetailResponse>
 
 }

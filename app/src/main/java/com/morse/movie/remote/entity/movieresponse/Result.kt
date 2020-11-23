@@ -1,4 +1,4 @@
-package com.morse.movie.remote.entity
+package com.morse.movie.remote.entity.movieresponse
 
 data class Result(
     val adult: Boolean ?=false,
