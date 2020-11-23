@@ -31,6 +31,16 @@
             android:layout_height="@dimen/_150sdp"
             android:id="@+id/movieDetailBackgroundImageView"
             android:layout_alignParentTop="true"
+            tools:src="@drawable/b"
+            android:scaleType="fitXY"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:id="@+id/movieDetailBackgroundIngrediantImageView"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/movie_detail_background_gradient"
             />
 
         <com.wang.avi.AVLoadingIndicatorView
@@ -53,6 +63,7 @@
             android:layout_marginTop="@dimen/_95sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:elevation="4dp"
+            tools:src="@drawable/a"
             android:id="@+id/movieDetailPosterImageView"
             />
 
@@ -63,6 +74,7 @@
             style="@style/AVLoadingIndicatorView"
             app:indicatorColor="@color/colorOfGreen"
             android:visibility="visible"
+            android:elevation="4dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_alignParentLeft="true"

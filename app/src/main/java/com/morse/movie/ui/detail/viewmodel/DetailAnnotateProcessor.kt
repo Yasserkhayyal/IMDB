@@ -35,11 +35,10 @@ class DetailAnnotateProcessor {
                     ?.map {
                         DetailResult.MovieDetailResult.Success(it)
                     }?.cast(DetailResult.MovieDetailResult::class.java)
-                    ?.onErrorReturn {
-                        DetailResult.MovieDetailResult.Error(it)
-                    }?.startWith(DetailResult.MovieDetailResult.Loading)
-                    ?.subscribeOn(AndroidSchedulers.mainThread())
-                    ?.observeOn(Schedulers.computation())
+                    ?.onErrorReturn { DetailResult.MovieDetailResult.Error(it)}
+                    ?. observeOn (AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.computation())
+                    ?.startWith(DetailResult.MovieDetailResult.Loading)
             }
         }
 
@@ -63,11 +62,10 @@ class DetailAnnotateProcessor {
                     ?.map {
                         DetailResult.MovieSimilarsResult.Success(it)
                     }?.cast(DetailResult.MovieSimilarsResult::class.java)
-                    ?.onErrorReturn {
-                        DetailResult.MovieSimilarsResult.Error(it)
-                    }?.startWith(DetailResult.MovieSimilarsResult.Loading)
-                    ?.subscribeOn(AndroidSchedulers.mainThread())
-                    ?.observeOn(Schedulers.computation())
+                    ?.onErrorReturn { DetailResult.MovieSimilarsResult.Error(it) }
+                    ?. observeOn (AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.computation())
+                    ?.startWith(DetailResult.MovieSimilarsResult.Loading)
             }
         }
 
