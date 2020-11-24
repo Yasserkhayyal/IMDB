@@ -37,7 +37,7 @@
         android:paddingLeft="10dp"
         android:textAppearance="@style/amoiriFontBold"
         android:textColor="@android:color/white"
-        android:textSize="15dp"
+        android:textSize="@dimen/_15ssp"
         tools:text="Mandalorian" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:paddingLeft="10dp"
         android:textAppearance="@style/amoiriFontBold"
         android:textColor="@android:color/white"
-        android:textSize="12dp"
+        android:textSize="@dimen/_12ssp"
         tools:text="Sep 14 , 2017" />
 
     <RelativeLayout
@@ -76,7 +76,7 @@
             android:layout_centerInParent="true"
             android:textAppearance="@style/amoiriFontBoldItalic"
             android:textColor="@android:color/white"
-            android:textSize="12dp"
+            android:textSize="@dimen/_7ssp"
             tools:text="86.0" />
 
     </RelativeLayout>

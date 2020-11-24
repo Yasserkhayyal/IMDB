@@ -11,8 +11,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfPopular"
-        android:layout_width="240dp"
-        android:layout_height="400dp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_300sdp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"
@@ -29,8 +29,8 @@
 
             <ImageView
                 android:id="@+id/popularImagePoster"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
+                android:layout_width="@dimen/_74sdp"
+                android:layout_height="@dimen/_112sdp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp" />
@@ -38,8 +38,8 @@
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/popularImageLoading"
                 style="@style/AVLoadingIndicatorView"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
@@ -51,12 +51,13 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/popularCardName"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/_38sdp"
                 android:layout_below="@id/popularImagePoster"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:lines="1"
                 android:maxLines="1"
+                android:textSize="@dimen/_12ssp"
                 android:paddingStart="42dp"
                 android:paddingEnd="42dp"
                 android:textAllCaps="false"
@@ -72,6 +73,7 @@
                 android:gravity="center|top"
                 android:lineSpacingExtra="2dp"
                 android:lines="3"
+                android:textSize="@dimen/_12ssp"
                 android:maxLines="3"
                 android:paddingHorizontal="2dp"
                 android:textAllCaps="false"
@@ -81,10 +83,11 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/goToDetailOfMovieDetailButton"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/_27sdp"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:text="Go To Detail"
+                android:textSize="@dimen/_12ssp"
                 android:textAppearance="@style/amoiriFontBoldItalic"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
@@ -183,7 +186,7 @@
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="@dimen/_10ssp" />
 
 
                 </RelativeLayout>
@@ -301,7 +304,7 @@
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="@dimen/_10ssp" />
 
 
                 </RelativeLayout>
@@ -419,7 +422,7 @@
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="@dimen/_10ssp" />
 
 
                 </RelativeLayout>
@@ -536,7 +539,7 @@
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </RelativeLayout>
 

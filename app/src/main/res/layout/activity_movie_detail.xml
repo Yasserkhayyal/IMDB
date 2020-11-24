@@ -14,8 +14,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardOfPopularDetail"
-            android:layout_width="240dp"
-            android:layout_height="400dp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_300sdp"
             android:layout_marginBottom="30dp"
             android:visibility="gone"
             android:layout_gravity="center"
@@ -30,8 +30,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="150dp"
+                    android:layout_width="@dimen/_74sdp"
+                    android:layout_height="@dimen/_112sdp"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="20dp"
@@ -39,8 +39,8 @@
                     />
 
                 <com.wang.avi.AVLoadingIndicatorView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp"
                     app:indicatorName="LineSpinFadeLoaderIndicator"
                     style="@style/AVLoadingIndicatorView"
                     android:layout_centerInParent="true"
@@ -54,9 +54,10 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="@dimen/_38sdp"
                     android:gravity="center"
                     android:paddingStart="42dp"
+                    android:textSize="@dimen/_12ssp"
                     android:layout_below="@id/popularImagePosterDetail"
                     android:paddingEnd="42dp"
                     android:id="@+id/popularCardNameDetail"
@@ -76,6 +77,7 @@
                     android:layout_below="@id/popularCardNameDetail"
                     android:lines="3"
                     android:maxLines="3"
+                    android:textSize="@dimen/_12ssp"
                     android:ellipsize="end"
                     android:lineSpacingExtra="2dp"
                     android:textAllCaps="false"
@@ -84,10 +86,11 @@
                     android:textColor="@android:color/white" />
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/_27sdp"
                     android:background="@drawable/detail_card_bottom_raduis_bg"
                     android:layout_alignParentBottom="true"
                     android:text="Go To Detail"
+                    android:textSize="@dimen/_12ssp"
                     android:id="@+id/goToDetailOfMovieDetailDetailButton"
                     android:textColor="@android:color/white"
                     android:textAppearance="@style/amoiriFontBoldItalic"
