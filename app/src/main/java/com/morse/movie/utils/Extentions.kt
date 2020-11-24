@@ -1,10 +1,15 @@
 package com.morse.movie.utils
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.View
 import com.wang.avi.AVLoadingIndicatorView
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import java.lang.Exception
 import java.text.SimpleDateFormat
 
 public fun String.bindFromDate(): String {
@@ -15,6 +20,17 @@ public fun String.bindFromDate(): String {
         return output
     }
     return ""
+}
+
+public fun String.openWebsite ( context: Context ) {
+    try {
+        var openWebsiteIntent = Intent()
+        openWebsiteIntent?.action = Intent.ACTION_VIEW
+        openWebsiteIntent?.data = Uri.parse(this)
+        context?.startActivity(openWebsiteIntent)
+    }catch (e : Exception){
+        Log.i("IMDB" , "Can`t Find Any App to Open Website")
+    }
 }
 
 public fun DiscreteScrollView.addDiscreteViewConfig() {

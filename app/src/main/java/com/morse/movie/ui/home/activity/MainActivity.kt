@@ -287,7 +287,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
             endView = mEndView
             addTarget(mEndView)
             pathMotion = MaterialArcMotion()
-            duration = 550
+            duration = 850
             scrimColor = Color.TRANSPARENT
         }
     }

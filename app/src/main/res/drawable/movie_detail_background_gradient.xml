@@ -3,6 +3,7 @@
 
     <gradient android:startColor="@color/colorPrimaryWith100Ingrediant"
         android:centerColor="@color/colorPrimary75Ingrediant"
-        android:endColor="@color/colorPrimary"/>
+        android:endColor="@color/colorOfCard"
+        android:angle="270"/>
 
 </shape>

@@ -16,7 +16,7 @@
         android:layout_marginBottom="30dp"
         android:visibility="gone"
         android:layout_gravity="center"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="#1C1C1C"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
         android:layout_centerInParent="true"
