@@ -114,7 +114,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:text="20 / 100"
+        android:text="0 / 100"
+        android:elevation="@dimen/_10sdp"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:id="@+id/movieLengthTextView"
@@ -161,6 +162,16 @@
             />
 
     </RelativeLayout>
-
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:indicatorName="LineSpinFadeLoaderIndicator"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/colorOfGreen"
+        android:visibility="visible"
+        android:id="@+id/moreMoviesLoading"
+        android:layout_marginTop="80dp"
+        />
 
 </RelativeLayout>
