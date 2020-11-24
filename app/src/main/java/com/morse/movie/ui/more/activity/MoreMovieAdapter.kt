@@ -59,4 +59,5 @@ class MoreMovieAdapter (private var movieListeners: MovieListener) : PagedListAd
         }
 
     }
+
 }

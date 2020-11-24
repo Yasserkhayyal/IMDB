@@ -18,6 +18,7 @@ import com.morse.movie.base.MviView
 import com.morse.movie.base.RecyclerViewShape
 import com.morse.movie.remote.entity.movieresponse.Result
 import com.morse.movie.ui.detail.activity.MovieDetailActivity
+import com.morse.movie.ui.favourite.activity.FavouriteActivity
 import com.morse.movie.ui.home.entities.HomeIntent
 import com.morse.movie.ui.home.entities.HomeState
 import com.morse.movie.ui.home.viewmodel.HomeViewModel
@@ -32,6 +33,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_movie_detail.*
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
@@ -135,6 +137,18 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
                 }
             }
         })
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            homeNestedScrollView?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if(scrollY > oldScrollY){
+                    goToFavouriteButton?.shrink()
+                }
+                else{
+                    goToFavouriteButton?.extend()
+                }
+            }
+        }
+
         bindViewModelWithView()
         configreAdapterToRecyclerview()
         configureClicksOnButtons()
@@ -260,6 +274,11 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun configureClicksOnButtons() {
 
+        RxView.clicks(goToFavouriteButton)?.throttleLatest(500, TimeUnit.MILLISECONDS)
+            ?.subscribe {
+                navigateToFavouriteScreen()
+            }?.addTo(compositeDisposable)
+
         RxView.clicks(redmoreIcon)?.throttleLatest(500, TimeUnit.MILLISECONDS)
             ?.subscribe {
                 navigateToMoreScreen(0)
@@ -309,6 +328,11 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
                 nowPlayinggMovieIntentSubject?.onNext(HomeIntent.LoadNowPlayingMovies)
             }?.addTo(compositeDisposable)
 
+    }
+
+    private fun navigateToFavouriteScreen() {
+        var favIntent = Intent(this, FavouriteActivity::class.java)
+        startActivity(favIntent)
     }
 
     private fun navigateToMoreScreen(position: Int? = 0) {

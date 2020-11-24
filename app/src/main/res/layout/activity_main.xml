@@ -2,9 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeScreenRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/homeScreenRoot"
     android:background="@color/colorPrimary"
     tools:context=".ui.home.activity.MainActivity">
 
@@ -13,109 +13,127 @@
         android:id="@+id/cardOfPopular"
         android:layout_width="240dp"
         android:layout_height="400dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:layout_marginBottom="30dp"
         android:visibility="gone"
-        android:layout_gravity="center"
         app:cardBackgroundColor="#1C1C1C"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
-        android:layout_centerInParent="true"
         tools:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <ImageView
+                android:id="@+id/popularImagePoster"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="20dp"
-                android:id="@+id/popularImagePoster"
-                />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp" />
 
             <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/popularImageLoading"
+                style="@style/AVLoadingIndicatorView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:indicatorName="LineSpinFadeLoaderIndicator"
-                style="@style/AVLoadingIndicatorView"
-                android:layout_centerInParent="true"
-                app:indicatorColor="@color/colorOfGreen"
-                android:visibility="visible"
                 android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/popularImageLoading"
                 android:layout_marginTop="80dp"
-                />
+                android:visibility="visible"
+                app:indicatorColor="@color/colorOfGreen"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/popularCardName"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:gravity="center"
-                android:paddingStart="42dp"
                 android:layout_below="@id/popularImagePoster"
-                android:paddingEnd="42dp"
-                android:id="@+id/popularCardName"
-                android:textAllCaps="false"
+                android:ellipsize="end"
+                android:gravity="center"
                 android:lines="1"
                 android:maxLines="1"
-                android:ellipsize="end"
-                android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white"
-                />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center|top"
-                android:id="@+id/popularCardDetail"
-                android:layout_below="@id/popularCardName"
-                android:lines="3"
-                android:maxLines="3"
-                android:ellipsize="end"
-                android:lineSpacingExtra="2dp"
+                android:paddingStart="42dp"
+                android:paddingEnd="42dp"
                 android:textAllCaps="false"
-                android:paddingHorizontal="2dp"
                 android:textAppearance="@style/amoiriFontItalic"
                 android:textColor="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/popularCardDetail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/popularCardName"
+                android:ellipsize="end"
+                android:gravity="center|top"
+                android:lineSpacingExtra="2dp"
+                android:lines="3"
+                android:maxLines="3"
+                android:paddingHorizontal="2dp"
+                android:textAllCaps="false"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white" />
+
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goToDetailOfMovieDetailButton"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:layout_alignParentBottom="true"
+                android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:text="Go To Detail"
-                android:id="@+id/goToDetailOfMovieDetailButton"
-                android:textColor="@android:color/white"
                 android:textAppearance="@style/amoiriFontBoldItalic"
-                />
+                android:textColor="@android:color/white" />
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/homeNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_anchor="@id/bottomNav"
-        app:layout_anchorGravity="top"
         android:fitsSystemWindows="true"
-        android:layout_marginBottom="@dimen/_52sdp"
+        app:layout_anchorGravity="top"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
+            android:id="@+id/mainMovieGroups"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="5dp"
-            android:id="@+id/mainMovieGroups">
+            android:layout_marginHorizontal="5dp">
 
             <ImageView
+                android:id="@+id/imdbImage"
                 android:layout_width="@dimen/_140sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/imdb"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_alignParentTop="true"
-                android:id="@+id/imdbImage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/imdb" />
+
+            <ImageView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/me"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/myImageView"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/me"
+                android:layout_toLeftOf="@id/myImageView"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textAppearance="@style/amoiriFontBoldItalic"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginRight="@dimen/_10sdp"
                 />
 
             <RelativeLayout
@@ -129,12 +147,11 @@
                 android:clickable="true">
 
                 <RelativeLayout
+                    android:id="@+id/popularMoviesHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/popularMoviesHeader"
-                    >
+                    android:layout_marginTop="20dp">
 
                     <ImageView
                         android:id="@+id/redIndicatorView"
@@ -146,10 +163,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/redIndicatorView"
                         android:text="Popular"
-                        android:layout_centerVertical="true"
                         android:textAppearance="@style/amoiriFontBoldItalic"
                         android:textColor="@android:color/white" />
 
@@ -159,85 +176,80 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp"
-                        android:background="@android:color/transparent"
-                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
+                        android:textSize="12dp" />
 
 
                 </RelativeLayout>
 
                 <com.wang.avi.AVLoadingIndicatorView
                     android:id="@+id/popularIndicatorView"
+                    style="@style/AVLoadingIndicatorView"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:indicatorName="LineSpinFadeLoaderIndicator"
-                    style="@style/AVLoadingIndicatorView"
                     android:layout_centerInParent="true"
+                    android:visibility="visible"
                     app:indicatorColor="@color/colorOfGreen"
-                    android:visibility="visible"  />
+                    app:indicatorName="LineSpinFadeLoaderIndicator" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/popularMoviesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/popularMoviesHeader"
                     android:layout_marginHorizontal="20dp"
-                    android:id="@+id/popularMoviesRecyclerView"
                     android:layout_marginTop="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/movie_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="4"
-                    />
+                    tools:listitem="@layout/movie_item" />
 
                 <RelativeLayout
+                    android:id="@+id/popularMoviesErrorContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:id="@+id/popularMoviesErrorContainer"
                     android:visibility="invisible"
-                    tools:visibility="visible"
-                    >
+                    tools:visibility="visible">
+
                     <ImageView
+                        android:id="@+id/popularWarningImage"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
-                        android:src="@drawable/ic_warning"
-                        android:id="@+id/popularWarningImage"
                         android:layout_centerHorizontal="true"
-                        />
+                        android:src="@drawable/ic_warning" />
 
                     <TextView
+                        android:id="@+id/popularWarningText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fail to Load Popular Movies"
-                        android:textColor="@android:color/white"
-                        android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:layout_centerHorizontal="true"
                         android:layout_below="@id/popularWarningImage"
-                        android:id="@+id/popularWarningText"
-                        />
+                        android:layout_centerHorizontal="true"
+                        android:text="Fail to Load Popular Movies"
+                        android:textAppearance="@style/amoiriFontBoldItalic"
+                        android:textColor="@android:color/white" />
+
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/retryPopularButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/popularWarningText"
                         android:layout_centerHorizontal="true"
-                        android:text="Retry"
-                        android:clickable="true"
-                        android:textColor="@android:color/white"
                         android:background="@drawable/retry_button_bg"
+                        android:clickable="true"
+                        android:text="Retry"
                         android:textAllCaps="false"
-                        android:id="@+id/retryPopularButton"
                         android:textAppearance="@style/amoiriFontItalic"
-                        />
+                        android:textColor="@android:color/white" />
 
                 </RelativeLayout>
-
 
 
             </RelativeLayout>
@@ -253,10 +265,10 @@
                 android:clickable="true">
 
                 <RelativeLayout
+                    android:id="@+id/topRatedMoviesHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:id="@+id/topRatedMoviesHeader"
                     android:layout_marginTop="20dp">
 
                     <ImageView
@@ -269,10 +281,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/greenIndicatorView"
                         android:text="Top Rated"
-                        android:layout_centerVertical="true"
                         android:textAppearance="@style/amoiriFontBoldItalic"
                         android:textColor="@android:color/white" />
 
@@ -282,81 +294,78 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp"
-                        android:background="@android:color/transparent"
-                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"  />
+                        android:textSize="12dp" />
 
 
                 </RelativeLayout>
 
                 <com.wang.avi.AVLoadingIndicatorView
                     android:id="@+id/topRatedIndicatorView"
-                    app:indicatorName="LineSpinFadeLoaderIndicator"
+                    style="@style/AVLoadingIndicatorView"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    style="@style/AVLoadingIndicatorView"
                     android:layout_centerInParent="true"
+                    android:visibility="visible"
                     app:indicatorColor="@color/colorOfGreen"
-                    android:visibility="visible"  />
+                    app:indicatorName="LineSpinFadeLoaderIndicator" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/topRatedMoviesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/topRatedMoviesHeader"
                     android:layout_marginHorizontal="20dp"
-                    android:id="@+id/topRatedMoviesRecyclerView"
                     android:layout_marginTop="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/movie_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="4"
-                    />
+                    tools:listitem="@layout/movie_item" />
 
                 <RelativeLayout
+                    android:id="@+id/topRatedMoviesErrorContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:id="@+id/topRatedMoviesErrorContainer"
                     android:visibility="invisible"
-                    tools:visibility="visible"
-                    >
+                    tools:visibility="visible">
+
                     <ImageView
+                        android:id="@+id/topRatedWarningImage"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
-                        android:src="@drawable/ic_warning"
-                        android:id="@+id/topRatedWarningImage"
                         android:layout_centerHorizontal="true"
-                        />
+                        android:src="@drawable/ic_warning" />
 
                     <TextView
+                        android:id="@+id/topRatedWarningText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fail to Load Top Rated Movies"
-                        android:textColor="@android:color/white"
-                        android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:layout_centerHorizontal="true"
                         android:layout_below="@id/topRatedWarningImage"
-                        android:id="@+id/topRatedWarningText"
-                        />
+                        android:layout_centerHorizontal="true"
+                        android:text="Fail to Load Top Rated Movies"
+                        android:textAppearance="@style/amoiriFontBoldItalic"
+                        android:textColor="@android:color/white" />
+
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/retryTopRatedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/topRatedWarningText"
                         android:layout_centerHorizontal="true"
-                        android:text="Retry"
-                        android:clickable="true"
-                        android:textColor="@android:color/white"
                         android:background="@drawable/retry_button_bg"
+                        android:clickable="true"
+                        android:text="Retry"
                         android:textAllCaps="false"
-                        android:id="@+id/retryTopRatedButton"
                         android:textAppearance="@style/amoiriFontItalic"
-                        />
+                        android:textColor="@android:color/white" />
 
                 </RelativeLayout>
 
@@ -374,10 +383,10 @@
                 android:clickable="true">
 
                 <RelativeLayout
+                    android:id="@+id/inComingMoviesHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:id="@+id/inComingMoviesHeader"
                     android:layout_marginTop="20dp">
 
                     <ImageView
@@ -390,8 +399,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/amberIndicatorView"
                         android:text="Incomming"
                         android:textAppearance="@style/amoiriFontBoldItalic"
@@ -403,81 +412,78 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp"
-                        android:background="@android:color/transparent"
-                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"  />
+                        android:textSize="12dp" />
 
 
                 </RelativeLayout>
 
                 <com.wang.avi.AVLoadingIndicatorView
                     android:id="@+id/inComingIndicatorView"
-                    app:indicatorName="LineSpinFadeLoaderIndicator"
+                    style="@style/AVLoadingIndicatorView"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    style="@style/AVLoadingIndicatorView"
                     android:layout_centerInParent="true"
+                    android:visibility="visible"
                     app:indicatorColor="@color/colorOfGreen"
-                    android:visibility="visible"  />
+                    app:indicatorName="LineSpinFadeLoaderIndicator" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/inComingMoviesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/inComingMoviesHeader"
                     android:layout_marginHorizontal="20dp"
-                    android:id="@+id/inComingMoviesRecyclerView"
                     android:layout_marginTop="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/movie_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="4"
-                    />
+                    tools:listitem="@layout/movie_item" />
 
                 <RelativeLayout
+                    android:id="@+id/inComingMoviesErrorContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:id="@+id/inComingMoviesErrorContainer"
                     android:visibility="invisible"
-                    tools:visibility="visible"
-                    >
+                    tools:visibility="visible">
+
                     <ImageView
+                        android:id="@+id/inComingWarningImage"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
-                        android:src="@drawable/ic_warning"
-                        android:id="@+id/inComingWarningImage"
                         android:layout_centerHorizontal="true"
-                        />
+                        android:src="@drawable/ic_warning" />
 
                     <TextView
+                        android:id="@+id/inComingWarningText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fail to Load In Coming Movies"
-                        android:textColor="@android:color/white"
-                        android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:layout_centerHorizontal="true"
                         android:layout_below="@id/inComingWarningImage"
-                        android:id="@+id/inComingWarningText"
-                        />
+                        android:layout_centerHorizontal="true"
+                        android:text="Fail to Load In Coming Movies"
+                        android:textAppearance="@style/amoiriFontBoldItalic"
+                        android:textColor="@android:color/white" />
+
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/retryInComingButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/inComingWarningText"
                         android:layout_centerHorizontal="true"
-                        android:text="Retry"
-                        android:clickable="true"
-                        android:textColor="@android:color/white"
                         android:background="@drawable/retry_button_bg"
+                        android:clickable="true"
+                        android:text="Retry"
                         android:textAllCaps="false"
-                        android:id="@+id/retryInComingButton"
                         android:textAppearance="@style/amoiriFontItalic"
-                        />
+                        android:textColor="@android:color/white" />
 
                 </RelativeLayout>
 
@@ -494,10 +500,10 @@
                 android:clickable="true">
 
                 <RelativeLayout
+                    android:id="@+id/nowPlayingMoviesHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:id="@+id/nowPlayingMoviesHeader"
                     android:layout_marginTop="20dp">
 
                     <ImageView
@@ -510,10 +516,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/grayIndicatorView"
                         android:text="Now Playing"
-                        android:layout_centerVertical="true"
                         android:textAppearance="@style/amoiriFontBoldItalic"
                         android:textColor="@android:color/white" />
 
@@ -523,80 +529,77 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp"
-                        android:background="@android:color/transparent"
-                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+                        android:textSize="12dp" />
 
                 </RelativeLayout>
 
                 <com.wang.avi.AVLoadingIndicatorView
                     android:id="@+id/nowPlayingIndicatorView"
-                    app:indicatorName="LineSpinFadeLoaderIndicator"
+                    style="@style/AVLoadingIndicatorView"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    style="@style/AVLoadingIndicatorView"
                     android:layout_centerInParent="true"
+                    android:visibility="visible"
                     app:indicatorColor="@color/colorOfGreen"
-                    android:visibility="visible"  />
+                    app:indicatorName="LineSpinFadeLoaderIndicator" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/nowPlayingMoviesRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/nowPlayingMoviesHeader"
                     android:layout_marginHorizontal="20dp"
-                    android:id="@+id/nowPlayingMoviesRecyclerView"
                     android:layout_marginTop="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/movie_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="4"
-                    />
+                    tools:listitem="@layout/movie_item" />
 
                 <RelativeLayout
+                    android:id="@+id/nowPlayingMoviesErrorContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:id="@+id/nowPlayingMoviesErrorContainer"
                     android:visibility="invisible"
-                    tools:visibility="visible"
-                    >
+                    tools:visibility="visible">
+
                     <ImageView
+                        android:id="@+id/nowPlayingWarningImage"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
-                        android:src="@drawable/ic_warning"
-                        android:id="@+id/nowPlayingWarningImage"
                         android:layout_centerHorizontal="true"
-                        />
+                        android:src="@drawable/ic_warning" />
 
                     <TextView
+                        android:id="@+id/nowPlayingWarningText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fail to Load Now Playing Movies"
-                        android:textColor="@android:color/white"
-                        android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:layout_centerHorizontal="true"
                         android:layout_below="@id/nowPlayingWarningImage"
-                        android:id="@+id/nowPlayingWarningText"
-                        />
+                        android:layout_centerHorizontal="true"
+                        android:text="Fail to Load Now Playing Movies"
+                        android:textAppearance="@style/amoiriFontBoldItalic"
+                        android:textColor="@android:color/white" />
+
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/retryNowPlayingButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/nowPlayingWarningText"
                         android:layout_centerHorizontal="true"
-                        android:text="Retry"
-                        android:clickable="true"
-                        android:textColor="@android:color/white"
                         android:background="@drawable/retry_button_bg"
+                        android:clickable="true"
+                        android:text="Retry"
                         android:textAllCaps="false"
-                        android:id="@+id/retryNowPlayingButton"
                         android:textAppearance="@style/amoiriFontItalic"
-                        />
+                        android:textColor="@android:color/white" />
 
                 </RelativeLayout>
 
@@ -607,21 +610,22 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/colorOfAmber" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/goToFavouriteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:backgroundTint="@android:color/white"
-        android:src="@drawable/ic_baseline_settings_24"
-        app:backgroundTint="@android:color/white"
-        app:layout_anchor="@id/bottomNav"
-        app:layout_anchorGravity="center|top" />
+        android:layout_below="@id/movieDetailDescribtion"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:backgroundTint="@color/colorPrimary"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:text="Go to Favourite"
+        android:textAppearance="@style/amoiriFontBoldItalic"
+        android:textColor="@android:color/white"
+        app:icon="@drawable/ic_baseline_favorite_24"
+        app:iconTint="@color/colorOfRed" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

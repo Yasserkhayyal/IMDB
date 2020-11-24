@@ -8,8 +8,6 @@
     android:id="@+id/movieDetailRoot"
     tools:context=".ui.detail.activity.MovieDetailActivity">
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,7 +23,7 @@
             app:cardCornerRadius="24dp"
             app:cardElevation="8dp"
             android:layout_centerInParent="true"
-            tools:visibility="visible">
+            tools:visibility="invisible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -101,21 +99,21 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="mini"
+            app:fabSize="normal"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:background="@color/colorOfGreen"
-            app:backgroundTint="@color/colorOfGreen"
+            app:backgroundTint="@color/colorOfCard"
             android:id="@+id/navigateBackFab"
-            android:backgroundTint="@color/colorOfGreen"
+            app:tint="@android:color/white"
+            android:backgroundTint="@color/colorOfCard"
             android:src="@drawable/ic_baseline_keyboard_backspace_24"
             />
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="@dimen/_190sdp"
             android:id="@+id/movieDetailBackgroundImageView"
             android:layout_alignParentTop="true"
             tools:src="@drawable/b"
@@ -124,7 +122,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="@dimen/_190sdp"
             android:id="@+id/movieDetailBackgroundIngrediantImageView"
             android:layout_alignParentTop="true"
             android:src="@drawable/movie_detail_background_gradient"
@@ -140,14 +138,14 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:id="@+id/detailBackgroundImageLoading"
-            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_70sdp"
             />
 
         <ImageView
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_140sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_160sdp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/_95sdp"
+            android:layout_marginTop="@dimen/_115sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:elevation="4dp"
             tools:src="@drawable/a"
@@ -231,7 +229,6 @@
 
         </LinearLayout>
 
-
         <TextView
             android:id="@+id/movieDetailDescribtion"
             android:layout_width="match_parent"
@@ -247,26 +244,56 @@
             tools:text="Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse"
             />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/website_bg"
-            android:text="View Website"
-            android:textColor="@android:color/white"
-            android:textAppearance="@style/amoiriFontBoldItalic"
-            android:paddingHorizontal="@dimen/_20sdp"
             android:layout_below="@id/movieDetailDescribtion"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_centerHorizontal="true"
-            android:drawableLeft="@drawable/ic_baseline_remove_red_eye_24"
-            android:drawablePadding="@dimen/_10sdp"
-            android:id="@+id/movieDetailWebsiteButton"
-            />
+            android:id="@+id/listOfActions"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_centerHorizontal="true">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorOfBlue"
+                android:text="View Website"
+                app:icon="@drawable/ic_baseline_remove_red_eye_24"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/amoiriFontBoldItalic"
+                android:paddingHorizontal="@dimen/_10sdp"
+                app:iconTint="@android:color/white"
+                android:ellipsize="marquee"
+                android:layout_below="@id/movieDetailDescribtion"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:id="@+id/movieDetailWebsiteButton"
+                />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorOfRed"
+                app:iconTint="@android:color/white"
+                android:text="Favourite it"
+                android:ellipsize="marquee"
+                app:icon="@drawable/ic_baseline_favorite_24"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/amoiriFontBoldItalic"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_below="@id/movieDetailDescribtion"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:id="@+id/movieDetailFavouriteButton"
+                />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/movieDetailWebsiteButton"
+            android:layout_below="@id/listOfActions"
             android:layout_marginLeft="@dimen/_10sdp"
             android:text="Similiar"
             android:textAppearance="@style/amoiriFontBoldItalic"
@@ -319,8 +346,7 @@
                 />
 
         </RelativeLayout>
-        
-    </RelativeLayout>
 
+    </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>

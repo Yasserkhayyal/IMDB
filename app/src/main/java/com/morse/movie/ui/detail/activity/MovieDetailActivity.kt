@@ -97,6 +97,18 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
             }
         }
         compositeDisposable = CompositeDisposable()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            movieDetailRoot?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if(scrollY > oldScrollY){
+                    movieDetailWebsiteButton?.shrink()
+                    movieDetailFavouriteButton?.shrink()
+                }
+                else{
+                    movieDetailWebsiteButton?.extend()
+                    movieDetailFavouriteButton?.extend()
+                }
+            }
+        }
         configureSimilarMovies()
         bindOurViewWithViewModel()
         movieDetailPublishSubject?.onNext(DetailIntent.LoadMovieDetails(movieId!!))

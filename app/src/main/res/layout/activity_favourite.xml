@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.more.activity.MoreMoviesActivity"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    tools:context=".ui.favourite.activity.FavouriteActivity">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardOfMore"
+        android:id="@+id/cardOfFavourite"
         android:layout_width="240dp"
         android:layout_height="400dp"
         android:layout_marginBottom="30dp"
@@ -30,7 +30,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="20dp"
-                android:id="@+id/moreImagePoster"
+                android:id="@+id/favouriteImagePoster"
                 />
             <com.wang.avi.AVLoadingIndicatorView
                 android:layout_width="50dp"
@@ -42,7 +42,7 @@
                 android:visibility="visible"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/moreImageLoading"
+                android:id="@+id/favouriteImageLoading"
                 android:layout_marginTop="80dp"
                 />
             <androidx.appcompat.widget.AppCompatTextView
@@ -50,9 +50,9 @@
                 android:layout_height="48dp"
                 android:gravity="center"
                 android:paddingStart="42dp"
-                android:layout_below="@id/moreImagePoster"
+                android:layout_below="@id/favouriteImagePoster"
                 android:paddingEnd="42dp"
-                android:id="@+id/moreCardName"
+                android:id="@+id/favouriteCardName"
                 android:textAllCaps="false"
                 android:lines="1"
                 android:maxLines="1"
@@ -64,8 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center|top"
-                android:id="@+id/moreCardDetail"
-                android:layout_below="@id/moreCardName"
+                android:id="@+id/favouriteCardDetail"
+                android:layout_below="@id/favouriteCardName"
                 android:lines="3"
                 android:maxLines="3"
                 android:ellipsize="end"
@@ -80,48 +80,34 @@
                 android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:layout_alignParentBottom="true"
                 android:text="Go To Detail"
-                android:id="@+id/goToDetailOfMovieDetailMoreButton"
+                android:id="@+id/goToDetailOfMovieDetailFavouriteButton"
                 android:textColor="@android:color/white"
                 android:textAppearance="@style/amoiriFontBoldItalic"
                 />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
+
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:id="@+id/moreActivityActionBar"
-        app:title="Popular Movies"
+        android:id="@+id/favouriteActivityActionBar"
+        app:title="Favourite"
         app:titleTextColor="@android:color/white"
         app:titleTextAppearance="@style/amoiriFontBoldItalic"
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
         />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/moreActivityActionBar"
-        android:id="@+id/moreMoviesRecyclerView"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_below="@id/favouriteActivityActionBar"
+        android:id="@+id/favouriteMoviesRecyclerView"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:orientation="vertical"
         tools:itemCount="10"
-        tools:listitem="@layout/movie_item_horizontal"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/total_count_bg"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:text="0 / 100"
-        android:elevation="@dimen/_10sdp"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:id="@+id/movieLengthTextView"
-        android:textAppearance="@style/amoiriFontItalic"
-        android:textSize="@dimen/_10ssp"
+        app:spanCount="2"
         />
 
     <RelativeLayout
@@ -129,39 +115,30 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:id="@+id/moreMoviesErrorContainer"
-        android:visibility="invisible"
-        tools:visibility="invisible">
+        android:id="@+id/favouriteMoviesErrorContainer"
+        android:visibility="visible"
+        tools:visibility="visible">
         <ImageView
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/ic_warning"
-            android:id="@+id/moreWarningImage"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:src="@drawable/ic_broke"
+            android:id="@+id/favouriteWarningImage"
             android:layout_centerHorizontal="true"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fail to Load Popular Movies"
+            android:text="Unfortunately , You didn`t have any Favourite Movie to Show"
             android:textColor="@android:color/white"
             android:textAppearance="@style/amoiriFontBoldItalic"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/moreWarningImage"
-            android:id="@+id/moreWarningText"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_below="@id/favouriteWarningImage"
+            android:id="@+id/favouriteWarningText"
             />
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/moreWarningText"
-            android:layout_centerHorizontal="true"
-            android:text="Retry"
-            android:clickable="true"
-            android:textColor="@android:color/white"
-            android:background="@drawable/retry_button_bg"
-            android:textAllCaps="false"
-            android:id="@+id/retryMoreButton"
-            android:textAppearance="@style/amoiriFontItalic"
-            />
+
 
     </RelativeLayout>
 
@@ -172,8 +149,9 @@
         style="@style/AVLoadingIndicatorView"
         android:layout_centerInParent="true"
         app:indicatorColor="@color/colorOfGreen"
-        android:visibility="visible"
-        android:id="@+id/moreMoviesLoading"
+        android:visibility="invisible"
+        tools:visibility="invisible"
+        android:id="@+id/favouriteMoviesLoading"
         android:layout_marginTop="80dp"
         />
 

@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/imdb_container"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.more.activity.MoreMoviesActivity"></activity>
+        <activity android:name=".ui.favourite.activity.FavouriteActivity"></activity>
+        <activity android:name=".ui.more.activity.MoreMoviesActivity" />
         <activity android:name=".ui.detail.activity.MovieDetailActivity" />
         <activity android:name=".ui.home.activity.MainActivity">
             <intent-filter>

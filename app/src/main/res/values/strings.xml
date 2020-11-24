@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IMDB Movie</string>
+    <string name="me"><u>Morse</u></string>
 </resources>
