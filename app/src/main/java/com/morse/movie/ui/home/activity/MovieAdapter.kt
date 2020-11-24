@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.morse.movie.R
+import com.morse.movie.base.RecyclerViewShape
 import com.morse.movie.remote.entity.movieresponse.Result
 import com.morse.movie.utils.*
 import com.squareup.picasso.Callback
@@ -14,7 +15,8 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.movie_item.*
 import java.lang.Exception
 
-class MovieAdapter (private var listener: MovieListener) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter (private var recyclerViewShape: RecyclerViewShape ? = RecyclerViewShape.VERTICAL,
+                    private var listener: MovieListener) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     private var listOfResults = arrayListOf<Result>()
     private lateinit var movieListener : MovieListener
@@ -35,9 +37,15 @@ class MovieAdapter (private var listener: MovieListener) : RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(
-            LayoutInflater.from(parent?.context)?.inflate(R.layout.movie_item, parent, false)!!
-        )
+        return if(recyclerViewShape == RecyclerViewShape.HORIZONTAL){
+            return MovieViewHolder(
+                LayoutInflater.from(parent?.context)?.inflate(R.layout.movie_item_horizontal, parent, false)!!
+            )
+        } else {
+            return MovieViewHolder(
+                LayoutInflater.from(parent?.context)?.inflate(R.layout.movie_item, parent, false)!!
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {

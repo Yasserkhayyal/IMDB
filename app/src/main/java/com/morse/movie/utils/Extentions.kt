@@ -2,13 +2,25 @@ package com.morse.movie.utils
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.view.isGone
+import com.google.android.material.transition.platform.MaterialArcMotion
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.morse.movie.remote.entity.movieresponse.Result
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wang.avi.AVLoadingIndicatorView
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
+import kotlinx.android.synthetic.main.activity_movie_detail.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 
@@ -24,10 +36,15 @@ public fun String.bindFromDate(): String {
 
 public fun String.openWebsite ( context: Context ) {
     try {
-        var openWebsiteIntent = Intent()
-        openWebsiteIntent?.action = Intent.ACTION_VIEW
-        openWebsiteIntent?.data = Uri.parse(this)
-        context?.startActivity(openWebsiteIntent)
+        if(this?.length ==0){
+         Toast.makeText(context , "There is`t an Valid Link to View , Sorry !" , Toast.LENGTH_SHORT).show()
+        }
+        else {
+            var openWebsiteIntent = Intent()
+            openWebsiteIntent?.action = Intent.ACTION_VIEW
+            openWebsiteIntent?.data = Uri.parse(this)
+            context?.startActivity(openWebsiteIntent)
+        }
     }catch (e : Exception){
         Log.i("IMDB" , "Can`t Find Any App to Open Website")
     }
@@ -75,3 +92,4 @@ public fun View.hideVisibilty() {
 public fun View.showVisibilty() {
     this?.visibility = View.VISIBLE
 }
+

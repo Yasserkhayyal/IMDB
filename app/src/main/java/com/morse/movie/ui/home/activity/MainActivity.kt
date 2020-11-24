@@ -15,15 +15,18 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.jakewharton.rxbinding2.view.RxView
 import com.morse.movie.R
 import com.morse.movie.base.MviView
+import com.morse.movie.base.RecyclerViewShape
 import com.morse.movie.remote.entity.movieresponse.Result
 import com.morse.movie.ui.detail.activity.MovieDetailActivity
 import com.morse.movie.ui.home.entities.HomeIntent
 import com.morse.movie.ui.home.entities.HomeState
 import com.morse.movie.ui.home.viewmodel.HomeViewModel
+import com.morse.movie.ui.more.activity.MoreMoviesActivity
 import com.morse.movie.utils.*
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     lateinit var topRatedMoviesAdapter: MovieAdapter
     lateinit var inComingMoviesAdapter: MovieAdapter
     lateinit var nowPlayingMoviesAdapter: MovieAdapter
-    var currentMovieId   : Int?  = 0
+    var currentMovieId: Int? = 0
     private lateinit var movieView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,33 +63,76 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     override fun onStart() {
         super.onStart()
         compositeDisposable = CompositeDisposable()
-        popularMoviesAdapter = MovieAdapter(object : MovieListener {
+        popularMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onMovieClicks(movieCard: View, movieResult: Result) {
                 currentMovieId = movieResult?.id!!
-                animateCard(movieCard)
-                bindMovieDetailToPopularCard(movieResult)
+                if (cardOfPopular?.visibility == View.VISIBLE) {
+                    returnCardToOriginPosition(200)
+                    Observable.intervalRange(0, 100, 300, 0, TimeUnit.MILLISECONDS)
+                        ?.subscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
+                            animateCard(movieCard)
+                            bindMovieDetailToPopularCard(movieResult)
+                        }?.addTo(compositeDisposable)
+                } else {
+                    animateCard(movieCard)
+                    bindMovieDetailToPopularCard(movieResult)
+                }
             }
         })
-        topRatedMoviesAdapter = MovieAdapter(object : MovieListener {
+        topRatedMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             override fun onMovieClicks(movieCard: View, movieResult: Result) {
                 currentMovieId = movieResult?.id!!
-                animateCard(movieCard)
-                bindMovieDetailToPopularCard(movieResult)
+                if (cardOfPopular?.visibility == View.VISIBLE) {
+                    returnCardToOriginPosition(200)
+                    Observable.intervalRange(0, 100, 300, 0, TimeUnit.MILLISECONDS)
+                        ?.subscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
+                            animateCard(movieCard)
+                            bindMovieDetailToPopularCard(movieResult)
+                        }?.addTo(compositeDisposable)
+                } else {
+                    animateCard(movieCard)
+                    bindMovieDetailToPopularCard(movieResult)
+                }
             }
         })
-        inComingMoviesAdapter = MovieAdapter(object : MovieListener {
+        inComingMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             override fun onMovieClicks(movieCard: View, movieResult: Result) {
                 currentMovieId = movieResult?.id!!
-                animateCard(movieCard)
-                bindMovieDetailToPopularCard(movieResult)
+                if (cardOfPopular?.visibility == View.VISIBLE) {
+                    returnCardToOriginPosition(200)
+                    Observable.intervalRange(0, 100, 300, 0, TimeUnit.MILLISECONDS)
+                        ?.subscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())
+                        ?.subscribe {
+                            animateCard(movieCard)
+                            bindMovieDetailToPopularCard(movieResult)
+                        }?.addTo(compositeDisposable)
+                }
+                else {
+                    animateCard(movieCard)
+                    bindMovieDetailToPopularCard(movieResult)
+                }
             }
         })
-        nowPlayingMoviesAdapter = MovieAdapter(object : MovieListener {
+        nowPlayingMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             override fun onMovieClicks(movieCard: View, movieResult: Result) {
                 currentMovieId = movieResult?.id!!
-                animateCard(movieCard)
-                bindMovieDetailToPopularCard(movieResult)
+                if (cardOfPopular?.visibility == View.VISIBLE) {
+                    returnCardToOriginPosition(200)
+                    Observable.intervalRange(0, 100, 300, 0, TimeUnit.MILLISECONDS)
+                        ?.subscribeOn(AndroidSchedulers.mainThread())
+                        ?.observeOn(AndroidSchedulers.mainThread())
+                        ?.subscribe {
+                            animateCard(movieCard)
+                            bindMovieDetailToPopularCard(movieResult)
+                        }?.addTo(compositeDisposable)
+                } else {
+                    animateCard(movieCard)
+                    bindMovieDetailToPopularCard(movieResult)
+                }
             }
         })
         bindViewModelWithView()
@@ -191,20 +237,20 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPosition () {
+    private fun returnCardToOriginPosition(duration : Long) {
         android.transition.TransitionManager.beginDelayedTransition(
             homeScreenRoot,
-            getTransform(cardOfPopular, movieView)
+            getTransform(cardOfPopular, movieView , duration)
         )
         cardOfPopular?.isGone = true
         movieView?.isGone = false
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPositionWithNavigationAction () {
+    private fun returnCardToOriginPositionWithNavigationAction() {
         android.transition.TransitionManager.beginDelayedTransition(
             homeScreenRoot,
-            getTransform(cardOfPopular, movieView)
+            getTransform(cardOfPopular, movieView , 650)
         )
         cardOfPopular?.isGone = true
         movieView?.isGone = false
@@ -214,6 +260,26 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun configureClicksOnButtons() {
 
+        RxView.clicks(redmoreIcon)?.throttleLatest(500, TimeUnit.MILLISECONDS)
+            ?.subscribe {
+                navigateToMoreScreen(0)
+            }?.addTo(compositeDisposable)
+
+        RxView.clicks(greenmoreIcon)?.throttleLatest(500, TimeUnit.MILLISECONDS)
+            ?.subscribe {
+                navigateToMoreScreen(1)
+            }?.addTo(compositeDisposable)
+
+        RxView.clicks(ambermoreIcon)?.throttleLatest(500, TimeUnit.MILLISECONDS)
+            ?.subscribe {
+                navigateToMoreScreen(2)
+            }?.addTo(compositeDisposable)
+
+        RxView.clicks(graymoreIcon)?.throttleLatest(500, TimeUnit.MILLISECONDS)
+            ?.subscribe {
+                navigateToMoreScreen(3)
+            }?.addTo(compositeDisposable)
+
         RxView.clicks(goToDetailOfMovieDetailButton)?.throttleLatest(500, TimeUnit.MILLISECONDS)
             ?.subscribe {
                 returnCardToOriginPositionWithNavigationAction()
@@ -222,7 +288,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
 
         RxView.clicks(cardOfPopular)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
 
-            returnCardToOriginPosition()
+            returnCardToOriginPosition(650)
 
         }?.addTo(compositeDisposable)
 
@@ -245,9 +311,17 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
 
     }
 
-    private fun navigateToDetailScreen (movieId : Int?){
-        var detailIntent = Intent(this , MovieDetailActivity::class.java)
-        detailIntent?.putExtra(MOVIE_ID_kEY , movieId )
+    private fun navigateToMoreScreen(position: Int? = 0) {
+
+        var moreIntent = Intent(this, MoreMoviesActivity::class.java)
+        moreIntent?.putExtra(MOVIE_TYPE, position)
+        startActivity(moreIntent)
+
+    }
+
+    private fun navigateToDetailScreen(movieId: Int?) {
+        var detailIntent = Intent(this, MovieDetailActivity::class.java)
+        detailIntent?.putExtra(MOVIE_ID_kEY, movieId)
         startActivity(detailIntent)
     }
 
@@ -281,13 +355,13 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun getTransform(mStartView: View, mEndView: View): MaterialContainerTransform {
+    private fun getTransform(mStartView: View, mEndView: View , customDuration : Long): MaterialContainerTransform {
         return MaterialContainerTransform().apply {
             startView = mStartView
             endView = mEndView
             addTarget(mEndView)
             pathMotion = MaterialArcMotion()
-            duration = 850
+            duration = customDuration
             scrimColor = Color.TRANSPARENT
         }
     }
@@ -297,7 +371,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
         movieView = view
         android.transition.TransitionManager.beginDelayedTransition(
             homeScreenRoot,
-            getTransform(view, cardOfPopular)
+            getTransform(view, cardOfPopular , 650)
         )
         view?.isGone = true
         cardOfPopular?.isGone = false

@@ -14,6 +14,7 @@ import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.morse.movie.R
 import com.morse.movie.base.MviView
+import com.morse.movie.base.RecyclerViewShape
 import com.morse.movie.remote.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.remote.entity.movieresponse.MovieResponse
 import com.morse.movie.remote.entity.movieresponse.Result
@@ -29,13 +30,16 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_item.*
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailState> {
 
@@ -60,20 +64,31 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     override fun onStart() {
         super.onStart()
-        similarMoviesAdapter = MovieAdapter(object : MovieListener {
+        similarMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL ,object : MovieListener {
 
             override fun onMovieClicks(movieCard: View, movieResult: Result) {
-                Toast.makeText(this@MovieDetailActivity, "Clicked", Toast.LENGTH_SHORT).show()
+
                 currentMovieId = movieResult?.id!!
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    animateCard(movieCard)
+                    if (cardOfPopularDetail?.visibility == View.VISIBLE) {
+                        returnCardToOriginPosition(200)
+                        Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
+                            ?.subscribeOn(AndroidSchedulers.mainThread())
+                            ?.observeOn(AndroidSchedulers.mainThread())
+                            ?.subscribe {
+                                animateCard(movieCard)
+                                bindMovieDetailToPopularCard(movieResult)
+                            }?.addTo(compositeDisposable)
+                    } else {
+                        animateCard(movieCard)
+                        bindMovieDetailToPopularCard(movieResult)
+                    }
                 }
-                bindMovieDetailToPopularCard(movieResult)
             }
         })
         cardOfPopularDetail?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPosition()
+                returnCardToOriginPosition(650)
             }
         }
         goToDetailOfMovieDetailDetailButton?.setOnClickListener {
@@ -92,7 +107,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     private fun returnCardToOriginPositionWithNavigationAction () {
         android.transition.TransitionManager.beginDelayedTransition(
             movieDetailRoot,
-            getTransform(cardOfPopularDetail, movieView)
+            getTransform(cardOfPopularDetail, movieView , 650)
         )
         cardOfPopularDetail?.isGone = true
         movieView?.isGone = false
@@ -210,13 +225,13 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun getTransform(mStartView: View, mEndView: View): MaterialContainerTransform {
+    private fun getTransform(mStartView: View, mEndView: View , customDuration : Long): MaterialContainerTransform {
         return MaterialContainerTransform().apply {
             startView = mStartView
             endView = mEndView
             addTarget(mEndView)
             pathMotion = MaterialArcMotion()
-            duration = 850
+            duration = customDuration
             scrimColor = Color.TRANSPARENT
         }
     }
@@ -226,7 +241,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         movieView = view
         android.transition.TransitionManager.beginDelayedTransition(
             movieDetailRoot,
-            getTransform(view, cardOfPopularDetail)
+            getTransform(view, cardOfPopularDetail , 650)
         )
         view?.isGone = true
         cardOfPopularDetail?.isGone = false
@@ -253,10 +268,10 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPosition () {
+    private fun returnCardToOriginPosition (duration : Long) {
         android.transition.TransitionManager.beginDelayedTransition(
             movieDetailRoot,
-            getTransform(cardOfPopularDetail, movieView)
+            getTransform(cardOfPopularDetail, movieView , duration)
         )
         cardOfPopularDetail?.isGone = true
         movieView?.isGone = false

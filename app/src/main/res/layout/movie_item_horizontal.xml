@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_200sdp"
+    android:id="@+id/movieCard"
+    android:background="@color/colorPrimary"
+    android:layout_marginBottom="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_130sdp"
+        android:background="@drawable/movie_card_bg_except_left_corners"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        />
+
+    <ImageView
+        android:id="@+id/movieImage"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:src="@drawable/a" />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loading"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/_75sdp"
+        android:layout_marginLeft="@dimen/_55sdp"
+        android:visibility="visible"
+        app:indicatorColor="@color/colorOfGreen"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_toRightOf="@id/movieImage"
+        android:layout_centerVertical="true"
+        >
+
+        <TextView
+            android:id="@+id/movieName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movieImage"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:ellipsize="end"
+            android:maxWidth="110dp"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:textAppearance="@style/amoiriFontBold"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            tools:text="Mandalorian" />
+
+        <TextView
+            android:id="@+id/movieDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movieName"
+            android:paddingLeft="10dp"
+            android:textAppearance="@style/amoiriFontBold"
+            android:textColor="@android:color/white"
+            android:textSize="12dp"
+            tools:text="Sep 14 , 2017" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/movieImage"
+        android:layout_alignBottom="@id/movieImage"
+        android:layout_marginBottom="-25dp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:background="@drawable/circule_progress"
+        android:elevation="4dp">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:progressBarStyleHorizontal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:max="10"
+            android:progress="3"
+            android:progressDrawable="@drawable/stepper_progressbar_theme" />
+
+        <TextView
+            android:id="@+id/progressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAppearance="@style/amoiriFontBoldItalic"
+            android:textColor="@android:color/white"
+            android:textSize="12dp"
+            tools:text="86.0" />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

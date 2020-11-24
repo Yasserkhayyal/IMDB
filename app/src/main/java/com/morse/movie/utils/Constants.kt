@@ -1,5 +1,6 @@
 package com.morse.movie.utils
 
+const val MOVIE_TYPE = "movieType"
 const val MOVIE_ID_kEY = "movieId"
 const val apiKey = "12ae0210d107863fd1d89b1e2ee1f26a"
 const val baseApi = "https://api.themoviedb.org/3/"

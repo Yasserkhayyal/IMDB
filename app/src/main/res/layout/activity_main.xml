@@ -102,14 +102,11 @@
         android:layout_marginBottom="@dimen/_52sdp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="5dp"
-            android:id="@+id/mainMovieGroups"
-            >
+            android:id="@+id/mainMovieGroups">
 
             <ImageView
                 android:layout_width="@dimen/_140sdp"
@@ -152,26 +149,26 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/redIndicatorView"
                         android:text="Popular"
+                        android:layout_centerVertical="true"
                         android:textAppearance="@style/amoiriFontBoldItalic"
                         android:textColor="@android:color/white" />
 
-                    <ImageView
+                    <Button
                         android:id="@+id/redmoreIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/redmoreIcon"
                         android:text="More"
+                        android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+
 
                 </RelativeLayout>
 
@@ -275,26 +272,25 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/greenIndicatorView"
                         android:text="Top Rated"
+                        android:layout_centerVertical="true"
                         android:textAppearance="@style/amoiriFontBoldItalic"
                         android:textColor="@android:color/white" />
 
-                    <ImageView
+                    <Button
                         android:id="@+id/greenmoreIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/greenmoreIcon"
                         android:text="More"
+                        android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"  />
+
 
                 </RelativeLayout>
 
@@ -395,28 +391,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/amberIndicatorView"
                         android:text="Incomming"
                         android:textAppearance="@style/amoiriFontBoldItalic"
                         android:textColor="@android:color/white" />
 
-                    <ImageView
+                    <Button
                         android:id="@+id/ambermoreIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/ambermoreIcon"
                         android:text="More"
+                        android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"  />
+
 
                 </RelativeLayout>
 
@@ -518,26 +513,24 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/grayIndicatorView"
                         android:text="Now Playing"
+                        android:layout_centerVertical="true"
                         android:textAppearance="@style/amoiriFontBoldItalic"
                         android:textColor="@android:color/white" />
 
-                    <ImageView
+                    <Button
                         android:id="@+id/graymoreIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/graymoreIcon"
                         android:text="More"
+                        android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
                         android:textColor="@android:color/white"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:background="@android:color/transparent"
+                        android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
                 </RelativeLayout>
 
@@ -611,9 +604,6 @@
 
 
         </RelativeLayout>
-
-
-
 
     </androidx.core.widget.NestedScrollView>
 
