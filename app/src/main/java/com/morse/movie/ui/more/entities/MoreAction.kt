@@ -1,4 +1,15 @@
 package com.morse.movie.ui.more.entities
 
-class MoreAction {
+import com.morse.movie.base.MviAction
+
+sealed class MoreAction : MviAction {
+
+    object LoadPopularMoviesByPagination : MoreAction()
+
+    object LoadTopRatedMoviesByPagination : MoreAction()
+
+    object LoadInComingMoviesByPagination : MoreAction()
+
+    object LoadNowPlayingMoviesByPagination : MoreAction()
+
 }

@@ -10,7 +10,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfFavourite"
         android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_300sdp"
+        android:layout_height="@dimen/_350sdp"
         android:layout_marginBottom="30dp"
         android:visibility="gone"
         android:layout_gravity="center"
@@ -68,8 +68,8 @@
                 android:gravity="center|top"
                 android:id="@+id/favouriteCardDetail"
                 android:layout_below="@id/favouriteCardName"
-                android:lines="3"
-                android:maxLines="3"
+                android:lines="5"
+                android:maxLines="5"
                 android:textSize="@dimen/_12ssp"
                 android:ellipsize="end"
                 android:lineSpacingExtra="2dp"
@@ -79,7 +79,7 @@
                 android:textColor="@android:color/white" />
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_27sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:layout_alignParentBottom="true"
                 android:text="Go To Detail"

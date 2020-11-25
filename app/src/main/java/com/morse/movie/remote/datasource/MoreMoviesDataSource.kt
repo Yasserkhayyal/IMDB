@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MoreMoviesDataSource (): PageKeyedDataSource<Int, Result>() {
+class MoreMoviesDataSource (private var position : Int): PageKeyedDataSource<Int, Result>() {
     var popularPage = 1
 
     override fun loadInitial(
@@ -37,8 +37,26 @@ class MoreMoviesDataSource (): PageKeyedDataSource<Int, Result>() {
     private fun executeMovieQuery (block : (MovieResponse)->Unit) {
 
         CoroutineScope(Dispatchers.IO)?.launch {
-            var popularMovies = RetrofitBuilder?.getNetworkInteractor()?.getPopularMovie()?.await()
-            block(popularMovies)
+            if(position == 0) {
+                var popularMovies = RetrofitBuilder?.getNetworkInteractor()
+                    ?.getPopularMovieWithPagination(page_id = popularPage)?.await()
+                block(popularMovies)
+            }
+            else if(position == 1) {
+                var popularMovies = RetrofitBuilder?.getNetworkInteractor()
+                    ?.getTopRatedMovieWithPagination(page_id = popularPage)?.await()
+                block(popularMovies)
+            }
+            else if(position == 2) {
+                var popularMovies = RetrofitBuilder?.getNetworkInteractor()
+                    ?.getIncomingMovieWithPagination(page_id = popularPage)?.await()
+                block(popularMovies)
+            }
+            else if(position == 3) {
+                var popularMovies = RetrofitBuilder?.getNetworkInteractor()
+                    ?.getNowPlayingMovieWithPagination(page_id = popularPage)?.await()
+                block(popularMovies)
+            }
         }
     }
 }

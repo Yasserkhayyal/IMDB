@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/_200sdp"
     android:id="@+id/movieCard"
-    android:background="@color/colorPrimary"
+    android:elevation="4dp"
+    android:background="@android:color/transparent"
     android:layout_marginBottom="2dp">
 
     <RelativeLayout
@@ -14,6 +15,7 @@
         android:background="@drawable/movie_card_bg_except_left_corners"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:id="@+id/movieHorizontalCardBackground"
         />
 
     <ImageView
@@ -27,14 +29,13 @@
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/loading"
         style="@style/AVLoadingIndicatorView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/_37sdp"
+        android:layout_height="@dimen/_37sdp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/_75sdp"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/_55sdp"
         android:visibility="visible"
-        app:indicatorColor="@color/colorOfGreen"
+        app:indicatorColor="@android:color/white"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 
     <LinearLayout
@@ -48,12 +49,12 @@
 
         <TextView
             android:id="@+id/movieName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/movieImage"
             android:layout_marginTop="@dimen/_20sdp"
             android:ellipsize="end"
-            android:maxWidth="110dp"
+            android:layout_marginRight="@dimen/_12sdp"
             android:maxLines="1"
             android:paddingLeft="10dp"
             android:textAppearance="@style/amoiriFontBold"

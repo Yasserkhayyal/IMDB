@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/moreScreenRoot"
     tools:context=".ui.more.activity.MoreMoviesActivity"
     android:background="@color/colorPrimary">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfMore"
         android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_300sdp"
+        android:layout_height="@dimen/_350sdp"
         android:layout_marginBottom="30dp"
         android:visibility="gone"
         android:layout_gravity="center"
-        app:cardBackgroundColor="#1C1C1C"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
         android:layout_centerInParent="true"
@@ -67,9 +68,9 @@
                 android:gravity="center|top"
                 android:id="@+id/moreCardDetail"
                 android:layout_below="@id/moreCardName"
-                android:lines="3"
+                android:lines="5"
                 android:textSize="@dimen/_12ssp"
-                android:maxLines="3"
+                android:maxLines="5"
                 android:ellipsize="end"
                 android:lineSpacingExtra="2dp"
                 android:textAllCaps="false"
@@ -78,13 +79,13 @@
                 android:textColor="@android:color/white" />
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_27sdp"
-                android:background="@drawable/detail_card_bottom_raduis_bg"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/detail_card_bottom_raduis_bg_balck"
                 android:layout_alignParentBottom="true"
                 android:text="Go To Detail"
                 android:textSize="@dimen/_12ssp"
                 android:id="@+id/goToDetailOfMovieDetailMoreButton"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textAppearance="@style/amoiriFontBoldItalic"
                 />
 
@@ -110,23 +111,6 @@
         tools:itemCount="10"
         tools:listitem="@layout/movie_item_horizontal"
         />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/total_count_bg"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:text="0 / 100"
-        android:elevation="@dimen/_10sdp"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:id="@+id/movieLengthTextView"
-        android:textAppearance="@style/amoiriFontItalic"
-        android:textSize="@dimen/_10ssp"
-        />
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,7 +151,6 @@
             />
 
     </RelativeLayout>
-
     <com.wang.avi.AVLoadingIndicatorView
         android:layout_width="50dp"
         android:layout_height="50dp"

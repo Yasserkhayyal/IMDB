@@ -10,8 +10,8 @@ class MoreDataSourceManager {
 
     var config = PagedList.Config.Builder().setEnablePlaceholders(false)?.setPageSize(20)?.build()
 
-    fun getPaginationMovies () : LiveData<PagedList<Result>> {
-        return  LivePagedListBuilder<Int , Result>(MoreMoviesDataSourceFactory() , config)?.build()
+    fun getPaginationMovies( position : Int ): LiveData<PagedList<Result>> {
+        return LivePagedListBuilder<Int, Result>(MoreMoviesDataSourceFactory(position), config)?.build()
     }
 
 }

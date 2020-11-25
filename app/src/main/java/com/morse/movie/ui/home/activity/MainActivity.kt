@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
         compositeDisposable = CompositeDisposable()
         popularMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-            override fun onMovieClicks(movieCard: View, movieResult: Result) {
+            override fun onMovieClicks(movieCard: View, movieResult: Result,color : Int?) {
                 currentMovieId = movieResult?.id!!
                 if (cardOfPopular?.visibility == View.VISIBLE) {
                     returnCardToOriginPosition(200)
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
             }
         })
         topRatedMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
-            override fun onMovieClicks(movieCard: View, movieResult: Result) {
+            override fun onMovieClicks(movieCard: View, movieResult: Result,color : Int?) {
                 currentMovieId = movieResult?.id!!
                 if (cardOfPopular?.visibility == View.VISIBLE) {
                     returnCardToOriginPosition(200)
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
             }
         })
         inComingMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
-            override fun onMovieClicks(movieCard: View, movieResult: Result) {
+            override fun onMovieClicks(movieCard: View, movieResult: Result,color : Int?) {
                 currentMovieId = movieResult?.id!!
                 if (cardOfPopular?.visibility == View.VISIBLE) {
                     returnCardToOriginPosition(200)
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
             }
         })
         nowPlayingMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
-            override fun onMovieClicks(movieCard: View, movieResult: Result) {
+            override fun onMovieClicks(movieCard: View, movieResult: Result,color : Int?) {
                 currentMovieId = movieResult?.id!!
                 if (cardOfPopular?.visibility == View.VISIBLE) {
                     returnCardToOriginPosition(200)
@@ -310,6 +310,8 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
             returnCardToOriginPosition(650)
 
         }?.addTo(compositeDisposable)
+
+
 
         RxView.clicks(retryPopularButton)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
             popularMovieIntentSubject?.onNext(HomeIntent.LoadPopularMovies)

@@ -1,5 +1,6 @@
 package com.morse.movie.ui.more.activity
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,8 +38,24 @@ class MoreMovieAdapter (private var movieListeners: MovieListener) : PagedListAd
     inner class MovieViewHolder(override val containerView: View?) :
         RecyclerView.ViewHolder(containerView!!), LayoutContainer {
 
+        private var listOfThemes = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                arrayListOf<Pair<Drawable , Int>>( Pair( containerView?.context?.getDrawable(R.drawable.movie_card_bg_except_left_corners )!! ,  containerView?.context?.getColor(R.color.colorOfGreen )!!)
+                    , Pair( containerView?.context?.getDrawable(R.drawable.movie_card_bg_except_left_corners_amber )!! ,  containerView?.context?.getColor(R.color.colorOfAmber )!! )
+                    , Pair( containerView?.context?.getDrawable(R.drawable.movie_card_bg_except_left_corners_color )!! ,  containerView?.context?.getColor(R.color.colorOfRedSpecial )!! )
+                    , Pair( containerView?.context?.getDrawable(R.drawable.movie_card_bg_except_left_corners_red )!! ,  containerView?.context?.getColor(R.color.colorOfBlueSpecial )!! )
+                )
+            } else {
+                TODO("VERSION.SDK_INT < M")
+            }
+        } else {
+            arrayListOf<Pair<Drawable , Int>>()
+        }
+
         fun bind (movie : Result , movieListeners : MovieListener){
+            var theme = listOfThemes?.random()
             loading?.makeItOn()
+            movieHorizontalCardBackground?.background = theme?.first
             movieName?.setText(movie?.title)
             movieDate?.setText(movie?.release_date?.bindFromDateForMovieReleqse())
             Picasso.get()?.load(imageApiPoster +movie?.poster_path)?.transform(RoundedCornersTransformation(20 , 10))?.into(movieImage, object : Callback {
@@ -54,7 +71,7 @@ class MoreMovieAdapter (private var movieListeners: MovieListener) : PagedListAd
             progressValue?.setText("${movie?.vote_average}")
             progress?.setProgress(movie?.vote_average?.toInt()!!)
             movieCard?.setOnClickListener {
-                movieListeners?.onMovieClicks(it , movie)
+                movieListeners?.onMovieClicks(it , movie , theme?.second)
             }
         }
 

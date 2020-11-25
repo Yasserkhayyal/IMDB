@@ -15,7 +15,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardOfPopularDetail"
             android:layout_width="@dimen/_200sdp"
-            android:layout_height="@dimen/_300sdp"
+            android:layout_height="@dimen/_350sdp"
             android:layout_marginBottom="30dp"
             android:visibility="gone"
             android:layout_gravity="center"
@@ -75,8 +75,8 @@
                     android:gravity="center|top"
                     android:id="@+id/popularCardDetailDetail"
                     android:layout_below="@id/popularCardNameDetail"
-                    android:lines="3"
-                    android:maxLines="3"
+                    android:lines="5"
+                    android:maxLines="5"
                     android:textSize="@dimen/_12ssp"
                     android:ellipsize="end"
                     android:lineSpacingExtra="2dp"
@@ -86,7 +86,7 @@
                     android:textColor="@android:color/white" />
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_27sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:background="@drawable/detail_card_bottom_raduis_bg"
                     android:layout_alignParentBottom="true"
                     android:text="Go To Detail"
@@ -102,7 +102,7 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="normal"
+            app:fabSize="mini"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="@dimen/_5sdp"
