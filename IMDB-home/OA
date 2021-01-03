@@ -1,0 +1,145 @@
+[33mcommit 7f366e9dbfbd17d50db5e043e7acbccb93f15c94[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Devil2020 <Devil2020@yahoo.com>
+Date:   Wed Nov 25 13:27:32 2020 +0200
+
+    add pagination
+
+[1mdiff --git a/app/src/main/java/com/morse/movie/remote/core/MoviesApi.kt b/app/src/main/java/com/morse/movie/remote/core/MoviesApi.kt[m
+[1mindex 03f95a1..25f8d66 100644[m
+[1m--- a/app/src/main/java/com/morse/movie/remote/core/MoviesApi.kt[m
+[1m+++ b/app/src/main/java/com/morse/movie/remote/core/MoviesApi.kt[m
+[36m@@ -4,8 +4,10 @@[m [mimport com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse[m
+ import com.morse.movie.data.entity.movieresponse.MovieResponse[m
+ import com.morse.movie.utils.*[m
+ import kotlinx.coroutines.Deferred[m
+[32m+[m[32mimport retrofit2.http.Field[m
+ import retrofit2.http.GET[m
+ import retrofit2.http.Path[m
+[32m+[m[32mimport retrofit2.http.Query[m
+ [m
+ open interface MoviesApi {[m
+ [m
+[36m@@ -13,18 +15,34 @@[m [mopen interface MoviesApi {[m
+     @GET(value = popularMovies)[m
+     public fun getPopularMovie () : Deferred<MovieResponse>[m
+ [m
+[32m+[m[32m    @Retry[m
+[32m+[m[32m    @GET(value = popularMovies)[m
+[32m+[m[32m    public fun getPopularMovieWithPagination (@Query ("page") page_id : Int) : Deferred<MovieResponse>[m
+[32m+[m
+     @Retry[m
+     @GET(value = topRatedMovies)[m
+     public fun getTopRatedMovie () : Deferred<MovieResponse>[m
+ [m
+[32m+[m[32m    @Retry[m
+[32m+[m[32m    @GET(value = topRatedMovies)[m
+[32m+[m[32m    public fun getTopRatedMovieWithPagination (@Query ("page") page_id : Int) : Deferred<MovieResponse>[m
+[32m+[m
+     @Retry[m
+     @GET(value = inCommingMovies)[m
+     public fun getIncomingMovie () : Deferred<MovieResponse>[m
+ [m
+[32m+[m[32m    @Retry[m
+[32m+[m[32m    @GET(value = inCommingMovies)[m
+[32m+[m[32m    public fun getIncomingMovieWithPagination (@Query ("page") page_id : Int) : Deferred<MovieResponse>[m
+[32m+[m
+     @Retry[m
+     @GET(value = nowplayingMovies)[m
+     public fun getNowPlayingMovie () : Deferred<MovieResponse>[m
+ [m
+[32m+[m[32m    @Retry[m
+[32m+[m[32m    @GET(value = nowplayingMovies)[m
+[32m+[m[32m    public fun getNowPlayingMovieWithPagination (@Query ("page") page_id : Int) : Deferred<MovieResponse>[m
+[32m+[m
+     @Retry[m
+     @GET(value = similarMovies)[m
+     public fun getSimilarMovies ( @Path("movie_id") movieId : Int ) : Deferred<MovieResponse>[m
+[1mdiff --git a/app/src/main/java/com/morse/movie/remote/datasource/MoreDataSourceManager.kt b/app/src/main/java/com/morse/movie/remote/datasource/MoreDataSourceManager.kt[m
+[1mindex 39a1fd6..f65bd82 100644[m
+[1m--- a/app/src/main/java/com/morse/movie/remote/datasource/MoreDataSourceManager.kt[m
+[1m+++ b/app/src/main/java/com/morse/movie/remote/datasource/MoreDataSourceManager.kt[m
+[36m@@ -10,8 +10,8 @@[m [mclass MoreDataSourceManager {[m
+ [m
+     var config = PagedList.Config.Builder().setEnablePlaceholders(false)?.setPageSize(20)?.build()[m
+ [m
+[31m-    fun getPaginationMovies () : LiveData<PagedList<Result>> {[m
+[31m-        return  LivePagedListBuilder<Int , Result>(MoreMoviesDataSourceFactory() , config)?.build()[m
+[32m+[m[32m    fun getPaginationMovies( position : Int ): LiveData<PagedList<Result>> {[m
+[32m+[m[32m        return LivePagedListBuilder<Int, Result>(MoreMoviesDataSourceFactory(position), config)?.build()[m
+     }[m
+ [m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSource.kt b/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSource.kt[m
+[1mindex ee7cdff..6a48802 100644[m
+[1m--- a/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSource.kt[m
+[1m+++ b/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSource.kt[m
+[36m@@ -8,7 +8,7 @@[m [mimport kotlinx.coroutines.CoroutineScope[m
+ import kotlinx.coroutines.Dispatchers[m
+ import kotlinx.coroutines.launch[m
+ [m
+[31m-class MoreMoviesDataSource (): PageKeyedDataSource<Int, Result>() {[m
+[32m+[m[32mclass MoreMoviesDataSource (private var position : Int): PageKeyedDataSource<Int, Result>() {[m
+     var popularPage = 1[m
+ [m
+     override fun loadInitial([m
+[36m@@ -37,8 +37,26 @@[m [mclass MoreMoviesDataSource (): PageKeyedDataSource<Int, Result>() {[m
+     private fun executeMovieQuery (block : (MovieResponse)->Unit) {[m
+ [m
+         CoroutineScope(Dispatchers.IO)?.launch {[m
+[31m-            var popularMovies = RetrofitBuilder?.getNetworkInteractor()?.getPopularMovie()?.await()[m
+[31m-            block(popularMovies)[m
+[32m+[m[32m            if(position == 0) {[m
+[32m+[m[32m                var popularMovies = RetrofitBuilder?.getNetworkInteractor()[m
+[32m+[m[32m                    ?.getPopularMovieWithPagination(page_id = popularPage)?.await()[m
+[32m+[m[32m                block(popularMovies)[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else if(position == 1) {[m
+[32m+[m[32m                var popularMovies = RetrofitBuilder?.getNetworkInteractor()[m
+[32m+[m[32m                    ?.getTopRatedMovieWithPagination(page_id = popularPage)?.await()[m
+[32m+[m[32m                block(popularMovies)[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else if(position == 2) {[m
+[32m+[m[32m                var popularMovies = RetrofitBuilder?.getNetworkInteractor()[m
+[32m+[m[32m                    ?.getIncomingMovieWithPagination(page_id = popularPage)?.await()[m
+[32m+[m[32m                block(popularMovies)[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else if(position == 3) {[m
+[32m+[m[32m                var popularMovies = RetrofitBuilder?.getNetworkInteractor()[m
+[32m+[m[32m                    ?.getNowPlayingMovieWithPagination(page_id = popularPage)?.await()[m
+[32m+[m[32m                block(popularMovies)[m
+[32m+[m[32m            }[m
+         }[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSourceFactory.kt b/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSourceFactory.kt[m
+[1mindex 273d1ea..54da396 100644[m
+[1m--- a/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSourceFactory.kt[m
+[1m+++ b/app/src/main/java/com/morse/movie/remote/datasource/MoreMoviesDataSourceFactory.kt[m
+[36m@@ -3,8 +3,8 @@[m [mpackage com.morse.movies.movies.data.datasource.populardatasource[m
+ import androidx.paging.DataSource[m
+ import com.morse.movie.data.entity.movieresponse.Result[m
+ [m
+[31m-class MoreMoviesDataSourceFactory : DataSource.Factory<Int , Result>() {[m
+[32m+[m[32mclass MoreMoviesDataSourceFactory(private var position : Int) : DataSource.Factory<Int , Result>() {[m
+     override fun create(): DataSource<Int, Result> {[m
+[31m-        return MoreMoviesDataSource()[m
+[32m+[m[32m        return MoreMoviesDataSource(position)[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/java/com/morse/movie/ui/detail/activity/MovieDetailActivity.kt b/app/src/main/java/com/morse/movie/ui/detail/activity/MovieDetailActivity.kt[m
+[1mindex ddbd660..d74fcdd 100644[m
+[1m--- a/app/src/main/java/com/morse/movie/ui/detail/activity/MovieDetailActivity.kt[m
+[1m+++ b/app/src/main/java/com/morse/movie/ui/detail/activity/MovieDetailActivity.kt[m
+[36m@@ -66,7 +66,7 @@[m [mclass MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta[m
+         super.onStart()[m
+         similarMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL ,object : MovieListener {[m
+ [m
+[31m-            override fun onMovieClicks(movieCard: View, movieResult: Result) {[m
+[32m+[m[32m            override fun onMovieClicks(movieCard: View, movieResult: Result,color : Int?) {[m
+ [m
+                 currentMovieId = movieResult?.id!![m
+                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {[m
+[1mdiff --git a/app/src/main/java/com/mor

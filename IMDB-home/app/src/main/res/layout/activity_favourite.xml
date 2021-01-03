@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:id="@+id/root"
+    android:transitionName="favShared"
+    tools:context=".ui.favourite.activity.FavouriteActivity">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardOfFavourite"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_350sdp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="#1C1C1C"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        android:layout_centerInParent="true"
+        tools:visibility="invisible">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_74sdp"
+                android:layout_height="@dimen/_112sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:id="@+id/favouriteImagePoster"
+                />
+            <com.wang.avi.AVLoadingIndicatorView
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
+                app:indicatorName="LineSpinFadeLoaderIndicator"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_centerInParent="true"
+                app:indicatorColor="@color/colorOfGreen"
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/favouriteImageLoading"
+                android:layout_marginTop="80dp"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+
+                android:layout_height="@dimen/_38sdp"
+                android:gravity="center"
+                android:paddingStart="42dp"
+                android:textSize="@dimen/_12ssp"
+                android:layout_below="@id/favouriteImagePoster"
+                android:paddingEnd="42dp"
+                android:id="@+id/favouriteCardName"
+                android:textAllCaps="false"
+                android:lines="1"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|top"
+                android:id="@+id/favouriteCardDetail"
+                android:layout_below="@id/favouriteCardName"
+                android:lines="5"
+                android:maxLines="5"
+                android:textSize="@dimen/_12ssp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:textAllCaps="false"
+                android:paddingHorizontal="2dp"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/detail_card_bottom_raduis_bg"
+                android:layout_alignParentBottom="true"
+                android:text="Go To Detail"
+                android:textSize="@dimen/_12ssp"
+                android:id="@+id/goToDetailOfMovieDetailFavouriteButton"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/amoiriFontBoldItalic"
+                />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:id="@+id/favouriteActivityActionBar"
+        app:title="Favourite"
+        app:titleTextColor="@android:color/white"
+        app:titleTextAppearance="@style/amoiriFontBoldItalic"
+        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
+        app:menu="@menu/navigation_menu"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/favouriteActivityActionBar"
+        android:id="@+id/favouriteMoviesRecyclerView"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:background="@drawable/movie_card_bg"
+        android:layout_margin="@dimen/_16sdp"
+        tools:itemCount="10"
+        app:spanCount="2"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:id="@+id/favouriteMoviesErrorContainer"
+        android:visibility="visible"
+        tools:visibility="visible">
+        <ImageView
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:src="@drawable/ic_stable_no_certificate_found"
+            android:id="@+id/favouriteWarningImage"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unfortunately , You didn`t have any Favourite Movie to Show"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/amoiriFontBoldItalic"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_below="@id/favouriteWarningImage"
+            android:id="@+id/favouriteWarningText"
+            />
+
+
+    </RelativeLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:indicatorName="LineSpinFadeLoaderIndicator"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/colorOfGreen"
+        android:visibility="invisible"
+        tools:visibility="invisible"
+        android:id="@+id/favouriteMoviesLoading"
+        android:layout_marginTop="80dp"
+        />
+
+</RelativeLayout>

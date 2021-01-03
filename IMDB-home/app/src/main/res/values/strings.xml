@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">IMDB Movie</string>
+    <string name="me"><b>Morse</b></string>
+    <string name="myFacebook"> <u> https://www.facebook.com/xmando.moro </u> </string>
+    <string name="myLinkedIn"> <u> https://www.linkedin.com/in/mohammed-morse-486022151/ </u></string>
+    <string name="myGithup"> <u> https://github.com/Devil2020/ </u> </string>
+    <string name="myYoutube"> <u> https://www.youtube.com/channel/UC5cOW_yzRl2FnYEp9jxRqBQ </u> </string>
+    <string name="myEtisalatNumber"> <u> 01119551454 </u> </string>
+    <string name="myOrangeNumber"> <u> 01220049119 </u> </string>
+    <string name="title_activity_search">SearchActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+</resources>

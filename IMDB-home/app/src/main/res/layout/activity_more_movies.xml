@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/moreScreenRoot"
+    tools:context=".ui.more.activity.MoreMoviesActivity"
+    android:background="@color/colorPrimary">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardOfMore"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        android:layout_centerInParent="true"
+        tools:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_74sdp"
+                android:layout_height="@dimen/_112sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:id="@+id/moreImagePoster"
+                />
+            <com.wang.avi.AVLoadingIndicatorView
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
+                app:indicatorName="LineSpinFadeLoaderIndicator"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_centerInParent="true"
+                app:indicatorColor="@color/colorOfGreen"
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/moreImageLoading"
+                android:layout_marginTop="80dp"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp"
+                android:gravity="center"
+                android:paddingStart="42dp"
+                android:textSize="@dimen/_12ssp"
+                android:layout_below="@id/moreImagePoster"
+                android:paddingEnd="42dp"
+                android:id="@+id/moreCardName"
+                android:textAllCaps="false"
+                android:lines="1"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|top"
+                android:id="@+id/moreCardDetail"
+                android:layout_below="@id/moreCardName"
+                android:lines="4"
+                android:textSize="@dimen/_12ssp"
+                android:maxLines="4"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:layout_marginBottom="@dimen/_35sdp"
+                android:textAllCaps="false"
+                android:paddingHorizontal="2dp"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/detail_card_bottom_raduis_bg_balck"
+                android:layout_alignParentBottom="true"
+                android:text="Go To Detail"
+                android:textSize="@dimen/_12ssp"
+                android:id="@+id/goToDetailOfMovieDetailMoreButton"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/amoiriFontBoldItalic"
+                />
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:theme="@style/ActionBarThemeOverlay"
+        android:id="@+id/moreActivityActionBar"
+        app:title="Popular Movies"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:titleTextColor="@android:color/white"
+        app:titleTextAppearance="@style/amoiriFontBoldItalic"
+        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/moreActivityActionBar"
+        android:id="@+id/moreMoviesRecyclerView"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        tools:itemCount="10"
+        tools:listitem="@layout/movie_item_horizontal"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:id="@+id/moreMoviesErrorContainer"
+        android:visibility="invisible"
+        tools:visibility="invisible">
+        <ImageView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/ic_warning"
+            android:id="@+id/moreWarningImage"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fail to Load Popular Movies"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/amoiriFontBoldItalic"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/moreWarningImage"
+            android:id="@+id/moreWarningText"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moreWarningText"
+            android:layout_centerHorizontal="true"
+            android:text="Retry"
+            android:clickable="true"
+            android:textColor="@android:color/white"
+            android:background="@drawable/retry_button_bg"
+            android:textAllCaps="false"
+            android:id="@+id/retryMoreButton"
+            android:textAppearance="@style/amoiriFontItalic"
+            />
+
+    </RelativeLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:indicatorName="LineSpinFadeLoaderIndicator"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/colorOfGreen"
+        android:visibility="visible"
+        android:id="@+id/moreMoviesLoading"
+        android:layout_marginTop="80dp"
+        />
+
+</RelativeLayout>
