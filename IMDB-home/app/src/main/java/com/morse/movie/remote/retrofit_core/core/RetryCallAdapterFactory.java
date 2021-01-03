@@ -1,4 +1,4 @@
-package com.morse.movie.remote.retrofit_core;
+package com.morse.movie.remote.retrofit_core.core;
 
 
 

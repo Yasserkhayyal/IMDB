@@ -57,6 +57,7 @@ dependencies {
     implementation appCompact
     implementation kotlinKtx
     implementation retrofit
+    implementation fuel
     implementation glide
     implementation picasso
     implementation legacy

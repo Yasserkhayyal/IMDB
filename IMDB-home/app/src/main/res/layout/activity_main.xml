@@ -704,23 +704,23 @@
                 android:layout_below="@id/nowPlayingMoviesCard"
                 >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/green_circule"
-                    android:id="@+id/tvCirculeImageView"
-                    />
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/green_circule"-->
+<!--                    android:id="@+id/tvCirculeImageView"-->
+<!--                    />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tvs"
-                    android:textAppearance="@style/amoiriFontBoldItalic"
-                    android:textColor="@android:color/white"
-                    android:layout_toRightOf="@id/tvCirculeImageView"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_centerVertical="true"
-                    />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Tvs"-->
+<!--                    android:textAppearance="@style/amoiriFontBoldItalic"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:layout_toRightOf="@id/tvCirculeImageView"-->
+<!--                    android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    />-->
 
             </RelativeLayout>
 
@@ -770,8 +770,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/movieDetailDescribtion"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom|center"
+        android:layout_gravity="bottom|end|right"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
         android:backgroundTint="#F6C700"
         android:paddingHorizontal="@dimen/_10sdp"
         android:text="Show Favourites"
@@ -779,6 +781,6 @@
         android:textColor="@android:color/black"
         android:transitionName="favShared"
         app:icon="@drawable/ic_baseline_favorite_24"
-        app:iconTint="@color/colorOfGreen" />
+        app:iconTint="@color/colorOfRed" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

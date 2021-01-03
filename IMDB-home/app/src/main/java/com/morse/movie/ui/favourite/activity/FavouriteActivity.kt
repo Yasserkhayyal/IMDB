@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProviders
 import com.morse.movie.R
 import com.morse.movie.app.coordinator.MovieCoordinator
@@ -21,7 +20,9 @@ import com.morse.movie.domain.usecase.CheckIfMovieExistInDataBase
 import com.morse.movie.domain.usecase.LoadFavouriteMovies
 import com.morse.movie.local.manager.RoomClient
 import com.morse.movie.local.room_core.RoomManager
-import com.morse.movie.remote.manager.RetrofitClient
+import com.morse.movie.remote.fuel_core.core.FuelClient
+import com.morse.movie.remote.retrofit_core.core.RetrofitClient
+import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
 import com.morse.movie.ui.favourite.entities.FavouriteIntent
 import com.morse.movie.ui.favourite.entities.FavouriteStatus
 import com.morse.movie.ui.favourite.viewmodel.FavouriteAnnotateProcessor
@@ -43,7 +44,10 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
 
         val roomManager = RoomManager.invoke(this)
         val localSource = RoomClient(roomManager)
-        val remoteSource = RetrofitClient()
+        //val dataManager = RetrofitMoreDataSourceManager()
+        //val remoteSource = RetrofitClient(dataManager)
+        val dataManager = FuelMoreDataSourceManager()
+        val remoteSource = FuelClient(dataManager)
         val repository = DataRepositoryImpl (remoteSource , localSource)
 
         val checkIfExistInDatabase = CheckIfMovieExistInDataBase (repository)

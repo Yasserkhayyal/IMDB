@@ -1,9 +1,9 @@
-package com.morse.movie.remote.datasource.search
+package com.morse.movie.remote.retrofit_core.datasource.search
 
 import androidx.paging.PageKeyedDataSource
 import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
-import com.morse.movie.remote.retrofit_core.RetrofitBuilder
+import com.morse.movie.remote.retrofit_core.core.RetrofitBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,14 +19,16 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.jakewharton.rxbinding2.view.RxView
 import com.morse.movie.R
 import com.morse.movie.base.MviView
-import com.morse.movie.remote.datasource.manager.MoreDataSourceManager
+import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.repository.DataRepositoryImpl
 import com.morse.movie.domain.usecase.LoadPaginationMovies
 import com.morse.movie.domain.usecase.SearchOnMoviesUseCase
 import com.morse.movie.local.manager.RoomClient
 import com.morse.movie.local.room_core.RoomManager
-import com.morse.movie.remote.manager.RetrofitClient
+import com.morse.movie.remote.fuel_core.core.FuelClient
+import com.morse.movie.remote.retrofit_core.core.RetrofitClient
+import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import com.morse.movie.ui.detail.activity.MovieDetailActivity
 import com.morse.movie.ui.home.activity.MovieListener
 import com.morse.movie.ui.more.entities.MoreIntent
@@ -58,7 +59,10 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
 
         val roomManager = RoomManager.invoke(this)
         val localSource = RoomClient(roomManager)
-        val remoteSource = RetrofitClient()
+        //val dataManager = RetrofitMoreDataSourceManager()
+        //val remoteSource = RetrofitClient(dataManager)
+        val dataManager = FuelMoreDataSourceManager()
+        val remoteSource = FuelClient(dataManager)
         val repository = DataRepositoryImpl (remoteSource , localSource)
         val loadPaginationMovies = LoadPaginationMovies(repository)
         val searchPaginationMovies = SearchOnMoviesUseCase(repository)
@@ -261,10 +265,12 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
         if (state?.isLoading == true) {
             moreMoviesLoading?.makeItOn()
             moreMoviesErrorContainer?.hideVisibilty()
-        } else if (state?.error != null) {
+        }
+        else if (state?.error != null) {
             moreMoviesLoading?.makeItOff()
             moreMoviesErrorContainer?.showVisibilty()
-        } else if (state?.data != null) {
+        }
+        else if (state?.data != null) {
             moreMoviesLoading?.makeItOff()
             moreMoviesErrorContainer?.hideVisibilty()
             state?.data?.observe(this, {
@@ -319,16 +325,12 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
             moreMoviesRecyclerView?.hideVisibilty()
             moreMoviesErrorContainer?.hideVisibilty()
             moreMoviesLoading?.makeItOn()
-            MoreDataSourceManager()?.getPaginationMoviesSearch(newText!!)?.observe(this, {
-                moreMovieAdapter?.submitList(it)
-                moreMoviesLoading?.makeItOff()
-                moreMoviesRecyclerView?.showVisibilty()
-            })
+            searchIntentPublishSubject?.onNext(MoreIntent.SearchOnMoviesByPagination(newText!!))
         }
         else{
             callOnPagination()
         }
-       // searchIntentPublishSubject?.onNext(MoreIntent.SearchOnMoviesByPagination(newText!!))
+
         return true
     }
 

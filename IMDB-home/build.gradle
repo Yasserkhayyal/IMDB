@@ -13,6 +13,7 @@ buildscript {
 
     ext {
         def koinVersion = "2.1.6"
+        def fuelVersion = "2.3.1"
         espressoTest = ['androidx.test.espresso:espresso-core:3.2.0']
         junitTest = ['androidx.test.ext:junit:1.1.1']
         junitImplementation = ['junit:junit:4.12']
@@ -27,6 +28,12 @@ buildscript {
                 'com.squareup.okhttp3:logging-interceptor:3.4.1' ,
                 'com.squareup.retrofit2:retrofit:2.6.0' ,
                 "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+        ]
+        fuel = ["com.github.kittinunf.fuel:fuel:$fuelVersion" ,
+                "com.github.kittinunf.fuel:fuel-android:$fuelVersion" ,
+                "com.github.kittinunf.fuel:fuel-rxjava:$fuelVersion" ,
+                "com.github.kittinunf.fuel:fuel-livedata:$fuelVersion" ,
+                "com.github.kittinunf.fuel:fuel-gson:$fuelVersion"
         ]
         shimmer = [
                 'com.facebook.shimmer:shimmer:0.5.0'

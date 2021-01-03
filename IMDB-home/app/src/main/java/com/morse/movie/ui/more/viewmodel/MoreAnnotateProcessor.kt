@@ -1,6 +1,5 @@
 package com.morse.movie.ui.more.viewmodel
 
-import com.morse.movie.remote.datasource.manager.MoreDataSourceManager
 import com.morse.movie.domain.usecase.LoadPaginationMovies
 import com.morse.movie.domain.usecase.SearchOnMoviesUseCase
 import com.morse.movie.ui.more.entities.MoreAction

@@ -30,6 +30,6 @@ const val imageApiBackground = "https://image.tmdb.org/t/p/w500"
 const val movieObjectTable = "MOVIE_Object_TABLE"
 const val DATABASE_NAME = "IMDB_DB"
 const val moviePrimaryKeyName = "MOVIE_ID"
-
+const val FLURRY_API_KEY = "2HHXNKMY37BSBNRXTHZK"
 //Errors
 const val noNetworkExist = "Unable to resolve host api.themoviedb.org: No address associated with hostname"

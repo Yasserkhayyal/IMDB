@@ -3,6 +3,8 @@ package com.morse.movie.data.entity.movieresponse
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.google.gson.Gson
 import com.morse.movie.utils.movieObjectTable
 import com.morse.movie.utils.moviePrimaryKeyName
 
@@ -21,3 +23,4 @@ data class Result(
     val vote_average: Double?= 0.0,
     val vote_count: Int ?= 0
 )
+

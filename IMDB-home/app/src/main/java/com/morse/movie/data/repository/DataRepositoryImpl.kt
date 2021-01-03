@@ -4,19 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.domain.repository.DataRepository
-import com.morse.movie.remote.retrofit_core.MoviesApi
 import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
 import com.morse.movie.data.local.LocalInterface
 import com.morse.movie.data.remote.RemoteInterface
-import com.morse.movie.ui.detail.entities.DetailResult
 import io.reactivex.Observable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class DataRepositoryImpl(private val remoteInterface: RemoteInterface , private val localeInterface : LocalInterface) : DataRepository {
 

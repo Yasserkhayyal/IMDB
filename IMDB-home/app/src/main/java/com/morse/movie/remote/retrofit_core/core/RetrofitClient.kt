@@ -1,4 +1,4 @@
-package com.morse.movie.remote.manager
+package com.morse.movie.remote.retrofit_core.core
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
@@ -8,20 +8,18 @@ import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
 import com.morse.movie.data.remote.RemoteInterface
-import com.morse.movie.remote.datasource.manager.MoreDataSourceManager
-import com.morse.movie.remote.retrofit_core.RetrofitBuilder
-import com.morse.movie.ui.detail.entities.DetailResult
-import com.morse.movie.ui.more.entities.MoreResult
+import com.morse.movie.remote.base.DataSourceManager
+import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
+import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import io.reactivex.Observable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class RetrofitClient () : RemoteInterface {
+class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : RemoteInterface {
 
     private var retrofitMoviesApi = RetrofitBuilder.getNetworkInteractor()
-    private var moreDataStoreManager = MoreDataSourceManager ()
 
     override fun loadPopularMoviesFromRemoteSource(): Observable<MovieResponse> {
         return Observable.create<MovieResponse> {

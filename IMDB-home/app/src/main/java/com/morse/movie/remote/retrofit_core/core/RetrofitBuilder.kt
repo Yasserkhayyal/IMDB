@@ -1,4 +1,4 @@
-package com.morse.movie.remote.retrofit_core
+package com.morse.movie.remote.retrofit_core.core
 
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -30,8 +30,6 @@ object RetrofitBuilder {
     public fun getNetworkInteractor () : MoviesApi {
         return getInstance()?.create(MoviesApi::class.java)
     }
-
-
 
     private fun getClientInstance () : OkHttpClient {
 

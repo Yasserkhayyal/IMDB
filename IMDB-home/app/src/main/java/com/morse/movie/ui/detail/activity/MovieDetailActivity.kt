@@ -27,7 +27,9 @@ import com.morse.movie.data.repository.DataRepositoryImpl
 import com.morse.movie.domain.usecase.*
 import com.morse.movie.local.manager.RoomClient
 import com.morse.movie.local.room_core.RoomManager
-import com.morse.movie.remote.manager.RetrofitClient
+import com.morse.movie.remote.fuel_core.core.FuelClient
+import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
+import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import com.morse.movie.ui.detail.adapter.ReviewAdapter
 import com.morse.movie.ui.detail.adapter.VideoAdapter
 import com.morse.movie.ui.detail.entities.DetailIntent
@@ -80,7 +82,10 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     private val detailViewModel: DetailViewModel by lazy {
         val roomManager = RoomManager.invoke(this)
         val localSource = RoomClient(roomManager)
-        val remoteSource = RetrofitClient()
+        //val dataManager = RetrofitMoreDataSourceManager()
+        //val remoteSource = RetrofitClient(dataManager)
+        val dataManager = FuelMoreDataSourceManager()
+        val remoteSource = FuelClient(dataManager)
         val repository = DataRepositoryImpl (remoteSource , localSource)
         val loadMovieDetails = LoadMovieDetails(repository)
         val loadMovieSimilars = LoadSimilarMovies (repository)

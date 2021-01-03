@@ -1,7 +1,7 @@
-package com.morse.movie.remote.datasource.more
+package com.morse.movie.remote.retrofit_core.datasource.more
 
 import androidx.paging.PageKeyedDataSource
-import com.morse.movie.remote.retrofit_core.RetrofitBuilder
+import com.morse.movie.remote.retrofit_core.core.RetrofitBuilder
 import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
 import kotlinx.coroutines.CoroutineScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class MoreMoviesDataSource (private var position : Int): PageKeyedDataSource<Int, Result>() {
+class RetrofitMoreMoviesDataSource (private var position : Int): PageKeyedDataSource<Int, Result>() {
     var popularPage = 1
 
     override fun loadInitial(

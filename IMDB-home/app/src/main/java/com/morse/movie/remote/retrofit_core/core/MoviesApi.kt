@@ -1,4 +1,4 @@
-package com.morse.movie.remote.retrofit_core
+package com.morse.movie.remote.retrofit_core.core
 
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.data.entity.movieresponse.MovieResponse
@@ -13,7 +13,7 @@ import retrofit2.http.Query
 open interface MoviesApi {
 
     @Retry
-    @GET(value = popularMovies+"&page=4")
+    @GET(value = popularMovies)
     public fun getPopularMovie () : Deferred<MovieResponse>
 
     @Retry
@@ -21,7 +21,7 @@ open interface MoviesApi {
     public fun getPopularMovieWithPagination (@Query ("page") page_id : Int) : Deferred<MovieResponse>
 
     @Retry
-    @GET(value = topRatedMovies+"&page=3")
+    @GET(value = topRatedMovies)
     public fun getTopRatedMovie () : Deferred<MovieResponse>
 
     @Retry
@@ -29,7 +29,7 @@ open interface MoviesApi {
     public fun getTopRatedMovieWithPagination (@Query ("page") page_id : Int) : Deferred<MovieResponse>
 
     @Retry
-    @GET(value = inCommingMovies+"&page=1")
+    @GET(value = inCommingMovies)
     public fun getIncomingMovie () : Deferred<MovieResponse>
 
     @Retry
@@ -37,7 +37,7 @@ open interface MoviesApi {
     public fun getIncomingMovieWithPagination (@Query ("page") page_id : Int) : Deferred<MovieResponse>
 
     @Retry
-    @GET(value = nowplayingMovies+"&page=2")
+    @GET(value = nowplayingMovies)
     public fun getNowPlayingMovie () : Deferred<MovieResponse>
 
     @Retry

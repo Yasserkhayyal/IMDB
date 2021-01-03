@@ -1,21 +1,12 @@
 package com.morse.movie.ui.detail.viewmodel
 
-import android.content.Context
-import com.morse.movie.remote.retrofit_core.RetrofitBuilder
-import com.morse.movie.data.entity.movieresponse.MovieResponse
-import com.morse.movie.data.entity.moviereviewresponse.MovieReview
-import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
 import com.morse.movie.domain.usecase.*
-import com.morse.movie.local.room_core.RoomManager
 import com.morse.movie.ui.detail.entities.DetailAction
 import com.morse.movie.ui.detail.entities.DetailResult
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class DetailAnnotateProcessor(
     private val loadMovieDetails: LoadMovieDetails,
