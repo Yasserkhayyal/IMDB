@@ -22,10 +22,9 @@ import com.morse.movie.domain.usecase.LoadInComingMovies
 import com.morse.movie.domain.usecase.LoadNowPlayingMovies
 import com.morse.movie.domain.usecase.LoadPopularMovies
 import com.morse.movie.domain.usecase.LoadTopRatedMovies
-import com.morse.movie.local.manager.RoomClient
+import com.morse.movie.local.room_core.RoomClient
 import com.morse.movie.local.room_core.RoomManager
-import com.morse.movie.remote.fuel_core.core.FuelClient
-import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
+import com.morse.movie.remote.retrofit_core.core.RetrofitClient
 import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import com.morse.movie.ui.home.entities.HomeIntent
 import com.morse.movie.ui.home.entities.HomeState
@@ -51,10 +50,10 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     private val homeViewModel: HomeViewModel by lazy(LazyThreadSafetyMode.NONE) {
         val roomManager = RoomManager.invoke(this)
         val localSource = RoomClient(roomManager)
-        //val dataManager = RetrofitMoreDataSourceManager()
-        //val remoteSource = RetrofitClient(dataManager)
-        val dataManager = FuelMoreDataSourceManager()
-        val remoteSource = FuelClient(dataManager)
+        val dataManager = RetrofitMoreDataSourceManager()
+        val remoteSource = RetrofitClient(dataManager)
+//        val dataManager = FuelMoreDataSourceManager()
+//        val remoteSource = FuelClient(dataManager)
         val repository = DataRepositoryImpl (remoteSource , localSource)
         val loadPopularMovies = LoadPopularMovies(repository)
         val loadTopRatedMovies = LoadTopRatedMovies(repository)

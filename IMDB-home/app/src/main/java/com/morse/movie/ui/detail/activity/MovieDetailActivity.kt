@@ -25,10 +25,10 @@ import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
 import com.morse.movie.data.repository.DataRepositoryImpl
 import com.morse.movie.domain.usecase.*
-import com.morse.movie.local.manager.RoomClient
+import com.morse.movie.local.realm_core.RealmClient
+import com.morse.movie.local.room_core.RoomClient
 import com.morse.movie.local.room_core.RoomManager
-import com.morse.movie.remote.fuel_core.core.FuelClient
-import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
+import com.morse.movie.remote.retrofit_core.core.RetrofitClient
 import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import com.morse.movie.ui.detail.adapter.ReviewAdapter
 import com.morse.movie.ui.detail.adapter.VideoAdapter
@@ -80,21 +80,30 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     private lateinit var compositeDisposable: CompositeDisposable
     private var isExistInFavourite: Boolean? = null
     private val detailViewModel: DetailViewModel by lazy {
-        val roomManager = RoomManager.invoke(this)
-        val localSource = RoomClient(roomManager)
-        //val dataManager = RetrofitMoreDataSourceManager()
-        //val remoteSource = RetrofitClient(dataManager)
-        val dataManager = FuelMoreDataSourceManager()
-        val remoteSource = FuelClient(dataManager)
-        val repository = DataRepositoryImpl (remoteSource , localSource)
+//        val roomManager = RoomManager.invoke(this)
+//        val localSource = RoomClient(roomManager)
+        val localSource = RealmClient()
+        val dataManager = RetrofitMoreDataSourceManager()
+        val remoteSource = RetrofitClient(dataManager)
+//        val dataManager = FuelMoreDataSourceManager()
+//        val remoteSource = FuelClient(dataManager)
+        val repository = DataRepositoryImpl(remoteSource, localSource)
         val loadMovieDetails = LoadMovieDetails(repository)
-        val loadMovieSimilars = LoadSimilarMovies (repository)
-        val loadMovieReviews = LoadMovieReviews (repository)
-        val loadMovieVideos = LoadMovieVideos (repository)
-        val checkIfExistInDatabase = CheckIfMovieExistInDataBase (repository)
-        val addMovieToDataBase = AddMovieToFavourites (repository)
-        val removeMovieFromFavourites = RemoveMovieFromFavourites (repository)
-        val detailAnnotateProcessor = DetailAnnotateProcessor(loadMovieDetails ,loadMovieSimilars , loadMovieReviews ,loadMovieVideos ,addMovieToDataBase , removeMovieFromFavourites , checkIfExistInDatabase )
+        val loadMovieSimilars = LoadSimilarMovies(repository)
+        val loadMovieReviews = LoadMovieReviews(repository)
+        val loadMovieVideos = LoadMovieVideos(repository)
+        val checkIfExistInDatabase = CheckIfMovieExistInDataBase(repository)
+        val addMovieToDataBase = AddMovieToFavourites(repository)
+        val removeMovieFromFavourites = RemoveMovieFromFavourites(repository)
+        val detailAnnotateProcessor = DetailAnnotateProcessor(
+            loadMovieDetails,
+            loadMovieSimilars,
+            loadMovieReviews,
+            loadMovieVideos,
+            addMovieToDataBase,
+            removeMovieFromFavourites,
+            checkIfExistInDatabase
+        )
         val detailViewModelFactory = DetailViewModelFactory(detailAnnotateProcessor)
         ViewModelProviders.of(this, detailViewModelFactory).get(DetailViewModel::class.java)
     }
@@ -196,7 +205,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         compositeDisposable = CompositeDisposable()
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             movieDetailScrollView?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > oldScrollY ) {
+                if (scrollY > oldScrollY) {
                     movieDetailWebsiteButton?.shrink()
                     movieDetailFavouriteButton?.shrink()
                 } else {
@@ -412,8 +421,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         if (movieDetail?.results?.size == 0) {
             similerTitleHeaderTextView?.hideVisibilty()
             emptySimilarContainer?.hideVisibilty()
-        }
-        else {
+        } else {
             similerTitleHeaderTextView?.showVisibilty()
             emptySimilarContainer?.hideVisibilty()
             similarMoviesAdapter?.submitNewMovies(movieDetail?.results as ArrayList<Result>)
@@ -424,8 +432,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         if (movieDetail?.results?.size == 0) {
             videosTitleHeaderTextView?.hideVisibilty()
             emptyVideosContainer?.hideVisibilty()
-        }
-        else {
+        } else {
             videosTitleHeaderTextView?.showVisibilty()
             emptyVideosContainer?.hideVisibilty()
             videoMoviesAdapter?.submitNewVideos(movieDetail?.results as ArrayList<com.morse.movie.data.entity.movievideosresponse.Result>)

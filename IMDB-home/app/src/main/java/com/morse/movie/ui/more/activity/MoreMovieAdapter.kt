@@ -31,6 +31,9 @@ class MoreMovieAdapter (private var movieListeners: MovieListener) : PagedListAd
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        if(position == 0){
+            var i = 1 + 2
+        }
         holder.bind(getItem(position)!! , movieListeners)
     }
 

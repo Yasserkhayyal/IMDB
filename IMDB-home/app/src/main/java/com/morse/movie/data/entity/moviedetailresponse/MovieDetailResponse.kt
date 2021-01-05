@@ -7,6 +7,7 @@ import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.utils.movieObjectTable
+import io.realm.RealmObject
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

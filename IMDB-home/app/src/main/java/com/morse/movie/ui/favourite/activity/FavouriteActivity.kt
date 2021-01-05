@@ -18,10 +18,10 @@ import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.repository.DataRepositoryImpl
 import com.morse.movie.domain.usecase.CheckIfMovieExistInDataBase
 import com.morse.movie.domain.usecase.LoadFavouriteMovies
-import com.morse.movie.local.manager.RoomClient
+import com.morse.movie.local.realm_core.RealmClient
+import com.morse.movie.local.room_core.RoomClient
 import com.morse.movie.local.room_core.RoomManager
 import com.morse.movie.remote.fuel_core.core.FuelClient
-import com.morse.movie.remote.retrofit_core.core.RetrofitClient
 import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
 import com.morse.movie.ui.favourite.entities.FavouriteIntent
 import com.morse.movie.ui.favourite.entities.FavouriteStatus
@@ -42,18 +42,20 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
 
     private val favouriteViewModel: FavouriteViewModel by lazy(LazyThreadSafetyMode.NONE) {
 
-        val roomManager = RoomManager.invoke(this)
-        val localSource = RoomClient(roomManager)
+        //val roomManager = RoomManager.invoke(this)
+        //val localSource = RoomClient(roomManager)
+        val localSource = RealmClient()
         //val dataManager = RetrofitMoreDataSourceManager()
         //val remoteSource = RetrofitClient(dataManager)
         val dataManager = FuelMoreDataSourceManager()
         val remoteSource = FuelClient(dataManager)
-        val repository = DataRepositoryImpl (remoteSource , localSource)
+        val repository = DataRepositoryImpl(remoteSource, localSource)
 
-        val checkIfExistInDatabase = CheckIfMovieExistInDataBase (repository)
-        val loadAllMoviesInDatabase = LoadFavouriteMovies (repository)
+        val checkIfExistInDatabase = CheckIfMovieExistInDataBase(repository)
+        val loadAllMoviesInDatabase = LoadFavouriteMovies(repository)
 
-        val favouriteAnnotateProcessor = FavouriteAnnotateProcessor (checkIfExistInDatabase , loadAllMoviesInDatabase)
+        val favouriteAnnotateProcessor =
+            FavouriteAnnotateProcessor(checkIfExistInDatabase, loadAllMoviesInDatabase)
 
         val favouriteViewModelFactory = FavouriteViewModelFactory(favouriteAnnotateProcessor)
         ViewModelProviders.of(this, favouriteViewModelFactory).get(FavouriteViewModel::class.java)
@@ -78,7 +80,7 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
         popularMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
-                MovieCoordinator.navigateToDetailScreen(this@FavouriteActivity , movieResult?.id )
+                MovieCoordinator.navigateToDetailScreen(this@FavouriteActivity, movieResult?.id)
             }
         })
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -106,11 +108,11 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
     private fun configreAdapterToRecyclerview() {
         favouriteMoviesRecyclerView?.adapter = popularMoviesAdapter
         favouriteMoviesRecyclerView?.layoutManager =
-            AutoFitGridLayoutManager(this,400)
+            AutoFitGridLayoutManager(this, 400)
     }
 
     override fun onBackPressed() {
-    this?.finish()
+        this?.finish()
     }
 
     override fun render(state: FavouriteStatus) {
@@ -142,19 +144,19 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
     private fun changeResultToMovieResponse(listOfMovies: ArrayList<MovieDetailResponse>): ArrayList<Result> {
         return listOfMovies?.map {
             Result(
-                adult = it?.adult ,
+                adult = it?.adult,
                 backdrop_path = it?.backdrop_path,
-                id =  it?.id,
-                original_language =  it?.original_language,
-                original_title =  it?.original_title,
-                overview =  it?.overview,
-                popularity =  it?.popularity,
-                poster_path =  it?.poster_path,
-                release_date =  it?.release_date,
-                title =  it?.title,
-                video =  it?.video,
-                vote_average =  it?.vote_average,
-                vote_count =  it?.vote_count
+                id = it?.id,
+                original_language = it?.original_language,
+                original_title = it?.original_title,
+                overview = it?.overview,
+                popularity = it?.popularity,
+                poster_path = it?.poster_path,
+                release_date = it?.release_date,
+                title = it?.title,
+                video = it?.video,
+                vote_average = it?.vote_average,
+                vote_count = it?.vote_count
             )
         } as ArrayList<Result>
     }
@@ -178,14 +180,14 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.navigation_menu , menu)
+        menuInflater.inflate(R.menu.navigation_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return return when (item.itemId) {
             R.id.clearFav -> {
-                Toast.makeText(this , "Clear all Favourites" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Clear all Favourites", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> false

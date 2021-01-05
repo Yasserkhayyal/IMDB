@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 
 
-@Database(entities = arrayOf(MovieDetailResponse::class), version = 5 ,exportSchema = false )
+@Database(entities = arrayOf(MovieDetailResponse::class), version =6 ,exportSchema = false )
 abstract class RoomManager : RoomDatabase() {
 
     abstract fun getMovieDao(): MovieDao

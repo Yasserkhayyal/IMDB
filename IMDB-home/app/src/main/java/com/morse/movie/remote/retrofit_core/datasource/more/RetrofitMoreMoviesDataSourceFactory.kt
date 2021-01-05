@@ -5,6 +5,6 @@ import com.morse.movie.data.entity.movieresponse.Result
 
 class RetrofitMoreMoviesDataSourceFactory(private var position : Int) : DataSource.Factory<Int , Result>() {
     override fun create(): DataSource<Int, Result> {
-        return FuelMoreMoviesDataSource(position)
+        return RetrofitMoreMoviesDataSource(position)
     }
 }

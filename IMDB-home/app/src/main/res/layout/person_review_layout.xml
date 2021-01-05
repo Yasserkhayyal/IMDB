@@ -45,7 +45,7 @@
         android:id="@+id/personNameTextView"
         />
 
-    <com.borjabravo.readmoretextview.ReadMoreTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/personNameTextView"
@@ -54,13 +54,9 @@
         tools:text="Mohamed Morse asddasdasdasdasdasdasdasdasdasda sdasdasdasdsdasdasd \n Mohamed Morse asddasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasd"
         android:textAppearance="@style/amoiriFontItalic"
         android:textColor="@android:color/white"
-        app:trimLines="4"
-        app:trimLength="980"
-        app:showTrimExpandedText="true"
-        app:trimMode="trimModeLine"
-        app:trimCollapsedText="show less"
-        app:trimExpandedText="show more"
-        app:colorClickableText="@color/colorOfBlue"
+        android:lines="3"
+        android:maxLines="3"
+        android:ellipsize="end"
         android:textSize="@dimen/_12ssp"
         android:paddingRight="@dimen/_5sdp"
         android:id="@+id/personReviewTextView"
