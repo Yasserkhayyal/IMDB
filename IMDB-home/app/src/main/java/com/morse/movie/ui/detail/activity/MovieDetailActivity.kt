@@ -151,6 +151,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                     data: com.morse.movie.data.entity.moviereviewresponse.Result?,
                     color: Int?
                 ) {
+
                 }
             })
         videoMoviesAdapter = VideoAdapter(

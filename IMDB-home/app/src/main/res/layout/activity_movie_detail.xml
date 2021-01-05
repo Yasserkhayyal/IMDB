@@ -10,7 +10,6 @@
     android:id="@+id/movieDetailRoot"
     tools:context=".ui.detail.activity.MovieDetailActivity">
 
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfPopularDetail"
         android:layout_width="match_parent"
@@ -95,6 +94,134 @@
                 android:textColor="@android:color/white"
                 android:textAppearance="@style/amoiriFontBoldItalic"
                 />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardOfPersonDetail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_350sdp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="#1C1C1C"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        android:layout_centerInParent="true"
+        tools:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_74sdp"
+                android:layout_height="@dimen/_112sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                tools:src="@drawable/me"
+                android:id="@+id/personImagePosterDetail"
+                />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:layout_width="@dimen/_37sdp"
+                android:layout_height="@dimen/_37sdp"
+                app:indicatorName="LineSpinFadeLoaderIndicator"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_centerInParent="true"
+                app:indicatorColor="@color/colorOfGreen"
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/personImageLoadingDetail"
+                android:layout_marginTop="70dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingStart="42dp"
+                android:textSize="@dimen/_12ssp"
+                android:layout_below="@id/personImagePosterDetail"
+                android:paddingEnd="42dp"
+                android:id="@+id/personCardNameDetail"
+                android:textAllCaps="false"
+                android:lines="1"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:id="@+id/personCardBioGrahyDetail"
+                android:layout_below="@id/personCardNameDetail"
+                android:lines="1"
+                android:maxLines="1"
+                android:textSize="@dimen/_12ssp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:textAllCaps="false"
+                android:paddingHorizontal="2dp"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:id="@+id/personCardPlaceOfBearth"
+                android:layout_below="@id/personCardBioGrahyDetail"
+                android:lines="1"
+                android:maxLines="1"
+                android:textSize="@dimen/_12ssp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:textAllCaps="false"
+                android:paddingHorizontal="2dp"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:id="@+id/personCardDateOfBearth"
+                android:layout_below="@id/personCardPlaceOfBearth"
+                android:lines="1"
+                android:maxLines="1"
+                android:textSize="@dimen/_12ssp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:textAllCaps="false"
+                android:paddingHorizontal="2dp"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:id="@+id/personCardGender"
+                android:layout_below="@id/personCardDateOfBearth"
+                android:lines="1"
+                android:maxLines="1"
+                android:textSize="@dimen/_12ssp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:textAllCaps="false"
+                android:paddingHorizontal="2dp"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white" />
+
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>

@@ -18,6 +18,7 @@ const val emptyImagePlaceHolder ="https://ui-avatars.com/api/?size=128?bold=true
 const val youtubeVideos = "https://www.youtube.com/watch?v=" // use Key not id
 const val youtubeThumbnailImage = "https://i3.ytimg.com/vi/"
 //-------------------------------UnUsed--------------------------------------------------------------------------------
+const val personProfile = "/person/{person_id}?api_key=$apiKey&language=en-US"
 const val popularTv = "tv/popular?api_key=$apiKey&language=en-US"
 const val topRatedTv = "tv/top_rated?api_key=$apiKey&language=en-US&page=1"
 const val inCommingTv = "tv/upcoming?api_key=$apiKey&language=en-US&page=1"
