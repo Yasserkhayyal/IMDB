@@ -7,6 +7,7 @@ import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
+import com.morse.movie.data.entity.personresponse.PersonResponse
 import io.reactivex.Observable
 
 interface RemoteInterface {
@@ -37,4 +38,5 @@ interface RemoteInterface {
 
     public fun loadVideoMoviesFromRemoteSource (movieId : Int) : Observable<MovieVideoResponse>
 
+    public fun loadUserProfileFromRemoteSource (persionId : String) : Observable<PersonResponse>
 }

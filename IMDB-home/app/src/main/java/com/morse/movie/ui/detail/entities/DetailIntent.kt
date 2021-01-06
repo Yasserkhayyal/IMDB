@@ -21,4 +21,6 @@ sealed class DetailIntent  : MviIntent{
 
     public data class RemoveMovieFromFavouriteIntent (public val movieId : Int) : DetailIntent()
 
+    public data class LoadUserProfileIntent (public val userId : String) : DetailIntent()
+
 }

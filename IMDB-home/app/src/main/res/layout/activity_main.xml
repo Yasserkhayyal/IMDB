@@ -159,21 +159,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingHorizontal="@dimen/_5sdp"
-                    android:text="What i used in this project ? ✔️\n
-• Programming Languages: Kotlin , Java \n
-• Operating Systems : Windows ✔️\n
-• Tools: Vercion Control, Android Studio ✔️\n
-• Presentation Layer Articuture Pattern: MVI ✔️\n
-• Local Layer: Room and Realm ✔️\n
-• Remote Layer: (Coroutine + Retrofit ) and (Fuel) ✔️\n
-• DI: (Dependency Inject Fundemnatl Tech - Koin - Kodien ) ❌  \n
-• Clean Architecture : true ✔️\n
-• Crash Analysis: [Flurry - Firebase Crash Analtics] ❌   \n
-• DataBinding : False [But use RxBinding] ❌   \n
-• Dilever Updates : Siren ❌  \n
-• Unit Testing : [] ❌  \n
-• UI Testing : [] ❌  \n \n
-"
+                    android:text="@string/projectInfo"
                     android:textAppearance="@style/amoiriFontItalic"
                     android:textColor="@android:color/black" />
 

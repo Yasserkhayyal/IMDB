@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isGone
@@ -23,6 +24,7 @@ import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
+import com.morse.movie.data.entity.personresponse.PersonResponse
 import com.morse.movie.data.repository.DataRepositoryImpl
 import com.morse.movie.domain.usecase.*
 import com.morse.movie.local.realm_core.RealmClient
@@ -52,6 +54,8 @@ import io.reactivex.subjects.PublishSubject
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_more_movies.*
 import kotlinx.android.synthetic.main.activity_movie_detail.*
+import kotlinx.android.synthetic.main.activity_movie_detail.detailPosterImageLoading
+import kotlinx.android.synthetic.main.person_review_layout.*
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
@@ -77,6 +81,8 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         PublishSubject.create<DetailIntent.RemoveMovieFromFavouriteIntent>()
     private var isMovieExistInFavouriteIntentSubject =
         PublishSubject.create<DetailIntent.IsMovieExistInDatabaseIntent>()
+    private var loadPersonProfileIntentSubject =
+        PublishSubject.create<DetailIntent.LoadUserProfileIntent>()
     private lateinit var compositeDisposable: CompositeDisposable
     private var isExistInFavourite: Boolean? = null
     private val detailViewModel: DetailViewModel by lazy {
@@ -95,6 +101,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         val checkIfExistInDatabase = CheckIfMovieExistInDataBase(repository)
         val addMovieToDataBase = AddMovieToFavourites(repository)
         val removeMovieFromFavourites = RemoveMovieFromFavourites(repository)
+        val loadPersonProfile = LoadUserProfile(repository)
         val detailAnnotateProcessor = DetailAnnotateProcessor(
             loadMovieDetails,
             loadMovieSimilars,
@@ -102,7 +109,8 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
             loadMovieVideos,
             addMovieToDataBase,
             removeMovieFromFavourites,
-            checkIfExistInDatabase
+            checkIfExistInDatabase ,
+            loadPersonProfile
         )
         val detailViewModelFactory = DetailViewModelFactory(detailAnnotateProcessor)
         ViewModelProviders.of(this, detailViewModelFactory).get(DetailViewModel::class.java)
@@ -127,16 +135,16 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                 currentMovieId = movieResult?.id!!
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     if (cardOfPopularDetail?.visibility == View.VISIBLE) {
-                        returnCardToOriginPosition(200)
+                        returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieCard ,200)
                         Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
                             ?.subscribeOn(AndroidSchedulers.mainThread())
                             ?.observeOn(AndroidSchedulers.mainThread())
                             ?.subscribe {
-                                animateCard(movieCard)
+                                animateCard(movieDetailRoot , cardOfPopularDetail , movieCard)
                                 bindMovieDetailToPopularCard(movieResult)
                             }?.addTo(compositeDisposable)
                     } else {
-                        animateCard(movieCard)
+                        animateCard(movieDetailRoot , cardOfPopularDetail , movieCard)
                         bindMovieDetailToPopularCard(movieResult)
                     }
                 }
@@ -152,6 +160,26 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                     color: Int?
                 ) {
 
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        if (cardOfPersonDetail?.visibility == View.VISIBLE) {
+                            returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , card!! ,200)
+                            Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
+                                ?.subscribeOn(AndroidSchedulers.mainThread())
+                                ?.observeOn(AndroidSchedulers.mainThread())
+                                ?.subscribe {
+                                    animateCard(movieDetailRoot , cardOfPersonDetail , card)
+                                    loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                                    // Call for Api
+                                }?.addTo(compositeDisposable)
+                        } else {
+                            animateCard(movieDetailRoot , cardOfPersonDetail , card!!)
+                            loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                            // Call for Api
+                        }
+                    }
+
+
                 }
             })
         videoMoviesAdapter = VideoAdapter(
@@ -166,14 +194,22 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                     data?.key?.openYoutubeVideo(this@MovieDetailActivity)
                 }
             })
+
         cardOfPopularDetail?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPosition(650)
+                returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
             }
         }
+
+        cardOfPersonDetail?.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
+            }
+        }
+
         goToDetailOfMovieDetailDetailButton?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPositionWithNavigationAction()
+                returnCardToOriginPositionWithNavigationAction(movieDetailRoot , cardOfPopularDetail , movieView)
             }
         }
         movieDetailFavouriteButton?.setOnClickListener {
@@ -229,17 +265,6 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         movieVideosPublishSubject?.onNext(DetailIntent.LoadMovieVideosIntent(movieId!!))
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPositionWithNavigationAction() {
-        android.transition.TransitionManager.beginDelayedTransition(
-            movieDetailRoot,
-            getTransform(cardOfPopularDetail, movieView, 650)
-        )
-        cardOfPopularDetail?.isGone = true
-        movieView?.isGone = false
-        navigateToDetailScreen(currentMovieId)
-    }
-
     private fun navigateToDetailScreen(movieId: Int?) {
         var detailIntent = Intent(this, MovieDetailActivity::class.java)
         detailIntent?.putExtra(MOVIE_ID_kEY, movieId)
@@ -284,6 +309,9 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         if (state?.isLoadingVideos == true) {
 
         }
+        if (state?.isUserProfileLoading == true) {
+
+        }
 
         if (state?.errorDetail != null) {
             Toast.makeText(
@@ -310,6 +338,13 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
             Toast.makeText(
                 this,
                 "Can`t load Movie Videos Because ${state?.errorVideos}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        if (state?.userPorfileError != null) {
+            Toast.makeText(
+                this,
+                "Can`t load Person Info Because ${state?.errorVideos}",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -341,6 +376,9 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         if (state?.movieVideos != null) {
             bindMovieVideosResponseToView(state?.movieVideos!!)
         }
+        if(state?.userProfile != null){
+            bindUserProfileResposneToView(state?.userProfile!!)
+        }
     }
 
     private fun makeFavouriteTheme() {
@@ -361,8 +399,14 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     override fun onBackPressed() {
         if (cardOfPopularDetail?.isGone == false) {
-            returnCardToOriginPosition(650)
-        } else {
+            returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
+        }
+
+        else if (cardOfPersonDetail?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
+        }
+
+        else {
             this?.finish()
         }
     }
@@ -371,8 +415,9 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
         navigateBackFab?.setOnClickListener {
             if (cardOfPopularDetail?.isGone == false) {
-                returnCardToOriginPosition(650)
-            } else {
+                returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
+            }
+            else {
                 this?.finish()
             }
         }
@@ -451,6 +496,48 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         }
     }
 
+    private fun bindUserProfileResposneToView (personResponse: PersonResponse){
+        if(personResponse?.profilePath == null || personResponse?.profilePath?.isEmpty() ==true){
+            Picasso.get()?.load(emptyImagePlaceHolder + personResponse?.name)?.transform(
+                RoundedCornersTransformation(20 , 10)
+            )?.into(personImagePosterDetail, object : Callback {
+                override fun onSuccess() {
+                    personImageLoadingDetail?.makeItOff()
+                }
+
+                override fun onError(e: Exception?) {
+                    personImageLoadingDetail?.makeItOff()
+                }
+
+            })
+        }
+        else{
+            Picasso.get()?.load(  imageApiPoster +personResponse?.profilePath )?.transform(
+                RoundedCornersTransformation(20 , 10)
+            )?.into(personImagePosterDetail, object : Callback {
+                override fun onSuccess() {
+                    personImageLoadingDetail?.makeItOff()
+                }
+
+                override fun onError(e: Exception?) {
+                    personImageLoadingDetail?.makeItOff()
+                }
+
+            })
+        }
+        personCardNameDetail?.setText(personResponse?.name)
+        personCardBioGrahyDetail?.setText(personResponse?.biography)
+        personCardPlaceOfBearth?.setText(personResponse?.placeOfBirth)
+        personCardDateOfBearth?.setText(personResponse?.birthday)
+        if(personResponse?.gender == 2){
+            maleImageView?.setBackgroundResource(R.drawable.selected_gender)
+        }
+        else {
+            femaleImageView?.setBackgroundResource(R.drawable.selected_gender)
+        }
+
+    }
+
     override fun collectOurIntents(): Observable<DetailIntent> {
         return Observable.merge(
             addMovieToFavouriteIntentSubject,
@@ -459,35 +546,8 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
             movieDetailSimilarPublishSubject
         )?.mergeWith(isMovieExistInFavouriteIntentSubject)
             ?.mergeWith(movieReviewsPublishSubject)
-            ?.mergeWith(movieVideosPublishSubject)!!
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun getTransform(
-        mStartView: View,
-        mEndView: View,
-        customDuration: Long
-    ): MaterialContainerTransform {
-        return MaterialContainerTransform().apply {
-            startView = mStartView
-            endView = mEndView
-            addTarget(mEndView)
-            pathMotion = MaterialArcMotion()
-            duration = customDuration
-            scrimColor = Color.TRANSPARENT
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public fun animateCard(view: View) {
-        movieView = view
-        android.transition.TransitionManager.beginDelayedTransition(
-            movieDetailRoot,
-            getTransform(view, cardOfPopularDetail, 650)
-        )
-        view?.isGone = true
-        cardOfPopularDetail?.isGone = false
-
+            ?.mergeWith(movieVideosPublishSubject)
+            ?.mergeWith(loadPersonProfileIntentSubject)!!
     }
 
     private fun bindMovieDetailToPopularCard(movie: Result) {
@@ -508,19 +568,126 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPosition(duration: Long) {
-        android.transition.TransitionManager.beginDelayedTransition(
-            movieDetailRoot,
-            getTransform(cardOfPopularDetail, movieView, duration)
-        )
-        cardOfPopularDetail?.isGone = true
-        movieView?.isGone = false
-    }
-
     override fun onStop() {
         super.onStop()
+        if (cardOfPopularDetail?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
+        }
+
+        else if (cardOfPersonDetail?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
+        }
         compositeDisposable?.dispose()
+    }
+
+//------------------------------------------------------Card Animation-----------------------------------------------
+
+//    // i opened the card and click on go details , it will close it then navigate to Screen
+//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+//    private fun returnCardToOriginPositionWithNavigationAction() {
+//        android.transition.TransitionManager.beginDelayedTransition(
+//            movieDetailRoot,
+//            getTransform(cardOfPopularDetail, movieView, 650)
+//        )
+//        cardOfPopularDetail?.isGone = true
+//        movieView?.isGone = false
+//        navigateToDetailScreen(currentMovieId)
+//    }
+//
+//    // return a transformation already < DONE >
+//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+//    private fun getTransform(
+//        mStartView: View,
+//        mEndView: View,
+//        customDuration: Long
+//    ): MaterialContainerTransform {
+//        return MaterialContainerTransform().apply {
+//            startView = mStartView
+//            endView = mEndView
+//            addTarget(mEndView)
+//            pathMotion = MaterialArcMotion()
+//            duration = customDuration
+//            scrimColor = Color.TRANSPARENT
+//        }
+//    }
+//
+//    // hide adapter item and show our Card Animation
+//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+//    public fun animateCard(view: View) {
+//        movieView = view
+//        android.transition.TransitionManager.beginDelayedTransition(
+//            movieDetailRoot,
+//            getTransform(view, cardOfPopularDetail, 650)
+//        )
+//        view?.isGone = true
+//        cardOfPopularDetail?.isGone = false
+//
+//    }
+//
+//    // close card and show item of recyclerview
+//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+//    private fun returnCardToOriginPosition(duration: Long) {
+//        android.transition.TransitionManager.beginDelayedTransition(
+//            movieDetailRoot,
+//            getTransform(cardOfPopularDetail, movieView, duration)
+//        )
+//        cardOfPopularDetail?.isGone = true
+//        movieView?.isGone = false
+//    }
+
+    //------------------------------------------- I solved it--------------------------
+
+    // i opened the card and click on go details , it will close it then navigate to Screen
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun returnCardToOriginPositionWithNavigationAction(layoutRoot : ViewGroup , card : View , adapterView : View) {
+        android.transition.TransitionManager.beginDelayedTransition(
+            layoutRoot,
+            getTransform(card, movieView, 650)
+        )
+        card?.isGone = true
+        adapterView?.isGone = false
+        navigateToDetailScreen(currentMovieId)
+    }
+
+    // return a transformation already < DONE >
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun getTransform(
+        mStartView: View,
+        mEndView: View,
+        customDuration: Long
+    ): MaterialContainerTransform {
+        return MaterialContainerTransform().apply {
+            startView = mStartView
+            endView = mEndView
+            addTarget(mEndView)
+            pathMotion = MaterialArcMotion()
+            duration = customDuration
+            scrimColor = Color.TRANSPARENT
+        }
+    }
+
+    // hide adapter item and show our Card Animation
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public fun animateCard( layoutRoot : ViewGroup , card : View , adapterView : View) {
+        movieView = adapterView
+        android.transition.TransitionManager.beginDelayedTransition(
+            layoutRoot,
+            getTransform(adapterView, card, 650)
+        )
+        adapterView?.isGone = true
+        card?.isGone = false
+
+    }
+
+    // close card and show item of recyclerview
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun returnCardToOriginPosition(layoutRoot : ViewGroup , card : View , adapterView : View , duration: Long) {
+        android.transition.TransitionManager.beginDelayedTransition(
+            layoutRoot,
+            getTransform(card, adapterView, duration)
+        )
+        card?.isGone = true
+        adapterView?.isGone = false
     }
 
 }

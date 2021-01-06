@@ -21,4 +21,6 @@ sealed class DetailAction  : MviAction {
     public data class AddMovieToFavouriteAction (public val movie: MovieDetailResponse) : DetailAction()
 
     public data class RemoveMovieFromFavouriteAction (public val movieId : Int) : DetailAction()
+
+    public data class LoadUserProfileAction (public val userId : String) : DetailAction()
 }

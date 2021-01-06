@@ -1,7 +1,10 @@
 package com.morse.movie.data.entity.personresponse
 
 
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
 
 data class PersonResponse(
     @SerializedName("adult")
@@ -33,3 +36,9 @@ data class PersonResponse(
     @SerializedName("profile_path")
     var profilePath: String? = null // /rxfWFGJm35qJb2jy0jlauhYeNgV.jpg
 )
+
+class PersonProfileResponseDeserializer : ResponseDeserializable<PersonResponse> {
+
+    override fun deserialize(content: String) =
+        Gson().fromJson<PersonResponse>(content, PersonResponse::class.java)
+}

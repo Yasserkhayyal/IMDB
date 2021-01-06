@@ -14,6 +14,8 @@ import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.moviereviewresponse.MovieReviewResponseDeserializer
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponseDeserializer
+import com.morse.movie.data.entity.personresponse.PersonProfileResponseDeserializer
+import com.morse.movie.data.entity.personresponse.PersonResponse
 import com.morse.movie.data.remote.RemoteInterface
 import com.morse.movie.remote.base.DataSourceManager
 import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
@@ -195,4 +197,18 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
             })
         }
     }  //Done
+
+    override fun loadUserProfileFromRemoteSource(persionId: String): Observable<PersonResponse> {
+        return Observable.create {
+            Fuel.get(personProfile?.replace("{person_id}" , persionId))?.responseObject(PersonProfileResponseDeserializer() , object : Handler<PersonResponse>{
+                override fun failure(error: FuelError) {
+                    it?.onError(error?.exception)
+                }
+
+                override fun success(value: PersonResponse) {
+                it?.onNext(value)
+                }
+            })
+        }
+    } //Done
 }

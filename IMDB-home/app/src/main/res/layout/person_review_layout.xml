@@ -15,6 +15,7 @@
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:id="@+id/personImageView"
         tools:src="@drawable/me"
+        android:clickable="true"
         android:layout_alignParentLeft="true"
         />
 

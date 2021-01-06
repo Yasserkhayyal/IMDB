@@ -25,10 +25,10 @@ class DetailViewModel (private val detailAnnotateProcessor: DetailAnnotateProces
 
     override fun getStatus(): Observable<DetailState> {
         return detailIntentHandler
-            ?.distinctUntilChanged()
             ?.map { convertOurIntentToActions(it) }
             ?.compose(detailAnnotateProcessor?.detailAnnotateProcesser)
-            ?.scan(DetailState(),detailReducer)!!
+            ?.scan(DetailState(),detailReducer)
+            ?.distinctUntilChanged()!!
     }
 
     private fun handleIntentsAndReturnStatus(): Observable<DetailState> {
@@ -59,6 +59,9 @@ class DetailViewModel (private val detailAnnotateProcessor: DetailAnnotateProces
             }
             is DetailIntent.IsMovieExistInDatabaseIntent -> {
                 return DetailAction.IsMovieExistInDatabaseAction(intent?.movieId)
+            }
+            is DetailIntent.LoadUserProfileIntent -> {
+                return DetailAction.LoadUserProfileAction(intent?.userId)
             }
         }
     }
@@ -161,6 +164,20 @@ class DetailViewModel (private val detailAnnotateProcessor: DetailAnnotateProces
                         is DetailResult.IsMovieExistInFavouriteResult.Success -> {oldState?.copy(isExistInFavouriteLoading = false , errorExistInFavourite = null , isExist = newResult?.data)}
 
                         is DetailResult.IsMovieExistInFavouriteResult.Error -> {oldState?.copy(isExistInFavouriteLoading = false , errorExistInFavourite = newResult?.error?.localizedMessage ,isExist = null)}
+
+                    }
+
+                }
+
+                is DetailResult.UserProfileResult -> {
+
+                    when (newResult) {
+
+                        is DetailResult.UserProfileResult.Loading -> {oldState?.copy(isUserProfileLoading = true)}
+
+                        is DetailResult.UserProfileResult.Success -> {oldState?.copy(isUserProfileLoading = false , userPorfileError = null , userProfile = newResult?.data)}
+
+                        is DetailResult.UserProfileResult.Error -> {oldState?.copy(isUserProfileLoading = false , userPorfileError = newResult?.error?.localizedMessage ,userProfile = null)}
 
                     }
 

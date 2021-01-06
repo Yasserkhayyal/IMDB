@@ -109,7 +109,7 @@ class ReviewAdapter(
                 })
             }
 
-            reviewCard?.setOnClickListener {
+            personImageView?.setOnClickListener {
                 listener?.onItemPressed(personImageView , result)
             }
 

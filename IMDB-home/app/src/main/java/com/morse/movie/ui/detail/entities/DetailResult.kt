@@ -5,6 +5,7 @@ import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
+import com.morse.movie.data.entity.personresponse.PersonResponse
 import com.morse.movie.ui.favourite.entities.FavouriteResult
 
 sealed class DetailResult : MviResult {
@@ -77,4 +78,13 @@ sealed class DetailResult : MviResult {
         data class Success ( public val data : MovieVideoResponse) : MovieVideosResult()
     }
 
+    sealed class UserProfileResult : DetailResult() {
+
+        object Loading : UserProfileResult()
+
+        data class Error ( public val error : Throwable) : UserProfileResult()
+
+        data class Success ( public val data : PersonResponse) : UserProfileResult()
+
+    }
 }

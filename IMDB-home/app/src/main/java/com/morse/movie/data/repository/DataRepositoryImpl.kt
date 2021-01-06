@@ -8,6 +8,7 @@ import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
+import com.morse.movie.data.entity.personresponse.PersonResponse
 import com.morse.movie.data.local.LocalInterface
 import com.morse.movie.data.remote.RemoteInterface
 import io.reactivex.Observable
@@ -80,5 +81,9 @@ class DataRepositoryImpl(private val remoteInterface: RemoteInterface , private 
 
     override fun checkIfMovieExistInDataBase(movieId: Int): Observable<Boolean> {
         return localeInterface?.checkIfMovieExistInDataBase(movieId)
+    }
+
+    override fun loadUserProfile(persionId: String): Observable<PersonResponse> {
+        return remoteInterface?.loadUserProfileFromRemoteSource(persionId)
     }
 }

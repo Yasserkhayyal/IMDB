@@ -15,7 +15,8 @@ class DetailAnnotateProcessor(
     private val loadMovieVideos: LoadMovieVideos ,
     private val addMovieToFavourites: AddMovieToFavourites ,
     private val removeMovieFromFavourites: RemoveMovieFromFavourites ,
-    private val isMovieExistInDataBase : CheckIfMovieExistInDataBase
+    private val isMovieExistInDataBase : CheckIfMovieExistInDataBase ,
+    private val loadPersonProfile : LoadUserProfile
 ) {
 
 
@@ -139,6 +140,25 @@ class DetailAnnotateProcessor(
 
         }
 
+    private val loadProfileUserAnnotateProcessor =
+        ObservableTransformer<DetailAction.LoadUserProfileAction, DetailResult.UserProfileResult> {
+
+            it?.flatMap {
+                loadPersonProfile?.execute(it?.userId)
+                    ?.map {
+                        DetailResult.UserProfileResult.Success(it)
+                    }
+                    ?.cast(DetailResult.UserProfileResult::class.java)
+                    ?.onErrorReturn {
+                        DetailResult.UserProfileResult.Error(it)
+                    }
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribeOn(Schedulers.computation())
+                    ?.startWith(DetailResult.UserProfileResult.Loading)
+            }
+
+        }
+
     public val detailAnnotateProcesser = ObservableTransformer<DetailAction, DetailResult> {
         it?.publish {
             Observable.merge(
@@ -159,6 +179,9 @@ class DetailAnnotateProcessor(
             )?.mergeWith(
                 it?.ofType(DetailAction.LoadMovieVideosAction::class.java)
                     .compose(loadMovieVideosAnnotateProcessor)
+            )?.mergeWith(
+                it?.ofType(DetailAction.LoadUserProfileAction::class.java)
+                    .compose(loadProfileUserAnnotateProcessor)
             )
         }
     }

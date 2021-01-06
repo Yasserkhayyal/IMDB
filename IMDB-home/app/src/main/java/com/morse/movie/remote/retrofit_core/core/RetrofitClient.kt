@@ -7,6 +7,7 @@ import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.entity.moviereviewresponse.MovieReview
 import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
+import com.morse.movie.data.entity.personresponse.PersonResponse
 import com.morse.movie.data.remote.RemoteInterface
 import com.morse.movie.remote.base.DataSourceManager
 import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
@@ -204,4 +205,19 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
         }
     }
 
+    override fun loadUserProfileFromRemoteSource(persionId: String): Observable<PersonResponse> {
+        return Observable.create<PersonResponse> {
+
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    var result = retrofitMoviesApi
+                        .getPersonProfile(persionId)?.await()
+                    it?.onNext(result)
+                } catch (e: Exception) {
+                    it?.onError(e)
+                }
+            }
+
+        }
+    }
 }
