@@ -19,7 +19,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfPopular"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_350sdp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/_20sdp"
@@ -32,7 +32,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
@@ -59,7 +59,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/popularCardName"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_38sdp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/popularImagePoster"
                 android:ellipsize="end"
                 android:gravity="center"
@@ -75,13 +75,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/popularCardDetail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/popularCardName"
                 android:ellipsize="end"
                 android:gravity="center|top"
                 android:lineSpacingExtra="2dp"
-                android:lines="5"
-                android:maxLines="5"
                 android:paddingHorizontal="2dp"
                 android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
@@ -91,8 +89,8 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/goToDetailOfMovieDetailButton"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/popularCardDetail"
                 android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:text="Go To Detail"
                 android:textAppearance="@style/amoiriFontBoldItalic"

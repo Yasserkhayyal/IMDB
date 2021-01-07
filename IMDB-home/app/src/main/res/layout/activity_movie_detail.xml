@@ -13,7 +13,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfPopularDetail"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_350sdp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:visibility="gone"
         android:layout_marginHorizontal="@dimen/_20sdp"
@@ -26,7 +26,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="@dimen/_74sdp"
@@ -53,7 +53,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_38sdp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingStart="42dp"
                 android:textSize="@dimen/_12ssp"
@@ -70,12 +70,10 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center|top"
                 android:id="@+id/popularCardDetailDetail"
                 android:layout_below="@id/popularCardNameDetail"
-                android:lines="5"
-                android:maxLines="5"
                 android:textSize="@dimen/_12ssp"
                 android:ellipsize="end"
                 android:lineSpacingExtra="2dp"
@@ -87,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/detail_card_bottom_raduis_bg"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@id/popularCardDetailDetail"
                 android:text="Go To Detail"
                 android:textSize="@dimen/_12ssp"
                 android:id="@+id/goToDetailOfMovieDetailDetailButton"
