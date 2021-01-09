@@ -345,7 +345,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
             animateCardOfProfile(myProfile)
         }?.addTo(compositeDisposable)
 
-        RxView.clicks(meCard)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
+        RxView.clicks(meBody)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
 
             returnCardToOriginPositionOfProfile(650)
 
