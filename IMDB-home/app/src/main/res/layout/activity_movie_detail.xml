@@ -1,97 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movieDetailRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1C1C"
-    android:id="@+id/movieDetailRoot"
     tools:context=".ui.detail.activity.MovieDetailActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardOfPopularDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="30dp"
         android:visibility="gone"
-        android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_gravity="center"
         app:cardBackgroundColor="#1C1C1C"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
-        android:layout_centerInParent="true"
         tools:visibility="invisible">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
+                android:id="@+id/popularImagePosterDetail"
                 android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_112sdp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="20dp"
-                android:id="@+id/popularImagePosterDetail"
-                />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp" />
 
             <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/popularImageLoadingDetail"
+                style="@style/AVLoadingIndicatorView"
                 android:layout_width="@dimen/_37sdp"
                 android:layout_height="@dimen/_37sdp"
-                app:indicatorName="LineSpinFadeLoaderIndicator"
-                style="@style/AVLoadingIndicatorView"
-                android:layout_centerInParent="true"
-                app:indicatorColor="@color/colorOfGreen"
-                android:visibility="visible"
                 android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/popularImageLoadingDetail"
                 android:layout_marginTop="80dp"
-                />
+                android:visibility="visible"
+                app:indicatorColor="@color/colorOfGreen"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/popularCardNameDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingStart="42dp"
-                android:textSize="@dimen/_12ssp"
                 android:layout_below="@id/popularImagePosterDetail"
-                android:paddingEnd="42dp"
-                android:id="@+id/popularCardNameDetail"
-                android:textAllCaps="false"
+                android:ellipsize="end"
+                android:gravity="center"
                 android:lines="1"
                 android:maxLines="1"
-                android:ellipsize="end"
+                android:paddingStart="42dp"
+                android:paddingEnd="42dp"
+                android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
                 android:textColor="@android:color/white"
-                />
+                android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/popularCardDetailDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|top"
-                android:id="@+id/popularCardDetailDetail"
                 android:layout_below="@id/popularCardNameDetail"
-                android:textSize="@dimen/_12ssp"
                 android:ellipsize="end"
+                android:gravity="center|top"
                 android:lineSpacingExtra="2dp"
-                android:textAllCaps="false"
                 android:paddingHorizontal="2dp"
+                android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12ssp" />
+
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goToDetailOfMovieDetailDetailButton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:layout_below="@id/popularCardDetailDetail"
+                android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:text="Go To Detail"
-                android:textSize="@dimen/_12ssp"
-                android:id="@+id/goToDetailOfMovieDetailDetailButton"
-                android:textColor="@android:color/white"
                 android:textAppearance="@style/amoiriFontBoldItalic"
-                />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12ssp" />
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
@@ -100,14 +97,14 @@
         android:id="@+id/cardOfPersonDetail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_350sdp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="30dp"
         android:visibility="gone"
-        android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_gravity="center"
         app:cardBackgroundColor="#1C1C1C"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
-        android:layout_centerInParent="true"
         tools:visibility="invisible">
 
         <RelativeLayout
@@ -116,120 +113,114 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/personImagePosterDetail"
                 android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_112sdp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                tools:src="@drawable/me"
-                android:id="@+id/personImagePosterDetail"
-                />
+                tools:src="@drawable/me" />
 
             <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/personImageLoadingDetail"
+                style="@style/AVLoadingIndicatorView"
                 android:layout_width="@dimen/_37sdp"
                 android:layout_height="@dimen/_37sdp"
-                app:indicatorName="LineSpinFadeLoaderIndicator"
-                style="@style/AVLoadingIndicatorView"
-                android:layout_centerInParent="true"
-                app:indicatorColor="@color/colorOfGreen"
-                android:visibility="visible"
                 android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/personImageLoadingDetail"
                 android:layout_marginTop="70dp"
-                />
+                android:visibility="visible"
+                app:indicatorColor="@color/colorOfGreen"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/personCardNameDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingStart="42dp"
-                android:textSize="@dimen/_12ssp"
                 android:layout_below="@id/personImagePosterDetail"
-                android:paddingEnd="42dp"
-                android:id="@+id/personCardNameDetail"
-                android:textAllCaps="false"
+                android:ellipsize="end"
+                android:gravity="center"
                 android:lines="1"
                 android:maxLines="1"
-                android:ellipsize="end"
+                android:paddingStart="42dp"
+                android:paddingEnd="42dp"
+                android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
                 android:textColor="@android:color/white"
-                />
+                android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/personCardBioGrahyDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|top"
-                android:id="@+id/personCardBioGrahyDetail"
                 android:layout_below="@id/personCardNameDetail"
+                android:ellipsize="end"
+                android:gravity="center|top"
+                android:lineSpacingExtra="2dp"
                 android:lines="3"
                 android:maxLines="3"
-                android:textSize="@dimen/_12ssp"
-                android:ellipsize="end"
-                android:lineSpacingExtra="2dp"
-                android:textAllCaps="false"
                 android:paddingHorizontal="2dp"
+                android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|top"
                 android:id="@+id/personCardPlaceOfBearth"
-                android:layout_below="@id/personCardBioGrahyDetail"
-                android:lines="1"
-                android:maxLines="1"
-                android:textSize="@dimen/_12ssp"
-                android:ellipsize="end"
-                android:lineSpacingExtra="2dp"
-                android:textAllCaps="false"
-                android:paddingHorizontal="2dp"
-                android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white" />
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/personCardBioGrahyDetail"
+                android:ellipsize="end"
                 android:gravity="center|top"
-                android:id="@+id/personCardDateOfBearth"
-                android:layout_below="@id/personCardPlaceOfBearth"
+                android:lineSpacingExtra="2dp"
                 android:lines="1"
                 android:maxLines="1"
-                android:textSize="@dimen/_12ssp"
-                android:ellipsize="end"
-                android:lineSpacingExtra="2dp"
-                android:textAllCaps="false"
                 android:paddingHorizontal="2dp"
+                android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/personCardDateOfBearth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/personCardPlaceOfBearth"
+                android:ellipsize="end"
+                android:gravity="center|top"
+                android:lineSpacingExtra="2dp"
+                android:lines="1"
+                android:maxLines="1"
+                android:paddingHorizontal="2dp"
+                android:textAllCaps="false"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12ssp" />
 
             <LinearLayout
+                android:id="@+id/personCardGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/personCardGender"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:layout_below="@id/personCardDateOfBearth"
-               >
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_male"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
                     android:id="@+id/maleImageView"
-                    android:scaleType="centerInside"
-                    />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_female"
                     android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:id="@+id/femaleImageView"
                     android:scaleType="centerInside"
-                    />
+                    android:src="@drawable/ic_male" />
+
+                <ImageView
+                    android:id="@+id/femaleImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_female" />
 
             </LinearLayout>
 
@@ -241,101 +232,110 @@
         android:id="@+id/cardOfDeleteMovieFromFavourite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_centerInParent="true"
         android:layout_gravity="bottom"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:visibility="gone"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
-        android:layout_centerInParent="true"
         tools:visibility="invisible">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <ImageView
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:src="@drawable/me"
             android:background="@android:color/transparent"
-            android:id="@+id/movieDeletePoster"
-            android:elevation="@dimen/_4sdp"
-            android:layout_centerHorizontal="true"/>
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:background="@drawable/delete_movie_from_favourite_bg"
-             android:layout_below="@id/movieDeletePoster"
-             android:layout_marginTop="@dimen/_minus40sdp"
-             >
+            android:orientation="vertical">
 
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Delete Alert!!"
-                 android:layout_marginTop="@dimen/_50sdp"
-                 android:layout_centerHorizontal="true"
-                 android:textAppearance="@style/amoiriFontBold"
-                 android:id="@+id/alertTitle"
-                 android:textColor="@android:color/black"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/circule_background"
+                android:elevation="@dimen/_4sdp"
                  />
 
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_below="@id/alertTitle"
-                 android:layout_centerHorizontal="true"
-                 android:text="Are you sure that you want to remove Movie from DB ?"
-                 android:textAppearance="@style/amoiriFontBoldItalic"
-                 android:layout_marginHorizontal="@dimen/_5sdp"
-                 android:textSize="@dimen/_18ssp"
-                 android:gravity="center"
-                 android:id="@+id/alertBody"
-                 />
+            <ImageView
+                android:id="@+id/movieDeletePoster"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circule_background"
+                android:elevation="@dimen/_4sdp"
+                android:src="@drawable/me" />
 
-             <Button
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_below="@id/alertBody"
-                 android:background="@android:color/transparent"
-                 android:elevation="0dp"
-                 android:text="Cancel"
-                 android:textColor="@color/colorOfRed"
-                 android:textAppearance="@style/amoiriFontBoldItalic"
-                 android:layout_alignParentLeft="true"
-                 android:layout_marginLeft="@dimen/_10sdp"
-                 android:layout_marginBottom="@dimen/_20sdp"
-                 android:id="@+id/cancelDeletButton"
-                 />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movieDeletePoster"
+                android:layout_marginTop="@dimen/_minus40sdp"
+                android:background="@drawable/delete_movie_from_favourite_bg">
 
-             <Button
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_below="@id/alertBody"
-                 android:background="@android:color/transparent"
-                 android:elevation="0dp"
-                 android:text="Delete Now"
-                 android:layout_marginBottom="@dimen/_20sdp"
-                 android:textColor="@color/colorOfRed"
-                 android:textAppearance="@style/amoiriFontBoldItalic"
-                 android:layout_alignParentRight="true"
-                 android:layout_marginRight="@dimen/_10sdp"
-                 android:id="@+id/confirmDeletButton"
-                 />
+                <TextView
+                    android:id="@+id/alertTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:text="Delete Alert!!"
+                    android:textAppearance="@style/amoiriFontBold"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_14ssp" />
 
-         </RelativeLayout>
+                <TextView
+                    android:id="@+id/alertBody"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/alertTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:text="Are you sure for removeing movie from DB ?"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textSize="@dimen/_14ssp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/cancelDeletButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/alertBody"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp"
+                    android:text="Cancel"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textColor="@color/colorOfRed" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/confirmDeletButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/alertBody"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp"
+                    android:text="Delete Now"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textColor="@color/colorOfRed" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/movieDetailScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1C1C1C"
-        android:id="@+id/movieDetailScrollView">
+        android:background="#1C1C1C">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -343,133 +343,125 @@
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/navigateBackFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fabSize="mini"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/_5sdp"
-                app:backgroundTint="@color/colorOfCard"
-                android:id="@+id/navigateBackFab"
-                app:tint="@android:color/white"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:backgroundTint="@color/colorOfCard"
                 android:src="@drawable/ic_baseline_keyboard_backspace_24"
-                />
+                app:backgroundTint="@color/colorOfCard"
+                app:fabSize="mini"
+                app:tint="@android:color/white" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_190sdp"
                 android:id="@+id/movieDetailBackgroundImageView"
-                android:layout_alignParentTop="true"
-                tools:src="@drawable/b"
-                android:scaleType="fitXY"
-                />
-
-            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_190sdp"
-                android:id="@+id/movieDetailBackgroundIngrediantImageView"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/movie_detail_background_gradient"
-                />
+                android:scaleType="fitXY"
+                tools:src="@drawable/b" />
+
+            <ImageView
+                android:id="@+id/movieDetailBackgroundIngrediantImageView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_190sdp"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/movie_detail_background_gradient" />
 
             <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/detailBackgroundImageLoading"
+                style="@style/AVLoadingIndicatorView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:indicatorName="LineSpinFadeLoaderIndicator"
-                style="@style/AVLoadingIndicatorView"
-                app:indicatorColor="@color/colorOfGreen"
-                android:visibility="visible"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/detailBackgroundImageLoading"
                 android:layout_marginTop="@dimen/_70sdp"
-                />
+                android:visibility="visible"
+                app:indicatorColor="@color/colorOfGreen"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
 
             <ImageView
+                android:id="@+id/movieDetailPosterImageView"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_160sdp"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/_115sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_115sdp"
                 android:elevation="4dp"
-                tools:src="@drawable/a"
-                android:id="@+id/movieDetailPosterImageView"
-                />
+                tools:src="@drawable/a" />
 
             <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/detailPosterImageLoading"
+                style="@style/AVLoadingIndicatorView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:indicatorName="LineSpinFadeLoaderIndicator"
-                style="@style/AVLoadingIndicatorView"
-                app:indicatorColor="@color/colorOfGreen"
-                android:visibility="visible"
-                android:elevation="4dp"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/_40sdp"
-                android:id="@+id/detailPosterImageLoading"
                 android:layout_marginTop="@dimen/_150sdp"
-                />
+                android:elevation="4dp"
+                android:visibility="visible"
+                app:indicatorColor="@color/colorOfGreen"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
 
             <TextView
+                android:id="@+id/movieDetailTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
-                android:maxLines="1"
-                android:ellipsize="end"
                 android:layout_below="@id/movieDetailBackgroundImageView"
-                android:layout_toRightOf="@id/movieDetailPosterImageView"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                tools:text="Mohamed Morse Morse El Sayed Morse"
-                android:textColor="@android:color/white"
+                android:layout_toRightOf="@id/movieDetailPosterImageView"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
                 android:textAppearance="@style/amoiriFontBoldItalic"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/_15sdp"
-                android:id="@+id/movieDetailTitle"
-                />
+                tools:text="Mohamed Morse Morse El Sayed Morse" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_below="@id/movieDetailTitle"
-                android:gravity="center"
-                android:layout_toRightOf="@id/movieDetailPosterImageView"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                >
+                android:layout_toRightOf="@id/movieDetailPosterImageView"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/movieDetailCategoryTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/movie_category_drawable"
-                    android:text="Action"
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/_5sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"
                     android:elevation="4dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/_20sdp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="Action"
                     android:textAppearance="@style/amoiriFontRegular"
-                    android:textSize="@dimen/_9ssp"
+                    android:textColor="@android:color/white"
 
-                    android:id="@+id/movieDetailCategoryTextView"
+                    android:textSize="@dimen/_9ssp"
 
                     />
 
                 <TextView
+                    android:id="@+id/movieLanguageTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_9ssp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:background="@drawable/language_bg"
-                    android:textColor="@color/colorOfGray"
-                    android:text="EN"
                     android:gravity="center"
+                    android:text="EN"
                     android:textAppearance="@style/amoiriFontRegular"
-                    android:id="@+id/movieLanguageTextView"
+                    android:textColor="@color/colorOfGray"
+                    android:textSize="@dimen/_9ssp"
 
                     />
 
@@ -480,232 +472,217 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/movieDetailPosterImageView"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:gravity="center"
-                android:textColor="@android:color/white"
                 android:textAppearance="@style/amoiriFontBoldItalic"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/_14ssp"
-                tools:text="Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse"
-                />
+                tools:text="Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse Morse" />
 
             <LinearLayout
+                android:id="@+id/listOfActions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/movieDetailDescribtion"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:id="@+id/listOfActions"
-                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_centerHorizontal="true">
+                android:orientation="horizontal">
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/movieDetailWebsiteButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorOfBlue"
 
-                    app:icon="@drawable/ic_baseline_remove_red_eye_24"
-                    android:textColor="@android:color/white"
-                    android:textAppearance="@style/amoiriFontBoldItalic"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    app:iconTint="@android:color/white"
-                    android:ellipsize="marquee"
                     android:layout_below="@id/movieDetailDescribtion"
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:id="@+id/movieDetailWebsiteButton"
-                    />
+                    android:backgroundTint="@color/colorOfBlue"
+                    android:ellipsize="marquee"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textColor="@android:color/white"
+                    app:icon="@drawable/ic_baseline_remove_red_eye_24"
+                    app:iconTint="@android:color/white" />
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/movieDetailFavouriteButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorOfRed"
-                    app:iconTint="@android:color/white"
-                    android:ellipsize="marquee"
-                    app:icon="@drawable/ic_baseline_favorite_24"
-                    android:textColor="@android:color/white"
-                    android:textAppearance="@style/amoiriFontBoldItalic"
-                    android:paddingHorizontal="@dimen/_10sdp"
                     android:layout_below="@id/movieDetailDescribtion"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:id="@+id/movieDetailFavouriteButton"
-                    />
+                    android:backgroundTint="@color/colorOfRed"
+                    android:ellipsize="marquee"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textColor="@android:color/white"
+                    app:icon="@drawable/ic_baseline_favorite_24"
+                    app:iconTint="@android:color/white" />
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/similerTitleHeaderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/listOfActions"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:text="Similiar"
                 android:textAppearance="@style/amoiriFontBoldItalic"
-                android:textSize="@dimen/_13ssp"
                 android:textColor="@android:color/white"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:id="@+id/similerTitleHeaderTextView"
-                />
+                android:textSize="@dimen/_13ssp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/similarMovieDiscreteView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/similerTitleHeaderTextView"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:id="@+id/similarMovieDiscreteView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
-                />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <RelativeLayout
+                android:id="@+id/emptySimilarContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/similerTitleHeaderTextView"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:id="@+id/emptySimilarContainer"
                 android:visibility="invisible"
-                tools:visibility="visible"
-                android:layout_marginHorizontal="@dimen/_10sdp">
+                tools:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/emptyBoxImageView"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_box"
-                    android:id="@+id/emptyBoxImageView"
-                    />
+                    android:src="@drawable/ic_box" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/emptyBoxImageView"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="No Similar Movies for it"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
+                    android:text="No Similar Movies for it"
                     android:textAppearance="@style/amoiriFontBoldItalic"
-                    />
+                    android:textColor="@android:color/white" />
 
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/reviewTitleHeaderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/similarMovieDiscreteView"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="Reviews"
                 android:textAppearance="@style/amoiriFontBoldItalic"
-                android:textSize="@dimen/_13ssp"
                 android:textColor="@android:color/white"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:id="@+id/reviewTitleHeaderTextView"
-                />
+                android:textSize="@dimen/_13ssp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/peopleReviewMovieDiscreteView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reviewTitleHeaderTextView"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                tools:listitem="@layout/person_review_layout"
-                tools:itemCount="3"
-                android:id="@+id/peopleReviewMovieDiscreteView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
-                />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/person_review_layout" />
 
             <RelativeLayout
+                android:id="@+id/emptyReviewContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reviewTitleHeaderTextView"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:id="@+id/emptyReviewContainer"
                 android:visibility="invisible"
-                tools:visibility="visible"
-                android:layout_marginHorizontal="@dimen/_10sdp">
+                tools:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/emptyReviewBoxImageView"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_box"
-                    android:id="@+id/emptyReviewBoxImageView"
-                    />
+                    android:src="@drawable/ic_box" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/emptyReviewBoxImageView"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="No Reviews for this Movie"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
+                    android:text="No Reviews for this Movie"
                     android:textAppearance="@style/amoiriFontBoldItalic"
-                    />
+                    android:textColor="@android:color/white" />
 
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/videosTitleHeaderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/peopleReviewMovieDiscreteView"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="Videos"
                 android:textAppearance="@style/amoiriFontBoldItalic"
-                android:textSize="@dimen/_13ssp"
                 android:textColor="@android:color/white"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:id="@+id/videosTitleHeaderTextView"
-                />
+                android:textSize="@dimen/_13ssp" />
 
             <com.yarolegovich.discretescrollview.DiscreteScrollView
+                android:id="@+id/videosDiscreteView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/videosTitleHeaderTextView"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                tools:listitem="@layout/movie_video_layout"
-                tools:itemCount="3"
-                android:id="@+id/videosDiscreteView"
                 android:orientation="horizontal"
-                />
+                tools:itemCount="3"
+                tools:listitem="@layout/movie_video_layout" />
 
             <RelativeLayout
+                android:id="@+id/emptyVideosContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/videosTitleHeaderTextView"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:id="@+id/emptyVideosContainer"
                 android:visibility="invisible"
-                tools:visibility="visible"
-                android:layout_marginHorizontal="@dimen/_10sdp">
+                tools:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/emptyVideosBoxImageView"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_box"
-                    android:id="@+id/emptyVideosBoxImageView"
-                    />
+                    android:src="@drawable/ic_box" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/emptyVideosBoxImageView"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="No Reviews for this Movie"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
+                    android:text="No Reviews for this Movie"
                     android:textAppearance="@style/amoiriFontBoldItalic"
-                    />
+                    android:textColor="@android:color/white" />
 
             </RelativeLayout>
 

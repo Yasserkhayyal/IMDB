@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.morse.movie.R
@@ -206,7 +208,37 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                 returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
             }
         }
-
+        cardOfDeleteMovieFromFavourite?.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
+            }
+        }
+        cancelDeletButton?.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
+            }
+        }
+        confirmDeletButton?.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                returnCardToOriginPosition(
+                    movieDetailRoot,
+                    cardOfDeleteMovieFromFavourite,
+                    movieDetailFavouriteButton,
+                    650
+                )
+                makeFavouriteTheme()
+                MovieCoordinator.openDeleteSnackbar(
+                    movieDetailRoot,
+                    movieDetailResponse?.original_title
+                )
+                removeMovieFromFavouriteIntentSubject?.onNext(
+                    DetailIntent.RemoveMovieFromFavouriteIntent(
+                        movieDetailResponse?.id!!
+                    )
+                )
+                isExistInFavourite = false
+            }
+        }
         goToDetailOfMovieDetailDetailButton?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 returnCardToOriginPositionWithNavigationAction(movieDetailRoot , cardOfPopularDetail , movieView)
@@ -225,18 +257,30 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                     )
                 )
                 isExistInFavourite = true
-            } else {
-                makeFavouriteTheme()
-                MovieCoordinator.openDeleteSnackbar(
-                    movieDetailRoot,
-                    movieDetailResponse?.original_title
-                )
-                removeMovieFromFavouriteIntentSubject?.onNext(
-                    DetailIntent.RemoveMovieFromFavouriteIntent(
-                        movieDetailResponse?.id!!
-                    )
-                )
-                isExistInFavourite = false
+            }
+            else {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    if (cardOfDeleteMovieFromFavourite?.visibility == View.VISIBLE) {
+                        Glide.with(this)?.load( imageApiPoster + movieDetailResponse?.poster_path)?.circleCrop()?.into(movieDeletePoster)
+                        returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton!! ,200)
+                        Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
+                            ?.subscribeOn(AndroidSchedulers.mainThread())
+                            ?.observeOn(AndroidSchedulers.mainThread())
+                            ?.subscribe {
+                                animateCard(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton)
+                                //loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                                // Call for Api
+                            }?.addTo(compositeDisposable)
+                    } else {
+                        animateCard(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton!!)
+                        Glide.with(this)?.load( imageApiPoster + movieDetailResponse?.poster_path)
+                            ?.circleCrop()
+                            ?.into(movieDeletePoster)
+                        //loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                        // Call for Api
+                    }
+                }
+
             }
         }
         compositeDisposable = CompositeDisposable()
@@ -404,6 +448,10 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
         else if (cardOfPersonDetail?.isGone == false) {
             returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
+        }
+
+        else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
         }
 
         else {
@@ -576,6 +624,9 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
         else if (cardOfPersonDetail?.isGone == false) {
             returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
+        }
+        else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
         }
         compositeDisposable?.dispose()
     }
