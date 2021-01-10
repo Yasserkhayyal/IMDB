@@ -37,6 +37,10 @@ class FavouriteViewModel(private val favouriteAnnotateProcessor: FavouriteAnnota
                 return FavouriteActions.ChechIfMovieAlreadyExistAction(intent?.movieId)
             }
 
+            is FavouriteIntent.RemoveAllMoviesListIntent -> {
+                return FavouriteActions.RemoveAllMoviesListAction
+            }
+
         }
     }
 
@@ -59,9 +63,9 @@ class FavouriteViewModel(private val favouriteAnnotateProcessor: FavouriteAnnota
 
                         is FavouriteResult.LoadFavouriteMoviesResult.Loading -> { oldState?.copy(isSelectLoading = true)}
 
-                        is FavouriteResult.LoadFavouriteMoviesResult.Success -> {oldState?.copy( isSelectLoading = false , error = null , selectedData =  newResult?.data)}
+                        is FavouriteResult.LoadFavouriteMoviesResult.Success -> {oldState?.copy( isSelectLoading = false , selectAllMoviesError = null , selectedData =  newResult?.data , isDeletedFinished = null)}
 
-                        is FavouriteResult.LoadFavouriteMoviesResult.Error -> {oldState?.copy( isSelectLoading = false , selectedData = null , error = newResult?.error )}
+                        is FavouriteResult.LoadFavouriteMoviesResult.Error -> {oldState?.copy( isSelectLoading = false , selectedData = null , selectAllMoviesError = newResult?.error )}
 
                     }
 
@@ -73,9 +77,29 @@ class FavouriteViewModel(private val favouriteAnnotateProcessor: FavouriteAnnota
 
                         is FavouriteResult.MovieExistanceResult.Loading -> {oldState?.copy(isSelectLoading = true)}
 
-                        is FavouriteResult.MovieExistanceResult.Success -> {oldState?.copy(isSelectLoading = false , error = null )}
+                        is FavouriteResult.MovieExistanceResult.Success -> {oldState?.copy(isSelectLoading = false , selectAllMoviesError = null  , isDeletedFinished = null )}
 
-                        is FavouriteResult.MovieExistanceResult.Error -> {oldState?.copy(isSelectLoading = false , error = newResult?.error )}
+                        is FavouriteResult.MovieExistanceResult.Error -> {oldState?.copy(isSelectLoading = false , selectAllMoviesError = newResult?.error )}
+
+                    }
+
+                }
+
+                is FavouriteResult.RemoveAllMoviesResult -> {
+
+                    when (newResult) {
+
+                        is FavouriteResult.RemoveAllMoviesResult.Loading -> {
+                            oldState?.copy(isDeleteLoading = true , deleteAllMoviesError = null , isDeletedFinished = null)
+                        }
+
+                        is FavouriteResult.RemoveAllMoviesResult.Error   -> {
+                            oldState?.copy(isDeleteLoading = false , deleteAllMoviesError = newResult?.error , isDeletedFinished = null)
+                        }
+
+                        is FavouriteResult.RemoveAllMoviesResult.Success -> {
+                            oldState?.copy(isDeleteLoading = true , deleteAllMoviesError = null , isDeletedFinished = newResult?.data , selectedData = null)
+                        }
 
                     }
 

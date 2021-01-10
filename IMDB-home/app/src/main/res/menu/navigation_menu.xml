@@ -4,7 +4,7 @@
     <item android:id="@+id/clearFav"
         android:title="Clear"
         android:icon="@drawable/ic_baseline_clear_all_24"
-        app:showAsAction="ifRoom"
-        ></item>
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.AppCompatImageButton"></item>
 
 </menu>

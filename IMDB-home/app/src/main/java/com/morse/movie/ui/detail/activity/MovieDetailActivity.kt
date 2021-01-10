@@ -88,9 +88,9 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     private lateinit var compositeDisposable: CompositeDisposable
     private var isExistInFavourite: Boolean? = null
     private val detailViewModel: DetailViewModel by lazy {
-//        val roomManager = RoomManager.invoke(this)
-//        val localSource = RoomClient(roomManager)
-        val localSource = RealmClient()
+        val roomManager = RoomManager.invoke(this)
+        val localSource = RoomClient(roomManager)
+//        val localSource = RealmClient()
         val dataManager = RetrofitMoreDataSourceManager()
         val remoteSource = RetrofitClient(dataManager)
 //        val dataManager = FuelMoreDataSourceManager()
@@ -631,64 +631,6 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         compositeDisposable?.dispose()
     }
 
-//------------------------------------------------------Card Animation-----------------------------------------------
-
-//    // i opened the card and click on go details , it will close it then navigate to Screen
-//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-//    private fun returnCardToOriginPositionWithNavigationAction() {
-//        android.transition.TransitionManager.beginDelayedTransition(
-//            movieDetailRoot,
-//            getTransform(cardOfPopularDetail, movieView, 650)
-//        )
-//        cardOfPopularDetail?.isGone = true
-//        movieView?.isGone = false
-//        navigateToDetailScreen(currentMovieId)
-//    }
-//
-//    // return a transformation already < DONE >
-//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-//    private fun getTransform(
-//        mStartView: View,
-//        mEndView: View,
-//        customDuration: Long
-//    ): MaterialContainerTransform {
-//        return MaterialContainerTransform().apply {
-//            startView = mStartView
-//            endView = mEndView
-//            addTarget(mEndView)
-//            pathMotion = MaterialArcMotion()
-//            duration = customDuration
-//            scrimColor = Color.TRANSPARENT
-//        }
-//    }
-//
-//    // hide adapter item and show our Card Animation
-//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-//    public fun animateCard(view: View) {
-//        movieView = view
-//        android.transition.TransitionManager.beginDelayedTransition(
-//            movieDetailRoot,
-//            getTransform(view, cardOfPopularDetail, 650)
-//        )
-//        view?.isGone = true
-//        cardOfPopularDetail?.isGone = false
-//
-//    }
-//
-//    // close card and show item of recyclerview
-//    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-//    private fun returnCardToOriginPosition(duration: Long) {
-//        android.transition.TransitionManager.beginDelayedTransition(
-//            movieDetailRoot,
-//            getTransform(cardOfPopularDetail, movieView, duration)
-//        )
-//        cardOfPopularDetail?.isGone = true
-//        movieView?.isGone = false
-//    }
-
-    //------------------------------------------- I solved it--------------------------
-
-    // i opened the card and click on go details , it will close it then navigate to Screen
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun returnCardToOriginPositionWithNavigationAction(layoutRoot : ViewGroup , card : View , adapterView : View) {
         android.transition.TransitionManager.beginDelayedTransition(

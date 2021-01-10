@@ -48,13 +48,14 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
 
     private val homeViewModel: HomeViewModel by lazy(LazyThreadSafetyMode.NONE) {
-        val roomManager = RoomManager.invoke(this)
-        val localSource = RoomClient(roomManager)
+//        val roomManager = RoomManager.invoke(this)
+//        val localSource = RoomClient(roomManager)
+//        val localSource = RealmClient()
         val dataManager = RetrofitMoreDataSourceManager()
         val remoteSource = RetrofitClient(dataManager)
 //        val dataManager = FuelMoreDataSourceManager()
 //        val remoteSource = FuelClient(dataManager)
-        val repository = DataRepositoryImpl (remoteSource , localSource)
+        val repository = DataRepositoryImpl ( remoteInterface = remoteSource )
         val loadPopularMovies = LoadPopularMovies(repository)
         val loadTopRatedMovies = LoadTopRatedMovies(repository)
         val loadInComingMovies = LoadInComingMovies(repository)

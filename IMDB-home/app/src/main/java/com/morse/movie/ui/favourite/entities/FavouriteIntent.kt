@@ -5,6 +5,8 @@ import com.morse.movie.data.entity.movieresponse.Result
 
 sealed class FavouriteIntent : MviIntent {
 
+    object RemoveAllMoviesListIntent  : FavouriteIntent()
+
     object LoadFavouriteMoviesListIntent  : FavouriteIntent()
 
     data class ChechIfMovieAlreadyExistIntent (public val movieId: Int) : FavouriteIntent()

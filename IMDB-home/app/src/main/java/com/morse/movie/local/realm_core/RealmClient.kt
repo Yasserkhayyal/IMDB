@@ -100,4 +100,19 @@ class RealmClient() : LocalInterface {
             }
         }
     }
+
+    override fun removeAllMoviesFromDatabase(): Observable<Boolean> {
+        return Observable.create {
+            try {
+                realmInstance = Realm.getDefaultInstance()
+                realmInstance?.beginTransaction()
+                var result = realmInstance?.where(RealmMovieObject :: class.java)?.findAll()
+                result?.deleteAllFromRealm()
+                realmInstance?.commitTransaction()
+
+            } catch (e: Exception) {
+                it?.onError(e)
+            }
+        }
+    }
 }

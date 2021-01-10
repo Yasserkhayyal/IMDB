@@ -55,25 +55,32 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
     private var moviePosition: Int? = null
     private val moreViewMode: MoreViewModel by lazy {
 
-        val roomManager = RoomManager.invoke(this)
-        val localSource = RoomClient(roomManager)
+//        val roomManager = RoomManager.invoke(this)
+//        val localSource = RoomClient(roomManager)
+        //        val localSource = RealmClient()
         val dataManager = RetrofitMoreDataSourceManager()
         val remoteSource = RetrofitClient(dataManager)
 //        val dataManager = FuelMoreDataSourceManager()
 //        val remoteSource = FuelClient(dataManager)
-        val repository = DataRepositoryImpl (remoteSource , localSource)
+        val repository = DataRepositoryImpl(remoteSource)
         val loadPaginationMovies = LoadPaginationMovies(repository)
         val searchPaginationMovies = SearchOnMoviesUseCase(repository)
-        val moreAnnotateProcressor = MoreAnnotateProcessor(loadPaginationMovies , searchPaginationMovies)
+        val moreAnnotateProcressor =
+            MoreAnnotateProcessor(loadPaginationMovies, searchPaginationMovies)
         val moreViewModelFactory = MoreViewModelFactory(moreAnnotateProcressor)
         ViewModelProviders.of(this, moreViewModelFactory).get(MoreViewModel::class.java)
     }
     private lateinit var moreMovieAdapter: MoreMovieAdapter
-    private var popularIntentPublishSubject: PublishSubject<MoreIntent.LoadPopularMoviesByPagination> = PublishSubject.create()
-    private var topRatedIntentPublishSubject: PublishSubject<MoreIntent.LoadTopRatedMoviesByPagination> = PublishSubject.create()
-    private var inComingIntentPublishSubject: PublishSubject<MoreIntent.LoadInComingMoviesByPagination> = PublishSubject.create()
-    private var nowPlayingIntentPublishSubject: PublishSubject<MoreIntent.LoadNowPlayingMoviesByPagination> = PublishSubject.create()
-    private var searchIntentPublishSubject: PublishSubject<MoreIntent.SearchOnMoviesByPagination> = PublishSubject.create()
+    private var popularIntentPublishSubject: PublishSubject<MoreIntent.LoadPopularMoviesByPagination> =
+        PublishSubject.create()
+    private var topRatedIntentPublishSubject: PublishSubject<MoreIntent.LoadTopRatedMoviesByPagination> =
+        PublishSubject.create()
+    private var inComingIntentPublishSubject: PublishSubject<MoreIntent.LoadInComingMoviesByPagination> =
+        PublishSubject.create()
+    private var nowPlayingIntentPublishSubject: PublishSubject<MoreIntent.LoadNowPlayingMoviesByPagination> =
+        PublishSubject.create()
+    private var searchIntentPublishSubject: PublishSubject<MoreIntent.SearchOnMoviesByPagination> =
+        PublishSubject.create()
     private lateinit var compositeDisposable: CompositeDisposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,7 +133,8 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
             }
 
         }?.addTo(compositeDisposable)
-        RxView.clicks(goToDetailOfMovieDetailMoreButton)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
+        RxView.clicks(goToDetailOfMovieDetailMoreButton)?.throttleLatest(500, TimeUnit.MILLISECONDS)
+            ?.subscribe {
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     returnCardToOriginPositionWithNavigationAction()
@@ -137,17 +145,14 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
         callOnPagination()
     }
 
-    private fun callOnPagination () {
+    private fun callOnPagination() {
         if (moviePosition == 0) {
             popularIntentPublishSubject?.onNext(MoreIntent.LoadPopularMoviesByPagination)
-        }
-        else if (moviePosition == 1) {
+        } else if (moviePosition == 1) {
             topRatedIntentPublishSubject?.onNext(MoreIntent.LoadTopRatedMoviesByPagination)
-        }
-        else if (moviePosition == 2) {
+        } else if (moviePosition == 2) {
             inComingIntentPublishSubject?.onNext(MoreIntent.LoadInComingMoviesByPagination)
-        }
-        else if (moviePosition == 3) {
+        } else if (moviePosition == 3) {
             nowPlayingIntentPublishSubject?.onNext(MoreIntent.LoadNowPlayingMoviesByPagination)
         }
     }
@@ -264,13 +269,11 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
             moreMoviesLoading?.makeItOn()
             moreMoviesErrorContainer?.hideVisibilty()
             moreMoviesRecyclerView?.hideVisibilty()
-        }
-        else if (state?.error != null) {
+        } else if (state?.error != null) {
             moreMoviesRecyclerView?.hideVisibilty()
             moreMoviesLoading?.makeItOff()
             moreMoviesErrorContainer?.showVisibilty()
-        }
-        else if (state?.data != null) {
+        } else if (state?.data != null) {
 
             moreMoviesRecyclerView?.showVisibilty()
             moreMoviesLoading?.makeItOff()
@@ -318,18 +321,17 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-       // searchIntentPublishSubject?.onNext(MoreIntent.SearchOnMoviesByPagination(query!!))
+        // searchIntentPublishSubject?.onNext(MoreIntent.SearchOnMoviesByPagination(query!!))
         return false
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if(newText?.isNotEmpty()!!) {
+        if (newText?.isNotEmpty()!!) {
             moreMoviesRecyclerView?.hideVisibilty()
             moreMoviesErrorContainer?.hideVisibilty()
             moreMoviesLoading?.makeItOn()
             searchIntentPublishSubject?.onNext(MoreIntent.SearchOnMoviesByPagination(newText!!))
-        }
-        else{
+        } else {
             callOnPagination()
         }
 

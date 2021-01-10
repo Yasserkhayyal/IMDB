@@ -36,6 +36,11 @@ class MovieAdapter (private var recyclerViewShape: RecyclerViewShape ? = Recycle
         this?.notifyDataSetChanged()
     }
 
+    public fun clearAllMovies (){
+        listOfResults?.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return if(recyclerViewShape == RecyclerViewShape.HORIZONTAL){
             return MovieViewHolder(

@@ -15,4 +15,6 @@ interface LocalInterface {
 
     public fun removeMovieIntoDataBase ( movieId : Int ) : Observable<Boolean>
 
+    public fun removeAllMoviesFromDatabase () : Observable<Boolean>
+
 }

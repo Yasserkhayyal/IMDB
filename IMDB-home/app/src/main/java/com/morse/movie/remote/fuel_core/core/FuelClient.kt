@@ -33,7 +33,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
 
     override fun loadPopularMoviesFromRemoteSource(): Observable<MovieResponse> {
         return Observable.create<MovieResponse> {
-            Fuel.get(popularMovies)?.responseObject(MovieResponseDeserializer() , object : Handler<MovieResponse>{
+            Fuel.get(popularMovies )?.responseObject(MovieResponseDeserializer() , object : Handler<MovieResponse>{
                 override fun failure(error: FuelError) {
                     it?.onError(error?.exception)
                 }

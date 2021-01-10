@@ -8,13 +8,17 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.transition.Slide
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.isGone
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
@@ -26,6 +30,58 @@ import kotlinx.android.synthetic.main.activity_favourite.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
+
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+public fun Activity.returnCardToOriginPositionWithNavigationAction(layoutRoot : ViewGroup, card : View, adapterView : View , navigationFunction : (movieId : Int)-> Unit  , currentMovieId : Int) {
+    android.transition.TransitionManager.beginDelayedTransition(
+        layoutRoot,
+        getTransform(card, adapterView, 650)
+    )
+    card?.isGone = true
+    adapterView?.isGone = false
+    navigationFunction(currentMovieId)
+}
+
+// return a transformation already < DONE >
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+public fun Activity.getTransform(
+    mStartView: View,
+    mEndView: View,
+    customDuration: Long
+): MaterialContainerTransform {
+    return MaterialContainerTransform().apply {
+        startView = mStartView
+        endView = mEndView
+        addTarget(mEndView)
+        pathMotion = MaterialArcMotion()
+        duration = customDuration
+        scrimColor = Color.TRANSPARENT
+    }
+}
+
+// hide adapter item and show our Card Animation
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+public fun Activity.animateCard(layoutRoot : ViewGroup, card : View, adapterView : View) {
+    //movieView = adapterView
+    android.transition.TransitionManager.beginDelayedTransition(
+        layoutRoot,
+        getTransform(adapterView, card, 650)
+    )
+    adapterView?.isGone = true
+    card?.isGone = false
+
+}
+
+// close card and show item of recyclerview
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+public fun Activity.returnCardToOriginPosition(layoutRoot : ViewGroup, card : View, adapterView : View, duration: Long) {
+    android.transition.TransitionManager.beginDelayedTransition(
+        layoutRoot,
+        getTransform(card, adapterView, duration)
+    )
+    card?.isGone = true
+    adapterView?.isGone = false
+}
 
 public fun String.bindFromDate(): String {
     if (this.length != 0) {

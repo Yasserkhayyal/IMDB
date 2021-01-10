@@ -71,4 +71,18 @@ class RoomClient(public var roomDatabase: RoomManager) : LocalInterface {
 
         }
     }
+
+    override fun removeAllMoviesFromDatabase(): Observable<Boolean> {
+        return Observable.create<Boolean> {
+            try {
+                CoroutineScope(Dispatchers.IO).launch {
+                    var result = roomDatabase?.getMovieDao()?.removeAllMovieFromFavourite()
+                    it?.onNext(true)
+                }
+            } catch (e: Exception) {
+                it?.onError(e)
+            }
+
+        }
+    }
 }

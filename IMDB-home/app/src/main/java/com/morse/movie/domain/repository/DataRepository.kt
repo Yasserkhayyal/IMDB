@@ -53,4 +53,8 @@ interface DataRepository {
 
     public fun checkIfMovieExistInDataBase (movieId : Int) : Observable<Boolean>
 
+    public fun removeAllMovieFromFavourite () : Observable<Boolean>
+
+
+
 }

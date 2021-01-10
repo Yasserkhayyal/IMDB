@@ -9,90 +9,7 @@
     android:transitionName="favShared"
     tools:context=".ui.favourite.activity.FavouriteActivity">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardOfFavourite"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_350sdp"
-        android:layout_marginBottom="30dp"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        app:cardBackgroundColor="#1C1C1C"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="8dp"
-        android:layout_centerInParent="true"
-        tools:visibility="invisible">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="@dimen/_74sdp"
-                android:layout_height="@dimen/_112sdp"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="20dp"
-                android:id="@+id/favouriteImagePoster"
-                />
-            <com.wang.avi.AVLoadingIndicatorView
-                android:layout_width="@dimen/_37sdp"
-                android:layout_height="@dimen/_37sdp"
-                app:indicatorName="LineSpinFadeLoaderIndicator"
-                style="@style/AVLoadingIndicatorView"
-                android:layout_centerInParent="true"
-                app:indicatorColor="@color/colorOfGreen"
-                android:visibility="visible"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/favouriteImageLoading"
-                android:layout_marginTop="80dp"
-                />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-
-                android:layout_height="@dimen/_38sdp"
-                android:gravity="center"
-                android:paddingStart="42dp"
-                android:textSize="@dimen/_12ssp"
-                android:layout_below="@id/favouriteImagePoster"
-                android:paddingEnd="42dp"
-                android:id="@+id/favouriteCardName"
-                android:textAllCaps="false"
-                android:lines="1"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white"
-                />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center|top"
-                android:id="@+id/favouriteCardDetail"
-                android:layout_below="@id/favouriteCardName"
-                android:lines="5"
-                android:maxLines="5"
-                android:textSize="@dimen/_12ssp"
-                android:ellipsize="end"
-                android:lineSpacingExtra="2dp"
-                android:textAllCaps="false"
-                android:paddingHorizontal="2dp"
-                android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white" />
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/detail_card_bottom_raduis_bg"
-                android:layout_alignParentBottom="true"
-                android:text="Go To Detail"
-                android:textSize="@dimen/_12ssp"
-                android:id="@+id/goToDetailOfMovieDetailFavouriteButton"
-                android:textColor="@android:color/white"
-                android:textAppearance="@style/amoiriFontBoldItalic"
-                />
-
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -165,5 +82,108 @@
         android:id="@+id/favouriteMoviesLoading"
         android:layout_marginTop="80dp"
         />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardOfClearAllMovies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        tools:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/circule_black_background"
+                android:elevation="@dimen/_4sdp"
+                />
+
+            <ImageView
+                android:id="@+id/clearAllImageView"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circule_background"
+                android:elevation="@dimen/_4sdp"
+                android:src="@drawable/ic_erase_all_data_svg" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/clearAllImageView"
+                android:layout_marginTop="@dimen/_minus40sdp"
+                android:background="@drawable/delete_all_movie_from_favourite_bg">
+
+                <TextView
+                    android:id="@+id/alertRemoveTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:text="Erase All Data Alert!!"
+                    android:textAppearance="@style/amoiriFontBold"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/alertRemoveBody"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/alertRemoveTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:text="Are you sure for removeing all data from DB ?"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textSize="@dimen/_14ssp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/cancelRemoveDeletButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/alertRemoveBody"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/white_border_bg"
+                    android:elevation="0dp"
+                    android:text="Cancel"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textColor="@android:color/white" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/confirmRemoveDeletButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/alertRemoveBody"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/white_border_bg"
+                    android:elevation="0dp"
+                    android:text="Erase Now"
+                    android:textAppearance="@style/amoiriFontBoldItalic"
+                    android:textColor="@android:color/white" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>

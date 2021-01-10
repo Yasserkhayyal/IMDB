@@ -24,4 +24,8 @@ interface MovieDao {
     @Query (" SELECT * FROM movie_object_table ")
     public fun selectAllMoviesFromFavourite () : List<MovieDetailResponse>
 
+    @Query (" DELETE FROM movie_object_table ")
+    public fun removeAllMovieFromFavourite ()
+
+
 }

@@ -26,6 +26,16 @@ sealed class FavouriteResult : MviResult {
 
     }
 
+    sealed class RemoveAllMoviesResult : FavouriteResult () {
+
+        object Loading : RemoveAllMoviesResult()
+
+        data class Error ( public val error : Throwable) : RemoveAllMoviesResult()
+
+        data class Success ( public val data : Boolean) : RemoveAllMoviesResult()
+
+    }
+
 
 
 }
