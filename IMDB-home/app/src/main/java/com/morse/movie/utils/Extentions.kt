@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -22,12 +23,17 @@ import androidx.core.view.isGone
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.wang.avi.AVLoadingIndicatorView
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_favourite.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_movie_detail.*
+import kotlinx.android.synthetic.main.person_review_layout.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 
@@ -205,5 +211,117 @@ public fun View.hideVisibilty() {
 
 public fun View.showVisibilty() {
     this?.visibility = View.VISIBLE
+}
+//Unrecognized type of request: Request{ https://avatars.dicebear.com/4.5/api/bottts/TheReckoning.svg?r=50&colors[]=red&sidesChance=32 RoundedTransformation(radius=0, margin=0, diameter=0, cornerType=ALL)}
+public fun ImageView.loadImageAsBackground (url : String ? ="", text : String? ="" , avlLoadingView : AVLoadingIndicatorView){
+    if(url == null){
+        val newUrl = emptyPlaceHolderHeader + text + emptyPlaceholderBackgroundBody
+        Picasso.get()?.load(newUrl)?.transform(
+            RoundedCornersTransformation(0, 0)
+        )
+            ?.into(this, object : Callback {
+            override fun onSuccess() {
+                avlLoadingView?.makeItOff()
+            }
+
+            override fun onError(e: Exception?) {
+                avlLoadingView?.makeItOff()
+            }
+
+        })
+    }
+    else{
+        Picasso.get()?.load(imageApiBackground + url)?.transform(
+            RoundedCornersTransformation(0, 0)
+        )?.into(this, object : Callback {
+            override fun onSuccess() {
+                avlLoadingView?.makeItOff()
+            }
+
+            override fun onError(e: Exception?) {
+                avlLoadingView?.makeItOff()
+            }
+
+        })
+    }
+}
+
+public fun ImageView.loadImage (url : String ? ="", text : String? ="" , avlLoadingView : AVLoadingIndicatorView){
+    if(url == null){
+        val newUrl = emptyPlaceHolderHeader + text + emptyPlaceholderBody
+        Picasso.get()?.load(newUrl)?.transform(
+            RoundedCornersTransformation(20, 20)
+        ) ?.into(this, object : Callback {
+            override fun onSuccess() {
+                avlLoadingView?.makeItOff()
+            }
+
+            override fun onError(e: Exception?) {
+                avlLoadingView?.makeItOff()
+            }
+
+        })
+    }
+    else{
+        Picasso.get()?.load(imageApiBackground + url)?.transform(
+            RoundedCornersTransformation(20, 20)
+        )?.into(this, object : Callback {
+            override fun onSuccess() {
+                avlLoadingView?.makeItOff()
+            }
+
+            override fun onError(e: Exception?) {
+                avlLoadingView?.makeItOff()
+            }
+
+        })
+    }
+}
+
+public fun ImageView.loadUserImage (url : String ? ="", text : String? ="" , avlLoadingView : AVLoadingIndicatorView){
+    if(url == null || url?.isEmpty() ==true){
+        val newUrl = emptyPlaceHolderHeader + text + emptyPlaceholderBody
+        Picasso.get()?.load(newUrl)?.transform(
+            RoundedCornersTransformation(20 , 10)
+        )?.into(this, object : Callback {
+            override fun onSuccess() {
+                avlLoadingView?.makeItOff()
+            }
+
+            override fun onError(e: Exception?) {
+                avlLoadingView?.makeItOff()
+            }
+
+        })
+    }
+    else if (url?.contains("https") == true){
+        var urlRes = url?.removeRange(0,1)
+        Picasso.get()?.load( urlRes )?.transform(
+            RoundedCornersTransformation(20 , 10)
+        )?.into(this, object : Callback {
+            override fun onSuccess() {
+                avlLoadingView?.makeItOff()
+            }
+
+            override fun onError(e: Exception?) {
+                avlLoadingView?.makeItOff()
+            }
+
+        })
+    }
+    else{
+        Picasso.get()?.load(  imageApiPoster + url )?.transform(
+            RoundedCornersTransformation(20 , 10)
+        )?.into(this, object : Callback {
+            override fun onSuccess() {
+                avlLoadingView?.makeItOff()
+            }
+
+            override fun onError(e: Exception?) {
+                avlLoadingView?.makeItOff()
+            }
+
+        })
+    }
 }
 

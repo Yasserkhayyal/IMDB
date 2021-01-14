@@ -35,14 +35,11 @@ import com.morse.movie.ui.more.viewmodel.MoreAnnotateProcessor
 import com.morse.movie.ui.more.viewmodel.MoreViewModel
 import com.morse.movie.ui.more.viewmodel.MoreViewModelFactory
 import com.morse.movie.utils.*
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_more_movies.*
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
@@ -89,17 +86,21 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
         setSupportActionBar(moreActivityActionBar)
         moviePosition = intent?.extras?.getInt(MOVIE_TYPE)
         chooseCorrectTitle(moviePosition)
-        moreActivityActionBar?.setNavigationOnClickListener {
-            if (cardOfMore?.isGone == false) {
-                returnCardToOriginPosition(650)
-            } else {
-                this?.finish()
-            }
-        }
     }
 
     override fun onStart() {
         super.onStart()
+        compositeDisposable = CompositeDisposable()
+        initAdapter ()
+        configureReceyclerViewWithAdapter()
+        bindViewModerWithOurView()
+        configureViewListeners ()
+        moreMoviesLoading?.makeItOn()
+        callOnPagination()
+    }
+
+    private fun initAdapter (){
+
         moreMovieAdapter = MoreMovieAdapter(object : MovieListener {
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
                 currentMovieId = movieResult?.id!!
@@ -123,9 +124,17 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
                 }
             }
         })
-        compositeDisposable = CompositeDisposable()
-        configureReceyclerViewWithAdapter()
-        bindViewModerWithOurView()
+    }
+
+    private fun configureViewListeners () {
+
+        moreActivityActionBar?.setNavigationOnClickListener {
+            if (cardOfMore?.isGone == false) {
+                returnCardToOriginPosition(650)
+            } else {
+                this?.finish()
+            }
+        }
         RxView.clicks(cardOfMore)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -141,8 +150,6 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
                 }
 
             }?.addTo(compositeDisposable)
-        moreMoviesLoading?.makeItOn()
-        callOnPagination()
     }
 
     private fun callOnPagination() {
@@ -201,18 +208,7 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
     }
 
     private fun bindMovieDetailToPopularCard(movie: Result, color: Int?) {
-        Picasso.get()?.load(imageApiPoster + movie?.poster_path)?.transform(
-            RoundedCornersTransformation(20, 10)
-        )?.into(moreImagePoster, object : Callback {
-            override fun onSuccess() {
-                moreImageLoading?.makeItOff()
-            }
-
-            override fun onError(e: Exception?) {
-                moreImageLoading?.makeItOff()
-            }
-
-        })
+        moreImagePoster?.loadImage(movie?.poster_path , movie?.title , moreImageLoading)
         cardOfMore?.setCardBackgroundColor(color!!)
         moreCardName?.setText(movie?.title)
         moreCardDetail?.setText(movie?.overview)

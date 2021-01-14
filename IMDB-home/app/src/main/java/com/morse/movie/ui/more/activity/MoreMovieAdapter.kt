@@ -10,10 +10,7 @@ import com.morse.movie.R
 import com.morse.movie.base.DiffUtils
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.ui.home.activity.MovieListener
-import com.morse.movie.utils.bindFromDateForMovieReleqse
-import com.morse.movie.utils.imageApiPoster
-import com.morse.movie.utils.makeItOff
-import com.morse.movie.utils.makeItOn
+import com.morse.movie.utils.*
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
@@ -60,17 +57,8 @@ class MoreMovieAdapter (private var movieListeners: MovieListener) : PagedListAd
             movieHorizontalCardBackground?.background = theme?.first
             movieName?.setText(movie?.title)
             movieDate?.setText(movie?.release_date?.bindFromDateForMovieReleqse())
-            Picasso.get()?.load(imageApiPoster +movie?.poster_path)?.transform(RoundedCornersTransformation(20 , 10))?.into(movieImage, object : Callback {
-                override fun onSuccess() {
-                    loading?.makeItOff()
-                }
-
-                override fun onError(e: Exception?) {
-                    loading?.makeItOff()
-                }
-
-            })
-            progressValue?.setText("${movie?.vote_average}")
+            movieImage?.loadImage(movie?.poster_path , movie?.original_title , loading)
+           progressValue?.setText("${movie?.vote_average}")
             progress?.setProgress(movie?.vote_average?.toInt()!!)
             movieCard?.setOnClickListener {
                 movieListeners?.onMovieClicks(it , movie , theme?.second)

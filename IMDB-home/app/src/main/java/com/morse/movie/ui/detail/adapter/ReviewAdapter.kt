@@ -65,50 +65,7 @@ class ReviewAdapter(
             detailPosterImageLoading?.makeItOn()
             personNameTextView?.setText(result?.authorDetails?.username)
             personReviewTextView?.setText(result?.content)
-            if(result?.authorDetails?.avatarPath == null || result?.authorDetails?.avatarPath?.isEmpty() ==true){
-                Picasso.get()?.load(emptyImagePlaceHolder + result?.authorDetails?.username)?.transform(
-                    RoundedCornersTransformation(20 , 10)
-                )?.into(personImageView, object : Callback {
-                    override fun onSuccess() {
-                        detailPosterImageLoading?.makeItOff()
-                    }
-
-                    override fun onError(e: Exception?) {
-                        detailPosterImageLoading?.makeItOff()
-                    }
-
-                })
-            }
-            else if (result?.authorDetails?.avatarPath?.contains("https") == true){
-                var url =result?.authorDetails?.avatarPath?.removeRange(0,1)
-                Picasso.get()?.load( url )?.transform(
-                    RoundedCornersTransformation(20 , 10)
-                )?.into(personImageView, object : Callback {
-                    override fun onSuccess() {
-                        detailPosterImageLoading?.makeItOff()
-                    }
-
-                    override fun onError(e: Exception?) {
-                        detailPosterImageLoading?.makeItOff()
-                    }
-
-                })
-            }
-            else{
-                Picasso.get()?.load(  imageApiPoster +result?.authorDetails?.avatarPath )?.transform(
-                    RoundedCornersTransformation(20 , 10)
-                )?.into(personImageView, object : Callback {
-                    override fun onSuccess() {
-                        detailPosterImageLoading?.makeItOff()
-                    }
-
-                    override fun onError(e: Exception?) {
-                        detailPosterImageLoading?.makeItOff()
-                    }
-
-                })
-            }
-
+            personImageView?.loadUserImage(result?.authorDetails?.avatarPath , result?.author , detailPosterImageLoading)
             personImageView?.setOnClickListener {
                 listener?.onItemPressed(personImageView , result)
             }

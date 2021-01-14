@@ -93,25 +93,20 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
     override fun onStart() {
         super.onStart()
         compositeDisposable = CompositeDisposable()
+        initAdapter ()
+        bindViewModelWithView()
+        configreAdapterToRecyclerview()
+        configureClicksOnButtons()
+        requestOnAllMovies()
+    }
+
+    private fun initAdapter (){
         popularMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
                 MovieCoordinator.navigateToDetailScreen(this@FavouriteActivity, movieResult?.id)
             }
         })
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            homeNestedScrollView?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > oldScrollY) {
-                    goToFavouriteButton?.shrink()
-                } else {
-                    goToFavouriteButton?.extend()
-                }
-            }
-        }
-        bindViewModelWithView()
-        configreAdapterToRecyclerview()
-        configureClicksOnButtons()
-        requestOnAllMovies()
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

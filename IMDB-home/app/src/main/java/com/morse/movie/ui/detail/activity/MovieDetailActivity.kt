@@ -45,8 +45,6 @@ import com.morse.movie.ui.detail.viewmodel.DetailViewModelFactory
 import com.morse.movie.ui.home.activity.MovieAdapter
 import com.morse.movie.ui.home.activity.MovieListener
 import com.morse.movie.utils.*
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import io.reactivex.Observable
@@ -54,7 +52,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_more_movies.*
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.activity_movie_detail.detailPosterImageLoading
@@ -125,13 +122,21 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        movieId = intent?.extras?.getInt(MOVIE_ID_kEY)
-        movieDetailResponse = intent?.extras?.getParcelable(MOVIE_DETAIL_ID_kEY)
-
+        loadExtraData ()
     }
 
     override fun onStart() {
         super.onStart()
+        compositeDisposable = CompositeDisposable()
+        initAdapters ()
+        configureViewListeners ()
+        manageExtendedFabStatus ()
+        configureRecyclerViewsMoviesAdapters()
+        bindOurViewWithViewModel()
+        executeLoadAllData()
+    }
+
+    private fun initAdapters (){
         similarMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
 
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
@@ -199,12 +204,29 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                 }
             })
 
+    }
+
+    private fun configureViewListeners (){
+        navigateBackFab?.setOnClickListener {
+            if (cardOfPopularDetail?.isGone == false) {
+                returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
+            }
+
+            else if (cardOfPersonDetail?.isGone == false) {
+                returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
+            }
+            else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
+                returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
+            }
+            else {
+                finish()
+            }
+        }
         cardOfPopularDetail?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
             }
         }
-
         cardOfPersonDetail?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
@@ -263,7 +285,8 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
             else {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     if (cardOfDeleteMovieFromFavourite?.visibility == View.VISIBLE) {
-                        Glide.with(this)?.load( imageApiPoster + movieDetailResponse?.poster_path)?.circleCrop()?.into(movieDeletePoster)
+                        deleteImageLoadingDetail?.showVisibilty()
+                        movieDeletePoster?.loadImage(movieDetailResponse?.poster_path , movieDetailResponse?.original_title ,deleteImageLoadingDetail )
                         returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton!! ,200)
                         Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
                             ?.subscribeOn(AndroidSchedulers.mainThread())
@@ -285,7 +308,14 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
             }
         }
-        compositeDisposable = CompositeDisposable()
+    }
+
+    private fun loadExtraData () {
+        movieId = intent?.extras?.getInt(MOVIE_ID_kEY)
+        movieDetailResponse = intent?.extras?.getParcelable(MOVIE_DETAIL_ID_kEY)
+    }
+
+    private fun manageExtendedFabStatus (){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             movieDetailScrollView?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                 if (scrollY > oldScrollY) {
@@ -297,8 +327,9 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                 }
             }
         }
-        configureRecyclerViewsMoviesAdapters()
-        bindOurViewWithViewModel()
+    }
+
+    private fun executeLoadAllData (){
         isMovieExistInFavouriteIntentSubject?.onNext(
             DetailIntent.IsMovieExistInDatabaseIntent(
                 movieId!!
@@ -463,40 +494,9 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     private fun bindMovieDetailResponseToView(movieDetail: MovieDetailResponse) {
 
-        navigateBackFab?.setOnClickListener {
-            if (cardOfPopularDetail?.isGone == false) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
-            }
-            else {
-                this?.finish()
-            }
-        }
+        movieDetailBackgroundImageView?.loadImageAsBackground(movieDetail?.backdrop_path , movieDetail?.original_title , detailBackgroundImageLoading)
 
-        Picasso.get()?.load(imageApiBackground + movieDetail?.backdrop_path)?.transform(
-            RoundedCornersTransformation(0, 0)
-        )?.into(movieDetailBackgroundImageView, object : Callback {
-            override fun onSuccess() {
-                detailBackgroundImageLoading?.makeItOff()
-            }
-
-            override fun onError(e: Exception?) {
-                detailBackgroundImageLoading?.makeItOff()
-            }
-
-        })
-
-        Picasso.get()?.load(imageApiPoster + movieDetail?.poster_path)?.transform(
-            RoundedCornersTransformation(20, 10)
-        )?.into(movieDetailPosterImageView, object : Callback {
-            override fun onSuccess() {
-                detailPosterImageLoading?.makeItOff()
-            }
-
-            override fun onError(e: Exception?) {
-                detailPosterImageLoading?.makeItOff()
-            }
-
-        })
+        movieDetailPosterImageView?.loadImage(movieDetail?.poster_path , movieDetail?.title , detailPosterImageLoading)
 
         movieDetailTitle?.setText(movieDetail?.original_title)
 
@@ -547,34 +547,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     }
 
     private fun bindUserProfileResposneToView (personResponse: PersonResponse){
-        if(personResponse?.profilePath == null || personResponse?.profilePath?.isEmpty() ==true){
-            Picasso.get()?.load(emptyImagePlaceHolder + personResponse?.name)?.transform(
-                RoundedCornersTransformation(20 , 10)
-            )?.into(personImagePosterDetail, object : Callback {
-                override fun onSuccess() {
-                    personImageLoadingDetail?.makeItOff()
-                }
-
-                override fun onError(e: Exception?) {
-                    personImageLoadingDetail?.makeItOff()
-                }
-
-            })
-        }
-        else{
-            Picasso.get()?.load(  imageApiPoster +personResponse?.profilePath )?.transform(
-                RoundedCornersTransformation(20 , 10)
-            )?.into(personImagePosterDetail, object : Callback {
-                override fun onSuccess() {
-                    personImageLoadingDetail?.makeItOff()
-                }
-
-                override fun onError(e: Exception?) {
-                    personImageLoadingDetail?.makeItOff()
-                }
-
-            })
-        }
+        personImagePosterDetail?.loadImage(personResponse?.profilePath , personResponse?.name , personImageLoadingDetail)
         personCardNameDetail?.setText(personResponse?.name)
         personCardBioGrahyDetail?.setText(personResponse?.biography)
         personCardPlaceOfBearth?.setText(personResponse?.placeOfBirth)
@@ -601,18 +574,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     }
 
     private fun bindMovieDetailToPopularCard(movie: Result) {
-        Picasso.get()?.load(imageApiPoster + movie?.poster_path)?.transform(
-            RoundedCornersTransformation(20, 10)
-        )?.into(popularImagePosterDetail, object : Callback {
-            override fun onSuccess() {
-                popularImageLoadingDetail?.makeItOff()
-            }
-
-            override fun onError(e: Exception?) {
-                popularImageLoadingDetail?.makeItOff()
-            }
-
-        })
+        popularImagePosterDetail?.loadImage(movie?.poster_path , movie?.title ,popularImageLoadingDetail )
         popularCardNameDetail?.setText(movie?.title)
         popularCardDetailDetail?.setText(movie?.overview)
 

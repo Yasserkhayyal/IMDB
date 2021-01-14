@@ -27,6 +27,10 @@ const val nowplayingTv = "tv/now_playing?api_key=$apiKey&language=en-US&page=1"
 // Add w500 to be Background or w300 and then add posterPath
 const val imageApiPoster = "https://image.tmdb.org/t/p/w400"
 const val imageApiBackground = "https://image.tmdb.org/t/p/w500"
+const val emptyPlaceHolderHeader ="https://gravatar.com/avatar/"
+const val emptyPlaceholderBody = "?s=400&d=robohash&r=x"
+const val emptyPlaceholderBackgroundBody = "?s=800&d=monsterid&r=x"
+const val emptyImage = "https://robohash.org/1c8e8a6e8d1fe52b782b280909abeb38?set=set4&bgset=&size=400x400"
 //Filanlly Upload Apk into : https://apkpure.com/ar/submit-apk
 const val movieObjectTable = "MOVIE_Object_TABLE"
 const val DATABASE_NAME = "IMDB_DB"

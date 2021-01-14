@@ -71,16 +71,7 @@ class MovieAdapter (private var recyclerViewShape: RecyclerViewShape ? = Recycle
             loading?.makeItOn()
             movieName?.setText(result?.title)
             movieDate?.setText(result?.release_date?.bindFromDateForMovieReleqse())
-            Picasso.get()?.load(imageApiPoster+result?.poster_path)?.transform(RoundedCornersTransformation(20 , 10))?.into(movieImage, object : Callback {
-                override fun onSuccess() {
-                    loading?.makeItOff()
-                }
-
-                override fun onError(e: Exception?) {
-                    loading?.makeItOff()
-                }
-
-            })
+            movieImage?.loadImage(result?.poster_path , result?.original_title , loading)
             progressValue?.setText("${result?.vote_average}")
             progress?.setProgress(result?.vote_average?.toInt()!!)
             movieCard?.setOnClickListener {

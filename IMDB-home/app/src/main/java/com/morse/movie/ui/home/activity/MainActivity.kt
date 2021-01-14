@@ -30,14 +30,11 @@ import com.morse.movie.ui.home.viewmodel.HomeAnnotateProcessor
 import com.morse.movie.ui.home.viewmodel.HomeViewModel
 import com.morse.movie.ui.home.viewmodel.HomeViewModelFactory
 import com.morse.movie.utils.*
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 import java.lang.ref.WeakReference
@@ -92,6 +89,30 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     override fun onStart() {
         super.onStart()
         compositeDisposable = CompositeDisposable()
+        initAdapters()
+        manageFabAnimation ()
+        bindViewModelWithView()
+        configreAdapterToRecyclerview()
+        configureClicksOnButtons()
+        requestOnPopularMovies()
+        requestOnTopRatedMovies()
+        requestOnInComingMovies()
+        requestOnNowPlayingMovies()
+    }
+
+    private fun manageFabAnimation (){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            homeNestedScrollView?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if (scrollY > oldScrollY) {
+                    goToFavouriteButton?.shrink()
+                } else {
+                    goToFavouriteButton?.extend()
+                }
+            }
+        }
+    }
+
+    private fun initAdapters (){
         popularMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
@@ -163,24 +184,6 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
                 }
             }
         })
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            homeNestedScrollView?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > oldScrollY) {
-                    goToFavouriteButton?.shrink()
-                } else {
-                    goToFavouriteButton?.extend()
-                }
-            }
-        }
-
-        bindViewModelWithView()
-        configreAdapterToRecyclerview()
-        configureClicksOnButtons()
-        requestOnPopularMovies()
-        requestOnTopRatedMovies()
-        requestOnInComingMovies()
-        requestOnNowPlayingMovies()
     }
 
     private fun configreAdapterToRecyclerview() {
@@ -469,18 +472,8 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     }
 
     private fun bindMovieDetailToPopularCard(movie: Result) {
-        Picasso.get()?.load(imageApiPoster + movie?.poster_path)?.transform(
-            RoundedCornersTransformation(20, 10)
-        )?.into(popularImagePoster, object : Callback {
-            override fun onSuccess() {
-                popularImageLoading?.makeItOff()
-            }
 
-            override fun onError(e: Exception?) {
-                popularImageLoading?.makeItOff()
-            }
-
-        })
+        popularImagePoster?.loadImage( movie?.poster_path , movie?.title , popularImageLoading)
         popularCardName?.setText(movie?.title)
         popularCardDetail?.setText(movie?.overview)
 

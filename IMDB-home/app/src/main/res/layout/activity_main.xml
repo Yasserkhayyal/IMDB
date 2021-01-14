@@ -106,8 +106,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_10sdp"
         android:visibility="gone"
         app:cardBackgroundColor="#F6C700"
         app:cardCornerRadius="24dp"
@@ -162,7 +162,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
                         android:text="@string/projectInfo"
                         android:textAppearance="@style/amoiriFontItalic"
                         android:textColor="@android:color/black" />
