@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.morse.movie">
-<!--    -->
-<!--    For making any Screen with no history-->
-<!--    -->
-<!--    android:autoRemoveFromRecents="true"-->
-<!--    android:clearTaskOnLaunch="true"-->
-<!--    android:noHistory="true"-->
+    <!--    -->
+    <!--    For making any Screen with no history-->
+    <!--    -->
+    <!--    android:autoRemoveFromRecents="true"-->
+    <!--    android:clearTaskOnLaunch="true"-->
+    <!--    android:noHistory="true"-->
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,8 +24,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
 
-        <activity android:name=".ui.favourite.activity.FavouriteActivity"
-         />
+        <activity android:name=".ui.favourite.activity.FavouriteActivity" />
         <activity android:name=".ui.more.activity.MoreMoviesActivity">
 
             <meta-data
@@ -33,9 +32,19 @@
                 android:resource="@xml/search_config" />
 
         </activity>
-        <activity
-            android:name=".ui.detail.activity.MovieDetailActivity"
-  />
+        <activity android:name=".ui.detail.activity.MovieDetailActivity">
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="www.imdb.com"
+                    />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.home.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

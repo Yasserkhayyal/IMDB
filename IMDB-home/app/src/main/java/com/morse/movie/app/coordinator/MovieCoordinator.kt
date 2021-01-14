@@ -53,7 +53,7 @@ object MovieCoordinator {
         var favSnackbar = Snackbar.make(parentView , "${movieName} has been deleted successfully" , Snackbar.LENGTH_SHORT)
         var view = favSnackbar.getView()
         var params =view.getLayoutParams() as (CoordinatorLayout.LayoutParams)
-        params.gravity = Gravity.TOP
+        params.gravity = Gravity.BOTTOM
         view.setLayoutParams(params)
         favSnackbar?.setGestureInsetBottomIgnored(true)
         favSnackbar?.animationMode = Snackbar.ANIMATION_MODE_FADE
@@ -66,7 +66,7 @@ object MovieCoordinator {
         var favSnackbar = Snackbar.make(parentView , "${movieName} has been added successfully" , Snackbar.LENGTH_SHORT)
         var view = favSnackbar.getView()
         var params =view.getLayoutParams() as (CoordinatorLayout.LayoutParams)
-        params.gravity = Gravity.TOP
+        params.gravity = Gravity.BOTTOM
         view.setLayoutParams(params)
         favSnackbar?.setGestureInsetBottomIgnored(true)
         favSnackbar?.animationMode = Snackbar.ANIMATION_MODE_FADE

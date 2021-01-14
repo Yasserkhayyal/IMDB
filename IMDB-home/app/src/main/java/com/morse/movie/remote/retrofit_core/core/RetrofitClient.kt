@@ -2,6 +2,8 @@ package com.morse.movie.remote.retrofit_core.core
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
+import com.morse.movie.cache.DSCacheManager
+import com.morse.movie.data.cache.CacheInterface
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.data.entity.movieresponse.MovieResponse
 import com.morse.movie.data.entity.movieresponse.Result
@@ -10,15 +12,16 @@ import com.morse.movie.data.entity.movievideosresponse.MovieVideoResponse
 import com.morse.movie.data.entity.personresponse.PersonResponse
 import com.morse.movie.data.remote.RemoteInterface
 import com.morse.movie.remote.base.DataSourceManager
-import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
-import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import io.reactivex.Observable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : RemoteInterface {
+class RetrofitClient(
+    private var moreDataStoreManager: DataSourceManager? = null,
+    private val cacheInterface: CacheInterface?= DSCacheManager.newInstance()
+) : RemoteInterface {
 
     private var retrofitMoviesApi = RetrofitBuilder.getNetworkInteractor()
 
@@ -29,6 +32,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
                 try {
                     var response =
                         retrofitMoviesApi.getPopularMovie()?.await()
+                    cacheInterface?.addNewPopularMovieIntoCache("2", response)
                     it?.onNext(response)
                 } catch (e: Exception) {
                     it?.onError(e)
@@ -45,6 +49,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
                 try {
                     var response =
                         retrofitMoviesApi.getTopRatedMovie()?.await()
+                    cacheInterface?.addNewTopRatedMovieIntoCache("3", response)
                     it?.onNext(response)
                 } catch (e: Exception) {
                     it?.onError(e)
@@ -61,6 +66,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
                 try {
                     var response =
                         retrofitMoviesApi.getIncomingMovie()?.await()
+                    cacheInterface?.addNewInComingMovieIntoCache("4", response)
                     it?.onNext(response)
                 } catch (e: Exception) {
                     it?.onError(e)
@@ -77,6 +83,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
                 try {
                     var response =
                         retrofitMoviesApi.getNowPlayingMovie()?.await()
+                    cacheInterface?.addNewNowPlayingMovieIntoCache("1", response)
                     it?.onNext(response)
                 } catch (e: Exception) {
                     it?.onError(e)
@@ -89,7 +96,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
     override fun loadPopularMoviesByPaginationFromRemoteSource(): Observable<LiveData<PagedList<Result>>> {
         return Observable.create<LiveData<PagedList<Result>>> {
             try {
-                var result = moreDataStoreManager?.getPaginationMovies(0)
+                var result = moreDataStoreManager?.getPaginationMovies(0)!!
                 it?.onNext(result)
             } catch (e: Exception) {
                 it?.onError(e)
@@ -100,7 +107,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
     override fun loadTopRatedMoviesByPaginationFromRemoteSource(): Observable<LiveData<PagedList<Result>>> {
         return Observable.create<LiveData<PagedList<Result>>> {
             try {
-                var result = moreDataStoreManager?.getPaginationMovies(0)
+                var result = moreDataStoreManager?.getPaginationMovies(0)!!
                 it?.onNext(result)
             } catch (e: Exception) {
                 it?.onError(e)
@@ -111,7 +118,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
     override fun loadInComingMoviesByPaginationFromRemoteSource(): Observable<LiveData<PagedList<Result>>> {
         return Observable.create<LiveData<PagedList<Result>>> {
             try {
-                var result = moreDataStoreManager?.getPaginationMovies(0)
+                var result = moreDataStoreManager?.getPaginationMovies(0)!!
                 it?.onNext(result)
             } catch (e: Exception) {
                 it?.onError(e)
@@ -122,7 +129,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
     override fun loadNowPlayingMoviesByPaginationFromRemoteSource(): Observable<LiveData<PagedList<Result>>> {
         return Observable.create<LiveData<PagedList<Result>>> {
             try {
-                var result = moreDataStoreManager?.getPaginationMovies(0)
+                var result = moreDataStoreManager?.getPaginationMovies(0)!!
                 it?.onNext(result)
             } catch (e: Exception) {
                 it?.onError(e)
@@ -133,9 +140,9 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
     override fun searchOnMoviesByPaginationFromRemoteSource(movieName: String): Observable<LiveData<PagedList<Result>>> {
         return Observable.create<LiveData<PagedList<Result>>> {
             try {
-                var result = moreDataStoreManager?.getPaginationMoviesSearch(movieName)
+                var result = moreDataStoreManager?.getPaginationMoviesSearch(movieName)!!
                 it?.onNext(result)
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 it?.onError(e)
             }
         }
@@ -148,6 +155,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
                 try {
                     var response =
                         retrofitMoviesApi.getMovieDetail(movieId)?.await()
+                    cacheInterface?.addNewMovieDetailIntoCache("${movieId}", response)
                     it?.onNext(response)
                 } catch (e: Exception) {
                     it?.onError(e)
@@ -164,6 +172,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
                 try {
                     var result = retrofitMoviesApi
                         .getSimilarMovies(movieId)?.await()
+                    cacheInterface?.addNewSimilarMovieIntoCache("${movieId}", result)
                     it?.onNext(result)
                 } catch (e: Exception) {
                     it?.onError(e)
@@ -178,8 +187,9 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
 
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    var result =retrofitMoviesApi
+                    var result = retrofitMoviesApi
                         .getMovieReview(movieId)?.await()
+                    cacheInterface?.addNewReviewsIntoCache("${movieId}", result)
                     it?.onNext(result)
                 } catch (e: Exception) {
                     it?.onError(e)
@@ -196,6 +206,7 @@ class RetrofitClient (private var moreDataStoreManager : DataSourceManager) : Re
                 try {
                     var result = retrofitMoviesApi
                         .getMovieVideos(movieId)?.await()
+                    cacheInterface?.addNewVideoIntoCache("${movieId}", result)
                     it?.onNext(result)
                 } catch (e: Exception) {
                     it?.onError(e)

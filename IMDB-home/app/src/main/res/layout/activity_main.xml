@@ -193,6 +193,7 @@
                 android:id="@+id/moviesIndicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_60sdp">
 
@@ -220,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/moviesIndicator"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_70sdp"
                 android:background="@drawable/movie_card_bg"
                 android:clickable="true"
                 tools:visibility="visible">
@@ -762,7 +763,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:backgroundTint="#F6C700"
         android:paddingHorizontal="@dimen/_10sdp"
-        android:text="Show Favourites"
+        android:text="Favourites"
         android:textAppearance="@style/amoiriFontBoldItalic"
         android:textColor="@android:color/black"
         android:transitionName="favShared"

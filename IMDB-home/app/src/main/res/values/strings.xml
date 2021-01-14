@@ -8,11 +8,6 @@
     <string name="myEtisalatNumber"> <u> 01119551454 </u> </string>
     <string name="myOrangeNumber"> <u> 01220049119 </u> </string>
     <string name="title_activity_search">SearchActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
     <string name="projectInfo">What i used in this project ?\n
 • Programming Languages: Kotlin , Java ✔️ \n
 • Operating Systems : Windows ✔️\n
@@ -20,11 +15,12 @@
 • Presentation Layer Articuture Pattern: MVI ✔️\n
 • Local Layer: Room and Realm ✔️\n
 • Remote Layer: (Coroutine + Retrofit ) and (Fuel) ✔️\n
+• Cache Layer: DS as APP Mormery + WorkManager ✔️\n
 • DI: (Dependency Inject Fundemnatl Tech - Koin - Kodien ) ❌  \n
 • Clean Architecture : true ✔️\n
-• Crash Analysis: [Flurry - Firebase Crash Analtics] ❌   \n
+• Crash Analysis: [Flurry ✔️- Firebase Crash Analtics ❌ ]    \n
 • DataBinding : False [But use RxBinding] ❌   \n
 • Dilever Updates : Siren ❌  \n
-• Unit Testing : [] ❌  \n
-• UI Testing : [] ❌  \n \n</string>
+• Unit Testing : [Junit , WireMock , Mockito and Powermock] ❌  \n
+• UI Testing : [Appium] ❌  \n \n</string>
 </resources>

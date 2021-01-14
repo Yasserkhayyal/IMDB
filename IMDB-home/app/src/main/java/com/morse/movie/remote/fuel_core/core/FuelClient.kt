@@ -5,6 +5,8 @@ import androidx.paging.PagedList
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.fuel.core.interceptors.loggingRequestInterceptor
+import com.morse.movie.cache.DSCacheManager
+import com.morse.movie.data.cache.CacheInterface
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponseDeserializer
 import com.morse.movie.data.entity.movieresponse.MovieResponse
@@ -18,13 +20,12 @@ import com.morse.movie.data.entity.personresponse.PersonProfileResponseDeseriali
 import com.morse.movie.data.entity.personresponse.PersonResponse
 import com.morse.movie.data.remote.RemoteInterface
 import com.morse.movie.remote.base.DataSourceManager
-import com.morse.movie.remote.retrofit_core.datasource.manager.FuelMoreDataSourceManager
-import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import com.morse.movie.utils.*
 import io.reactivex.Observable
 import java.lang.Exception
 
-class FuelClient (private var moreDataStoreManager : DataSourceManager) : RemoteInterface {
+class FuelClient (private var moreDataStoreManager : DataSourceManager ,
+                  private val cacheInterface: CacheInterface?= DSCacheManager.newInstance()) : RemoteInterface {
 
     init {
         FuelManager.instance.basePath = baseApi
@@ -39,6 +40,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieResponse) {
+                    cacheInterface?.addNewPopularMovieIntoCache( "2", value!!)
                     it?.onNext(value)
                 }
             })
@@ -53,6 +55,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieResponse) {
+                    cacheInterface?.addNewTopRatedMovieIntoCache( "3", value!!)
                     it?.onNext(value)
                 }
             })
@@ -67,6 +70,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieResponse) {
+                    cacheInterface?.addNewInComingMovieIntoCache( "4", value!!)
                     it?.onNext(value)
                 }
             })
@@ -81,6 +85,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieResponse) {
+                    cacheInterface?.addNewNowPlayingMovieIntoCache( "1", value!!)
                     it?.onNext(value)
                 }
             })
@@ -150,6 +155,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieDetailResponse) {
+                    cacheInterface?.addNewMovieDetailIntoCache("${movieId}" , value)
                     it?.onNext(value)
                 }
             })
@@ -164,6 +170,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieResponse) {
+                    cacheInterface?.addNewSimilarMovieIntoCache("${movieId}" , value)
                     it?.onNext(value)
                 }
             })
@@ -178,6 +185,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieReview) {
+                    cacheInterface?.addNewReviewsIntoCache("${movieId}" , value)
                     it?.onNext(value)
                 }
             })
@@ -192,6 +200,7 @@ class FuelClient (private var moreDataStoreManager : DataSourceManager) : Remote
                 }
 
                 override fun success(value: MovieVideoResponse) {
+                    cacheInterface?.addNewVideoIntoCache("${movieId}" , value)
                     it?.onNext(value)
                 }
             })

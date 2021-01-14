@@ -78,16 +78,26 @@
                 android:paddingHorizontal="2dp"
                 android:textAppearance="@style/amoiriFontItalic"
                 android:textColor="@android:color/white" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@android:color/transparent"
+                android:layout_marginHorizontal="@dimen/_1sdp"
+                android:layout_below="@id/moreCardDetail"
+                android:id="@+id/view"
+                />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:layout_below="@id/moreCardDetail"
+                android:layout_below="@id/view"
                 android:text="Go To Detail"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 android:id="@+id/goToDetailOfMovieDetailMoreButton"
                 android:textColor="@android:color/white"
-                android:textAppearance="@style/amoiriFontBold"
+                android:textAppearance="@style/amoiriFontBoldItalic"
                 />
 
         </RelativeLayout>

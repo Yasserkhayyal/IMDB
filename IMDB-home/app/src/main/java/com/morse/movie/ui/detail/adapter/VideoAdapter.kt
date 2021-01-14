@@ -62,7 +62,7 @@ class VideoAdapter (private var recyclerViewShape: RecyclerViewShape? = Recycler
             val url = youtubeThumbnailImage + result?.key + "/maxresdefault.jpg"
             Picasso.get()?.load(url)?.transform(
                 RoundedCornersTransformation(20 , 10)
-            )?.into(youtubeVideoPlayer, object : Callback {
+            )?.into(youtubeVideoPlayer ?: containerView?.findViewById(R.id.youtubeVideoPlayer) , object : Callback {
                 override fun onSuccess() {
                     videoImageLoading?.makeItOff()
                     playMovieButton?.showVisibilty()

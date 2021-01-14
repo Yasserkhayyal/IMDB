@@ -22,8 +22,6 @@ import com.morse.movie.domain.usecase.LoadInComingMovies
 import com.morse.movie.domain.usecase.LoadNowPlayingMovies
 import com.morse.movie.domain.usecase.LoadPopularMovies
 import com.morse.movie.domain.usecase.LoadTopRatedMovies
-import com.morse.movie.local.room_core.RoomClient
-import com.morse.movie.local.room_core.RoomManager
 import com.morse.movie.remote.retrofit_core.core.RetrofitClient
 import com.morse.movie.remote.retrofit_core.datasource.manager.RetrofitMoreDataSourceManager
 import com.morse.movie.ui.home.entities.HomeIntent
@@ -51,6 +49,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
 //        val roomManager = RoomManager.invoke(this)
 //        val localSource = RoomClient(roomManager)
 //        val localSource = RealmClient()
+//        val cacheManager = CacheManager.newInstance()
         val dataManager = RetrofitMoreDataSourceManager()
         val remoteSource = RetrofitClient(dataManager)
 //        val dataManager = FuelMoreDataSourceManager()

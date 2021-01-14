@@ -2,6 +2,8 @@ package com.morse.movie.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
+import com.morse.movie.cache.DSCacheManager
+import com.morse.movie.data.cache.CacheInterface
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.domain.repository.DataRepository
 import com.morse.movie.data.entity.movieresponse.MovieResponse
@@ -13,33 +15,47 @@ import com.morse.movie.data.local.LocalInterface
 import com.morse.movie.data.remote.RemoteInterface
 import io.reactivex.Observable
 
-class DataRepositoryImpl(private val remoteInterface: RemoteInterface? = null , private val localeInterface : LocalInterface? = null) : DataRepository {
+class DataRepositoryImpl(
+    private val remoteInterface: RemoteInterface? = null,
+    private val localeInterface: LocalInterface? = null,
+    private val cacheInterface: CacheInterface? = DSCacheManager.newInstance()
+) : DataRepository {
 
     override fun loadPopularMovies(): Observable<MovieResponse> {
-        return remoteInterface?.loadPopularMoviesFromRemoteSource()!!
+        return if (cacheInterface?.isExistInPopularCache("2") == true) {
+            Observable.just(cacheInterface?.getPopularMoviesFromCache("2"))
+        } else {
+            remoteInterface?.loadPopularMoviesFromRemoteSource()!!
+        }
     }
 
     override fun loadTopRatedMovies(): Observable<MovieResponse> {
-        return remoteInterface?.loadTopRatedMoviesFromRemoteSource()!!
+        return if (cacheInterface?.isExistInTopRatedCache("3") == true) Observable.just(
+            cacheInterface?.getTopRatedMoviesFromCache("3")
+        ) else remoteInterface?.loadTopRatedMoviesFromRemoteSource()!!
     }
 
     override fun loadNowPlayingMovies(): Observable<MovieResponse> {
-        return remoteInterface?.loadNowPlayingMoviesFromRemoteSource()!!
+        return if (cacheInterface?.isExistInNowPlayingCache("1") == true) Observable.just(
+            cacheInterface?.getNowPlayingMoviesFromCache("1")
+        ) else remoteInterface?.loadNowPlayingMoviesFromRemoteSource()!!
     }
 
     override fun loadNewComingMovies(): Observable<MovieResponse> {
-        return remoteInterface?.loadInComingMoviesFromRemoteSource()!!
+        return if (cacheInterface?.isExistInInComingCache("4") == true) Observable.just(
+            cacheInterface?.getInComingMoviesFromCache("4")
+        ) else remoteInterface?.loadInComingMoviesFromRemoteSource()!!
     }
 
-    override fun loadFavouriteMovies(): Observable< List<MovieDetailResponse>> {
+    override fun loadFavouriteMovies(): Observable<List<MovieDetailResponse>> {
         return localeInterface?.selectAllMoviesFromDataBase()!!
     }
 
-    override fun addMovieToFavourite( movie : MovieDetailResponse ): Observable<Boolean> {
-        return  localeInterface?.addMovieIntoDataBase(movie)!!
+    override fun addMovieToFavourite(movie: MovieDetailResponse): Observable<Boolean> {
+        return localeInterface?.addMovieIntoDataBase(movie)!!
     }
 
-    override fun removeMovieFromFavourite(movieId : Int): Observable<Boolean> {
+    override fun removeMovieFromFavourite(movieId: Int): Observable<Boolean> {
         return localeInterface?.removeMovieIntoDataBase(movieId)!!
     }
 
@@ -68,19 +84,27 @@ class DataRepositoryImpl(private val remoteInterface: RemoteInterface? = null , 
     }
 
     override fun loadMovieDetail(movieId: Int): Observable<MovieDetailResponse> {
-        return remoteInterface?.loadMovieDetailFromRemoteSource(movieId = movieId)!!
+        return if (cacheInterface?.isExistInDetailCache("${movieId}") == true) Observable.just(
+            cacheInterface?.getDetailMovieFromCache("${movieId}")
+        ) else remoteInterface?.loadMovieDetailFromRemoteSource(movieId = movieId)!!
     }
 
     override fun loadSimilarMovies(movieId: Int): Observable<MovieResponse> {
-        return remoteInterface?.loadSimilarMoviesFromRemoteSource(movieId)!!
+        return if (cacheInterface?.isExistInSimilarCache("${movieId}") == true) Observable.just(
+            cacheInterface?.getSimilarMoviesFromCache("${movieId}")
+        ) else remoteInterface?.loadSimilarMoviesFromRemoteSource(movieId)!!
     }
 
     override fun loadReviewMovies(movieId: Int): Observable<MovieReview> {
-        return remoteInterface?.loadReviewMoviesFromRemoteSource(movieId)!!
+        return if (cacheInterface?.isExistInReviewsCache("${movieId}") == true) Observable.just(
+            cacheInterface?.getReviewsMovieFromCache("${movieId}")
+        ) else remoteInterface?.loadReviewMoviesFromRemoteSource(movieId)!!
     }
 
     override fun loadVideoMovies(movieId: Int): Observable<MovieVideoResponse> {
-        return remoteInterface?.loadVideoMoviesFromRemoteSource(movieId)!!
+        return if (cacheInterface?.isExistInVideosCache("${movieId}") == true) Observable.just(
+            cacheInterface?.getVideosMovieFromCache("${movieId}")
+        ) else remoteInterface?.loadVideoMoviesFromRemoteSource(movieId)!!
     }
 
     override fun checkIfMovieExistInDataBase(movieId: Int): Observable<Boolean> {

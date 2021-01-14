@@ -6,6 +6,15 @@ apply plugin: 'realm-android'
 
 
 android {
+
+    signingConfigs {
+        release {
+            storeFile file('D:\\Android Projects\\IMDB-home\\IMDB-home\\from1to6key.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -17,6 +26,7 @@ android {
         multiDexEnabled true
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        proguardFiles
     }
 
     compileOptions {
@@ -31,7 +41,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
         }
     }
 
@@ -49,9 +64,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation kotlinVersion
-    implementation 'androidx.wear:wear:1.0.0'
     def lifecycle_version = "2.2.0"
-
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData

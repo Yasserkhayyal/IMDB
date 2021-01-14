@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -126,6 +127,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         setContentView(R.layout.activity_movie_detail)
         movieId = intent?.extras?.getInt(MOVIE_ID_kEY)
         movieDetailResponse = intent?.extras?.getParcelable(MOVIE_DETAIL_ID_kEY)
+
     }
 
     override fun onStart() {
