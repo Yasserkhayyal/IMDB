@@ -30,9 +30,18 @@
             <ImageView
                 android:layout_width="@dimen/_74sdp"
                 android:layout_height="@dimen/_112sdp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/ic_image_frame_white"/>
+
+            <ImageView
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/a"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_22sdp"
                 android:id="@+id/moreImagePoster"
                 />
             <com.wang.avi.AVLoadingIndicatorView
@@ -82,8 +91,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@android:color/black"
-                android:layout_marginHorizontal="@dimen/_1sdp"
+                android:background="@android:color/white"
                 android:layout_below="@id/moreCardDetail"
                 android:id="@+id/view"
                 />

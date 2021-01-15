@@ -1,9 +1,9 @@
 package com.morse.movie.ui.favourite.activity
 
-import com.morse.movie.R
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,9 +15,9 @@ import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.morse.movie.R
 import com.morse.movie.app.coordinator.MovieCoordinator
 import com.morse.movie.base.MviView
-import com.morse.movie.base.RecyclerViewShape
 import com.morse.movie.data.entity.moviedetailresponse.MovieDetailResponse
 import com.morse.movie.data.entity.movieresponse.Result
 import com.morse.movie.data.repository.DataRepositoryImpl
@@ -31,7 +31,6 @@ import com.morse.movie.ui.favourite.entities.FavouriteStatus
 import com.morse.movie.ui.favourite.viewmodel.FavouriteAnnotateProcessor
 import com.morse.movie.ui.favourite.viewmodel.FavouriteViewModel
 import com.morse.movie.ui.favourite.viewmodel.FavouriteViewModelFactory
-import com.morse.movie.ui.home.activity.MovieAdapter
 import com.morse.movie.ui.home.activity.MovieListener
 import com.morse.movie.utils.*
 import io.reactivex.Observable
@@ -80,7 +79,7 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
     private var removeAllMoviesIntentSubject =
         PublishSubject.create<FavouriteIntent.RemoveAllMoviesListIntent>()
     lateinit var compositeDisposable: CompositeDisposable
-    lateinit var popularMoviesAdapter: MovieAdapter
+    lateinit var popularMoviesAdapter: FavouriteMoviesAdapter
     var menuView : View ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,7 +100,7 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
     }
 
     private fun initAdapter (){
-        popularMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
+        popularMoviesAdapter = FavouriteMoviesAdapter(object : MovieListener {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
                 MovieCoordinator.navigateToDetailScreen(this@FavouriteActivity, movieResult?.id)
@@ -133,9 +132,13 @@ class FavouriteActivity : AppCompatActivity(), MviView<FavouriteIntent, Favourit
     }
 
     private fun configreAdapterToRecyclerview() {
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
         favouriteMoviesRecyclerView?.adapter = popularMoviesAdapter
         favouriteMoviesRecyclerView?.layoutManager =
-            AutoFitGridLayoutManager(this, 400)
+            AutoFitGridLayoutManager(this,width?.div(2)?.minus(100))
     }
 
     override fun onBackPressed() {

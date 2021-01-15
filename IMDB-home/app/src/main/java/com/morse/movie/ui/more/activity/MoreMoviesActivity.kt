@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.jakewharton.rxbinding2.view.RxView
@@ -47,9 +49,11 @@ import java.util.concurrent.TimeUnit
 class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
     SearchView.OnQueryTextListener {
 
+    private var oldSnapshot: PagedList<Result>? = null
     private var movieView: View? = null
     private var currentMovieId: Int? = 0
     private var moviePosition: Int? = null
+    private var colorUtils: ColorUtils? = null
     private val moreViewMode: MoreViewModel by lazy {
 
 //        val roomManager = RoomManager.invoke(this)
@@ -91,16 +95,16 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
     override fun onStart() {
         super.onStart()
         compositeDisposable = CompositeDisposable()
-        initAdapter ()
+        initAdapter()
         configureReceyclerViewWithAdapter()
         bindViewModerWithOurView()
-        configureViewListeners ()
+        configureViewListeners()
         moreMoviesLoading?.makeItOn()
         callOnPagination()
     }
 
-    private fun initAdapter (){
-
+    private fun initAdapter() {
+        colorUtils = ColorUtils(this)
         moreMovieAdapter = MoreMovieAdapter(object : MovieListener {
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
                 currentMovieId = movieResult?.id!!
@@ -123,10 +127,10 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
                     bindMovieDetailToPopularCard(movieResult, color)
                 }
             }
-        })
+        }, colorUtils!!)
     }
 
-    private fun configureViewListeners () {
+    private fun configureViewListeners() {
 
         moreActivityActionBar?.setNavigationOnClickListener {
             if (cardOfMore?.isGone == false) {
@@ -208,7 +212,7 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
     }
 
     private fun bindMovieDetailToPopularCard(movie: Result, color: Int?) {
-        moreImagePoster?.loadImage(movie?.poster_path , movie?.title , moreImageLoading)
+        moreImagePoster?.loadImage(movie?.poster_path, movie?.title, moreImageLoading)
         cardOfMore?.setCardBackgroundColor(color!!)
         moreCardName?.setText(movie?.title)
         moreCardDetail?.setText(movie?.overview)
@@ -269,7 +273,8 @@ class MoreMoviesActivity : AppCompatActivity(), MviView<MoreIntent, MoreState>,
             moreMoviesRecyclerView?.hideVisibilty()
             moreMoviesLoading?.makeItOff()
             moreMoviesErrorContainer?.showVisibilty()
-        } else if (state?.data != null) {
+        }
+        else if (state?.data != null) {
 
             moreMoviesRecyclerView?.showVisibilty()
             moreMoviesLoading?.makeItOff()

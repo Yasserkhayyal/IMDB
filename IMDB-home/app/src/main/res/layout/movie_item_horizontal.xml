@@ -19,11 +19,20 @@
         />
 
     <ImageView
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_190sdp"
+        android:src="@drawable/ic_image_frame_green"
+        android:id="@+id/movieFrameMoreView"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/_20sdp"
+        />
+
+    <ImageView
         android:id="@+id/movieImage"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_150sdp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_35sdp"
         android:src="@drawable/a" />
 
     <com.wang.avi.AVLoadingIndicatorView
@@ -43,7 +52,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_toRightOf="@id/movieImage"
+        android:layout_toRightOf="@id/movieFrameMoreView"
         android:layout_centerVertical="true"
         >
 
@@ -78,9 +87,9 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@id/movieImage"
-        android:layout_alignBottom="@id/movieImage"
-        android:layout_marginBottom="-25dp"
+        android:layout_alignRight="@id/movieFrameMoreView"
+        android:layout_alignBottom="@id/movieFrameMoreView"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginLeft="@dimen/_5sdp"
         android:background="@drawable/circule_progress"
         android:elevation="4dp">

@@ -10,16 +10,16 @@
     android:paddingBottom="30dp">
 
     <ImageView
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_170sdp"
         android:src="@drawable/ic_image_frame"
         android:id="@+id/movieImageFrameView"
         />
 
     <ImageView
         android:id="@+id/movieImage"
-        android:layout_width="@dimen/_115sdp"
-        android:layout_height="@dimen/_170sdp"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_140sdp"
         android:layout_marginLeft="@dimen/_17sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:src="@drawable/a" />
@@ -30,7 +30,7 @@
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_85sdp"
+        android:layout_marginTop="@dimen/_80sdp"
         android:visibility="visible"
         app:indicatorColor="@color/colorOfGreen"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
