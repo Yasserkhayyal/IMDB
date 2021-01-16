@@ -75,6 +75,7 @@ dependencies {
     implementation fuel
     implementation glide
     implementation picasso
+    implementation customSwitch
     implementation legacy
     implementation discreteScrollView
     annotationProcessor glideCompile

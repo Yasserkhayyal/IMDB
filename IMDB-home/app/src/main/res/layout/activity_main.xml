@@ -25,7 +25,7 @@
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginBottom="30dp"
         android:visibility="gone"
-        app:cardBackgroundColor="#1C1C1C"
+        app:cardBackgroundColor="@color/colorOfCard"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
         tools:visibility="visible">
@@ -78,7 +78,7 @@
                 android:paddingEnd="42dp"
                 android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorOfTextView"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -92,7 +92,7 @@
                 android:paddingHorizontal="2dp"
                 android:textAllCaps="false"
                 android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorOfTextView"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -103,7 +103,7 @@
                 android:background="@drawable/detail_card_bottom_raduis_bg"
                 android:text="Go To Detail"
                 android:textAppearance="@style/amoiriFontBoldItalic"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorOfTextView"
                 android:textSize="@dimen/_12ssp" />
         </RelativeLayout>
 
@@ -219,7 +219,7 @@
                     android:layout_toRightOf="@id/moviesCirculeImageView"
                     android:text="Movies"
                     android:textAppearance="@style/amoiriFontBoldItalic"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/colorOfTextView" />
 
             </RelativeLayout>
 
@@ -256,7 +256,7 @@
                         android:layout_toRightOf="@id/redIndicatorView"
                         android:text="Popular"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <Button
                         android:id="@+id/redmoreIcon"
@@ -270,7 +270,7 @@
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
 
                 </RelativeLayout>
@@ -321,7 +321,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="Fail to Load Popular Movies"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/retryPopularButton"
@@ -334,7 +334,7 @@
                         android:text="Retry"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                 </RelativeLayout>
 
@@ -374,7 +374,7 @@
                         android:layout_toRightOf="@id/greenIndicatorView"
                         android:text="Top Rated"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <Button
                         android:id="@+id/greenmoreIcon"
@@ -388,7 +388,7 @@
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
 
                 </RelativeLayout>
@@ -439,7 +439,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="Fail to Load Top Rated Movies"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/retryTopRatedButton"
@@ -452,7 +452,7 @@
                         android:text="Retry"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                 </RelativeLayout>
 
@@ -492,7 +492,7 @@
                         android:layout_toRightOf="@id/amberIndicatorView"
                         android:text="Incomming"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <Button
                         android:id="@+id/ambermoreIcon"
@@ -506,7 +506,7 @@
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
 
                 </RelativeLayout>
@@ -557,7 +557,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="Fail to Load In Coming Movies"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/retryInComingButton"
@@ -570,7 +570,7 @@
                         android:text="Retry"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView"/>
 
                 </RelativeLayout>
 
@@ -609,7 +609,7 @@
                         android:layout_toRightOf="@id/grayIndicatorView"
                         android:text="Now Playing"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <Button
                         android:id="@+id/graymoreIcon"
@@ -623,7 +623,7 @@
                         android:text="More"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontRegular"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                 </RelativeLayout>
 
@@ -673,7 +673,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="Fail to Load Now Playing Movies"
                         android:textAppearance="@style/amoiriFontBoldItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/retryNowPlayingButton"
@@ -686,7 +686,7 @@
                         android:text="Retry"
                         android:textAllCaps="false"
                         android:textAppearance="@style/amoiriFontItalic"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/colorOfTextView" />
 
                 </RelativeLayout>
 
@@ -712,7 +712,7 @@
                 <!--                    android:layout_height="wrap_content"-->
                 <!--                    android:text="Tvs"-->
                 <!--                    android:textAppearance="@style/amoiriFontBoldItalic"-->
-                <!--                    android:textColor="@android:color/white"-->
+                <!--                    android:textColor="@color/colorOfTextView"-->
                 <!--                    android:layout_toRightOf="@id/tvCirculeImageView"-->
                 <!--                    android:layout_marginLeft="@dimen/_10sdp"-->
                 <!--                    android:layout_centerVertical="true"-->
@@ -777,5 +777,15 @@
         android:transitionName="favShared"
         app:icon="@drawable/ic_baseline_favorite_24"
         app:iconTint="@color/colorOfRed" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_180sdp"
+        android:layout_gravity="top|left"
+        android:clickable="true"
+        android:layout_marginTop="@dimen/_minus40sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:id="@+id/modeLayout"
+        android:src="@drawable/ic_chain_body"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -67,7 +67,7 @@
             android:maxLines="1"
             android:paddingLeft="10dp"
             android:textAppearance="@style/amoiriFontBold"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorOfTextView"
             android:textSize="@dimen/_15ssp"
             tools:text="Mandalorian" />
 
@@ -78,7 +78,7 @@
             android:layout_below="@id/movieName"
             android:paddingLeft="10dp"
             android:textAppearance="@style/amoiriFontBold"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorOfTextView"
             android:textSize="@dimen/_12ssp"
             tools:text="Sep 14 , 2017" />
 
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textAppearance="@style/amoiriFontBoldItalic"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorOfTextView"
             android:textSize="@dimen/_7ssp"
             tools:text="86.0" />
 

@@ -71,7 +71,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorOfTextView"
                 />
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 android:textAllCaps="false"
                 android:paddingHorizontal="2dp"
                 android:textAppearance="@style/amoiriFontItalic"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/colorOfTextView" />
 
             <View
                 android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                 android:text="Go To Detail"
                 android:textSize="@dimen/_14ssp"
                 android:id="@+id/goToDetailOfMovieDetailMoreButton"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorOfTextView"
                 android:textAppearance="@style/amoiriFontBoldItalic"
                 />
 
@@ -115,12 +115,12 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorOfToolbar"
         app:theme="@style/ActionBarThemeOverlay"
         android:id="@+id/moreActivityActionBar"
         app:title="Popular Movies"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:titleTextColor="@android:color/white"
+        app:titleTextColor="@color/colorOfTextView"
         app:titleTextAppearance="@style/amoiriFontBoldItalic"
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
         />
@@ -156,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fail to Load Popular Movies"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorOfTextView"
             android:textAppearance="@style/amoiriFontBoldItalic"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/moreWarningImage"
@@ -169,7 +169,7 @@
             android:layout_centerHorizontal="true"
             android:text="Retry"
             android:clickable="true"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorOfTextView"
             android:background="@drawable/retry_button_bg"
             android:textAllCaps="false"
             android:id="@+id/retryMoreButton"

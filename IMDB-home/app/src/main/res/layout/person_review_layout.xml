@@ -65,7 +65,7 @@
         android:layout_marginTop="@dimen/_1sdp"
         tools:text="Mohamed Morse asddasdasdasdasdasdasdasdasdasda sdasdasdasdsdasdasd \n Mohamed Morse asddasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasd"
         android:textAppearance="@style/amoiriFontItalic"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorOfTextView"
         android:lines="3"
         android:maxLines="3"
         android:ellipsize="end"

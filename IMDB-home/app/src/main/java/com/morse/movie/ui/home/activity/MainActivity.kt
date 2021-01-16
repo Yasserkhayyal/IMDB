@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.transition.platform.MaterialArcMotion
@@ -298,7 +299,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
         myProfile?.isGone = false
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+
     private fun returnCardToOriginPositionWithNavigationAction() {
         android.transition.TransitionManager.beginDelayedTransition(
             homeScreenRoot,
@@ -311,6 +312,22 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun configureClicksOnButtons() {
+        RxView.clicks(modeLayout)?.throttleFirst(500 , TimeUnit.MILLISECONDS)?.subscribe {
+            if( Build.VERSION.SDK_INT >=  Build.VERSION_CODES.Q) {
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+//                    lampImageView?.setImageResource(R.drawable.ic_off_lamp)
+//                    modeLayout?.setBackgroundResource(R.drawable.dark_mode_bg)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                } else {
+//                    lampImageView?.setImageResource(R.drawable.ic_on_lamp)
+//                    modeLayout?.setBackgroundResource(R.drawable.light_mode_bg)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+            }
+            else {
+                Toast.makeText(this , "Unfortinatlly , Your Phone didn`t support dark mode . " , Toast.LENGTH_SHORT).show()
+            }
+        }?.addTo(compositeDisposable)
 
         RxView.clicks(goToFavouriteButton)?.throttleLatest(500, TimeUnit.MILLISECONDS)
             ?.subscribe {

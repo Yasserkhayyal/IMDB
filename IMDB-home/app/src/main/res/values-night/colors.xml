@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorOfReviewWhiteFrame">#FF9800</color>
-    <color name="colorOfToolbar">#DCDCDC</color>
-    <color name="colorOfTextView">#000000</color>
-    <color name="colorPrimary">#FFFFFF</color>
+
+    <color name="colorOfReviewWhiteFrame">#FFFFFF</color>
+    <color name="colorOfToolbar">#000000</color>
+    <color name="colorOfTextView">#ffffff</color>
+    <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryWith100Ingrediant">#00000000</color>
     <color name="colorPrimary75Ingrediant">#33000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#000000</color>
+    <color name="colorAccent">#FFFFFF</color>
     <color name="colorOfAmber">#FF9800</color>
-    <color name="colorOfCard">#DCDCDC</color>
+    <color name="colorOfCard">#1C1C1C</color>
     <color name="colorOfGreen">#4CAF50</color>
-    <color name="colorOfGray">#DCDCDC</color>
+    <color name="colorOfGray">#898A8C</color>
     <color name="colorOfBlue">#2196F3</color>
     <color name="colorOfRed">#F30000</color>
     <color name="colorOfRedSpecial">#F44336</color>
     <color name="colorOfBlueSpecial">#2196F3</color>
     <color name="green">#37CC75</color>
+
 </resources>
