@@ -15,6 +15,8 @@ buildscript {
     ext {
         def koinVersion = "2.1.6"
         def fuelVersion = "2.3.1"
+        mockitoTest = ['io.mockk:mockk:1.10.2' ,'org.mockito:mockito-core:2.19.0' , 'org.mockito:mockito-inline:2.13.0']
+        mockitoTestImplementation = ["io.mockk:mockk-android:1.10.2" , 'org.mockito:mockito-android:2.7.22']
         espressoTest = ['androidx.test.espresso:espresso-core:3.2.0']
         junitTest = ['androidx.test.ext:junit:1.1.1']
         junitImplementation = ['junit:junit:4.12']
@@ -47,7 +49,7 @@ buildscript {
         dotIndicator =[
                 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
         ]
-        customSwitch = ["com.kyleduo.switchbutton:library:2.0.3"]
+        customSwitch = ["com.kyleduo.switchbutton:library:2.0.2"]
         multidexLibrary = ["com.android.support:multidex:1.0.3"]
         glide = [
                 'com.github.bumptech.glide:glide:4.11.0'

@@ -28,7 +28,7 @@
         app:cardBackgroundColor="@color/colorOfCard"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -180,6 +180,135 @@
             </RelativeLayout>
 
         </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardOfSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#F6C700"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        tools:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Dark Mode"
+                android:textAllCaps="false"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:id="@+id/darkModeTitleTextView"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/darkModeBody"
+                android:layout_below="@id/darkModeTitleTextView"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/amoiriFontItalic"
+                    android:textColor="@android:color/black"
+                    android:text="Light Mode"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/darkModeSwitch"
+                    app:kswTintColor="@color/colorOfRedSpecial"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/amoiriFontItalic"
+                    android:textColor="@android:color/black"
+                    android:text="Dark Mode"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Localization"
+                android:textAllCaps="false"
+                android:textAppearance="@style/amoiriFontItalic"
+                android:textColor="@android:color/black"
+                android:layout_below="@id/darkModeBody"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:id="@+id/localizationTitleTextView"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/localizationModeBody"
+                android:layout_below="@id/localizationTitleTextView"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/amoiriFontItalic"
+                    android:textColor="@android:color/black"
+                    android:text="English Language"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/localizationSwitch"
+                    app:kswTintColor="@color/colorOfRedSpecial"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/amoiriFontItalic"
+                    android:textColor="@android:color/black"
+                    android:text="Arabic Language"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -778,14 +907,38 @@
         app:icon="@drawable/ic_baseline_favorite_24"
         app:iconTint="@color/colorOfRed" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_gravity="top|left"
-        android:clickable="true"
-        android:layout_marginTop="@dimen/_minus40sdp"
+    <RelativeLayout
+        android:id="@+id/settingLayout"
+        android:layout_width="@dimen/_75sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:id="@+id/modeLayout"
-        android:src="@drawable/ic_chain_body"/>
+        android:background="@drawable/profile_bg"
+        android:clickable="true"
+        android:padding="@dimen/_5sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_toRightOf="@id/settingImageView"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="Setting"
+            android:textAppearance="@style/amoiriFontItalic"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/settingImageView"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_setting" />
+
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

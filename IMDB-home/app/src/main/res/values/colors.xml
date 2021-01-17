@@ -3,6 +3,7 @@
     <color name="colorOfReviewWhiteFrame">#FF9800</color>
     <color name="colorOfToolbar">#DCDCDC</color>
     <color name="colorOfTextView">#000000</color>
+    <color name="colorOfBackIcon">#FFFFFF</color>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryWith100Ingrediant">#00000000</color>
     <color name="colorPrimary75Ingrediant">#33000000</color>

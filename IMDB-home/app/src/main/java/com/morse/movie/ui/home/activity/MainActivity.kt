@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.widget.RxCompoundButton
 import com.morse.movie.R
 import com.morse.movie.app.coordinator.MovieCoordinator
 import com.morse.movie.base.MviView
@@ -290,7 +291,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPositionOfProfile(duration: Long) {
+    private fun returnCardToOriginPositionOfSetting(duration: Long) {
         android.transition.TransitionManager.beginDelayedTransition(
             homeScreenRoot,
             getTransform(meCard, myProfile, duration)
@@ -299,6 +300,15 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
         myProfile?.isGone = false
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun returnCardToOriginPositionOfProfile(duration: Long) {
+        android.transition.TransitionManager.beginDelayedTransition(
+            homeScreenRoot,
+            getTransform(cardOfSetting, settingLayout, duration)
+        )
+        cardOfSetting?.isGone = true
+        settingLayout?.isGone = false
+    }
 
     private fun returnCardToOriginPositionWithNavigationAction() {
         android.transition.TransitionManager.beginDelayedTransition(
@@ -310,23 +320,37 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
         navigateToDetailScreen(currentMovieId)
     }
 
+    private fun manageDarkMode (isEnabled : Boolean){
+        if( Build.VERSION.SDK_INT >=  Build.VERSION_CODES.Q) {
+            if (isEnabled == false) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
+        else {
+            Toast.makeText(this , "Unfortinatlly , Your Phone didn`t support dark mode . " , Toast.LENGTH_SHORT).show()
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun configureClicksOnButtons() {
-        RxView.clicks(modeLayout)?.throttleFirst(500 , TimeUnit.MILLISECONDS)?.subscribe {
-            if( Build.VERSION.SDK_INT >=  Build.VERSION_CODES.Q) {
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-//                    lampImageView?.setImageResource(R.drawable.ic_off_lamp)
-//                    modeLayout?.setBackgroundResource(R.drawable.dark_mode_bg)
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                } else {
-//                    lampImageView?.setImageResource(R.drawable.ic_on_lamp)
-//                    modeLayout?.setBackgroundResource(R.drawable.light_mode_bg)
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
-            }
-            else {
-                Toast.makeText(this , "Unfortinatlly , Your Phone didn`t support dark mode . " , Toast.LENGTH_SHORT).show()
-            }
+        RxView.clicks(settingLayout)?.throttleFirst(500 , TimeUnit.MILLISECONDS)?.subscribe {
+            animateCardOfSetting(settingLayout)
+        }?.addTo(compositeDisposable)
+
+        RxView.clicks(cardOfSetting)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
+
+            returnCardToOriginPositionOfProfile(650)
+
+        }?.addTo(compositeDisposable)
+
+        RxCompoundButton.checkedChanges(darkModeSwitch)?.skipInitialValue()?.throttleFirst(500 , TimeUnit.MILLISECONDS)?.subscribe {
+            manageDarkMode(it)
+        }?.addTo(compositeDisposable)
+
+        RxCompoundButton.checkedChanges(localizationSwitch)?.throttleFirst(500 , TimeUnit.MILLISECONDS)?.subscribe {
+
         }?.addTo(compositeDisposable)
 
         RxView.clicks(goToFavouriteButton)?.throttleLatest(500, TimeUnit.MILLISECONDS)
@@ -485,6 +509,18 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
         )
         view?.isGone = true
         meCard?.isGone = false
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public fun animateCardOfSetting(view: View) {
+        movieView = view
+        android.transition.TransitionManager.beginDelayedTransition(
+            homeScreenRoot,
+            getTransform(view, cardOfSetting, 650)
+        )
+        view?.isGone = true
+        cardOfSetting?.isGone = false
 
     }
 

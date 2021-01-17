@@ -4,6 +4,7 @@
     <color name="colorOfReviewWhiteFrame">#FFFFFF</color>
     <color name="colorOfToolbar">#000000</color>
     <color name="colorOfTextView">#ffffff</color>
+    <color name="colorOfBackIcon">#000000</color>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryWith100Ingrediant">#00000000</color>
     <color name="colorPrimary75Ingrediant">#33000000</color>

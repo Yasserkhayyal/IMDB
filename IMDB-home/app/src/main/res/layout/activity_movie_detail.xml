@@ -27,11 +27,12 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:backgroundTint="@android:color/white"
+                android:background="@color/colorOfTextView"
+                android:backgroundTint="@color/colorOfTextView"
                 android:src="@drawable/ic_baseline_keyboard_backspace_24"
-                app:backgroundTint="@android:color/white"
+                app:backgroundTint="@color/colorOfTextView"
                 app:fabSize="mini"
-                app:tint="@android:color/black" />
+                app:tint="@color/colorOfBackIcon" />
 
             <ImageView
                 android:id="@+id/movieDetailBackgroundImageView"
