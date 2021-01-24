@@ -97,6 +97,7 @@ dependencies {
     implementation avlLoadingLibrary
     implementation cardLayoutManager
     implementation motion
+    implementation youtubeVideoPlayer
     implementation material
     implementation navigator
     implementation recyclerview

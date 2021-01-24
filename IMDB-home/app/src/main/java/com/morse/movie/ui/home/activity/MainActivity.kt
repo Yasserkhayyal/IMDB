@@ -294,20 +294,22 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
     private fun returnCardToOriginPositionOfSetting(duration: Long) {
         android.transition.TransitionManager.beginDelayedTransition(
             homeScreenRoot,
-            getTransform(meCard, myProfile, duration)
-        )
-        meCard?.isGone = true
-        myProfile?.isGone = false
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPositionOfProfile(duration: Long) {
-        android.transition.TransitionManager.beginDelayedTransition(
-            homeScreenRoot,
             getTransform(cardOfSetting, settingLayout, duration)
         )
         cardOfSetting?.isGone = true
         settingLayout?.isGone = false
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun returnCardToOriginPositionOfProfile(duration: Long) {
+
+        android.transition.TransitionManager.beginDelayedTransition(
+            homeScreenRoot,
+            getTransform(meCard, myProfile, duration)
+        )
+        meCard?.isGone = true
+        myProfile?.isGone = false
+
     }
 
     private fun returnCardToOriginPositionWithNavigationAction() {
@@ -341,7 +343,7 @@ class MainActivity : AppCompatActivity(), MviView<HomeIntent, HomeState> {
 
         RxView.clicks(cardOfSetting)?.throttleLatest(500, TimeUnit.MILLISECONDS)?.subscribe {
 
-            returnCardToOriginPositionOfProfile(650)
+            returnCardToOriginPositionOfSetting(650)
 
         }?.addTo(compositeDisposable)
 

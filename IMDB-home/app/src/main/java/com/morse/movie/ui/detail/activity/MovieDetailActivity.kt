@@ -45,6 +45,10 @@ import com.morse.movie.ui.detail.viewmodel.DetailViewModelFactory
 import com.morse.movie.ui.home.activity.MovieAdapter
 import com.morse.movie.ui.home.activity.MovieListener
 import com.morse.movie.utils.*
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import io.reactivex.Observable
@@ -117,6 +121,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     }
     private var currentMovieId: Int? = null
     private lateinit var movieView: View
+    private var youtubePlayerManager : YouTubePlayer?= null
     private var movieDetailResponse: MovieDetailResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,6 +133,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     override fun onStart() {
         super.onStart()
         compositeDisposable = CompositeDisposable()
+        initializeYoutubeVideo()
         initAdapters ()
         configureViewListeners ()
         manageExtendedFabStatus ()
@@ -181,7 +187,8 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                                     loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
                                     // Call for Api
                                 }?.addTo(compositeDisposable)
-                        } else {
+                        }
+                        else {
                             animateCard(movieDetailRoot , cardOfPersonDetail , card!!)
                             loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
                             // Call for Api
@@ -200,10 +207,85 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                     data: com.morse.movie.data.entity.movievideosresponse.Result?,
                     color: Int?
                 ) {
-                    data?.key?.openYoutubeVideo(this@MovieDetailActivity)
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        youtubePlayerManager?.loadVideo(data?.key!! , 0.0f)
+                        if (cardOfYoutubeVideoPlayer?.visibility == View.VISIBLE) {
+                            returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , card!! ,200)
+                            Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
+                                ?.subscribeOn(AndroidSchedulers.mainThread())
+                                ?.observeOn(AndroidSchedulers.mainThread())
+                                ?.subscribe {
+                                    animateCard(movieDetailRoot , cardOfYoutubeVideoPlayer , card)
+                                    loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                                    // Call for Api
+                                }?.addTo(compositeDisposable)
+                        }
+                        else {
+                            animateCard(movieDetailRoot , cardOfYoutubeVideoPlayer , card!!)
+                            // Call for Api
+                        }
+                    }
+
+                    //data?.key?.openYoutubeVideo(this@MovieDetailActivity)
                 }
             })
 
+    }
+
+    private fun initializeYoutubeVideo (){
+        youtube_player_view?.
+        initialize(object : YouTubePlayerListener{
+            override fun onApiChange(youTubePlayer: YouTubePlayer) {
+
+            }
+
+            override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+
+            }
+
+            override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+
+            }
+
+            override fun onPlaybackQualityChange(
+                youTubePlayer: YouTubePlayer,
+                playbackQuality: PlayerConstants.PlaybackQuality
+            ) {
+
+            }
+
+            override fun onPlaybackRateChange(
+                youTubePlayer: YouTubePlayer,
+                playbackRate: PlayerConstants.PlaybackRate
+            ) {
+            }
+
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youtubePlayerManager = youTubePlayer
+            }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+
+            }
+
+            override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+
+            }
+
+            override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
+
+            }
+
+            override fun onVideoLoadedFraction(
+                youTubePlayer: YouTubePlayer,
+                loadedFraction: Float
+            ) {
+
+            }
+        })
     }
 
     private fun configureViewListeners (){
@@ -235,6 +317,18 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         cardOfDeleteMovieFromFavourite?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
+            }
+        }
+        closeVideoFab?.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                youtubePlayerManager?.pause()
+                returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
+            }
+        }
+        cardOfYoutubeVideoPlayer?.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                youtubePlayerManager?.pause()
+                returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
             }
         }
         cancelDeletButton?.setOnClickListener {
@@ -487,6 +581,11 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
             returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
         }
 
+        else if (cardOfYoutubeVideoPlayer?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
+            youtube_player_view?.release()
+        }
+
         else {
             this?.finish()
         }
@@ -592,7 +691,12 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
             returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
         }
+        else if (cardOfYoutubeVideoPlayer?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
+
+        }
         compositeDisposable?.dispose()
+        youtube_player_view?.release()
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

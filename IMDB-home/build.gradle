@@ -32,6 +32,7 @@ buildscript {
                 'com.squareup.retrofit2:retrofit:2.6.0' ,
                 "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
         ]
+        youtubeVideoPlayer = ['com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5']
         fuel = ["com.github.kittinunf.fuel:fuel:$fuelVersion" ,
                 "com.github.kittinunf.fuel:fuel-android:$fuelVersion" ,
                 "com.github.kittinunf.fuel:fuel-rxjava:$fuelVersion" ,

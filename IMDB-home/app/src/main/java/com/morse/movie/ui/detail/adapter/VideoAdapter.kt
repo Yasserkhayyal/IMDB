@@ -75,7 +75,7 @@ class VideoAdapter (private var recyclerViewShape: RecyclerViewShape? = Recycler
 
             })
             videoCard?.setOnClickListener {
-                listener?.onItemPressed(it , result)
+                listener?.onItemPressed(playMovieButton , result)
             }
 
             playMovieButton?.setOnClickListener {
