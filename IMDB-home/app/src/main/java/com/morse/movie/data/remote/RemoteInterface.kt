@@ -39,4 +39,5 @@ interface RemoteInterface {
     public fun loadVideoMoviesFromRemoteSource (movieId : Int) : Observable<MovieVideoResponse>
 
     public fun loadUserProfileFromRemoteSource (persionId : String) : Observable<PersonResponse>
+
 }

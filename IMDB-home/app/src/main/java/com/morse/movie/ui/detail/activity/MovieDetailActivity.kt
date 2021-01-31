@@ -113,7 +113,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
             loadMovieVideos,
             addMovieToDataBase,
             removeMovieFromFavourites,
-            checkIfExistInDatabase ,
+            checkIfExistInDatabase,
             loadPersonProfile
         )
         val detailViewModelFactory = DetailViewModelFactory(detailAnnotateProcessor)
@@ -121,28 +121,29 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     }
     private var currentMovieId: Int? = null
     private lateinit var movieView: View
-    private var youtubePlayerManager : YouTubePlayer?= null
+    private var youtubePlayerManager: YouTubePlayer? = null
     private var movieDetailResponse: MovieDetailResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        loadExtraData ()
+
+        initializeYoutubeVideo()
+        loadExtraData()
     }
 
     override fun onStart() {
         super.onStart()
         compositeDisposable = CompositeDisposable()
-        initializeYoutubeVideo()
-        initAdapters ()
-        configureViewListeners ()
-        manageExtendedFabStatus ()
+        initAdapters()
+        configureViewListeners()
+        manageExtendedFabStatus()
         configureRecyclerViewsMoviesAdapters()
         bindOurViewWithViewModel()
         executeLoadAllData()
     }
 
-    private fun initAdapters (){
+    private fun initAdapters() {
         similarMoviesAdapter = MovieAdapter(RecyclerViewShape.VERTICAL, object : MovieListener {
 
             override fun onMovieClicks(movieCard: View, movieResult: Result, color: Int?) {
@@ -150,16 +151,21 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                 currentMovieId = movieResult?.id!!
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     if (cardOfPopularDetail?.visibility == View.VISIBLE) {
-                        returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieCard ,200)
+                        returnCardToOriginPosition(
+                            movieDetailRoot,
+                            cardOfPopularDetail,
+                            movieCard,
+                            200
+                        )
                         Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
                             ?.subscribeOn(AndroidSchedulers.mainThread())
                             ?.observeOn(AndroidSchedulers.mainThread())
                             ?.subscribe {
-                                animateCard(movieDetailRoot , cardOfPopularDetail , movieCard)
+                                animateCard(movieDetailRoot, cardOfPopularDetail, movieCard)
                                 bindMovieDetailToPopularCard(movieResult)
                             }?.addTo(compositeDisposable)
                     } else {
-                        animateCard(movieDetailRoot , cardOfPopularDetail , movieCard)
+                        animateCard(movieDetailRoot, cardOfPopularDetail, movieCard)
                         bindMovieDetailToPopularCard(movieResult)
                     }
                 }
@@ -178,19 +184,31 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         if (cardOfPersonDetail?.visibility == View.VISIBLE) {
-                            returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , card!! ,200)
+                            returnCardToOriginPosition(
+                                movieDetailRoot,
+                                cardOfPersonDetail,
+                                card!!,
+                                200
+                            )
                             Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
                                 ?.subscribeOn(AndroidSchedulers.mainThread())
                                 ?.observeOn(AndroidSchedulers.mainThread())
                                 ?.subscribe {
-                                    animateCard(movieDetailRoot , cardOfPersonDetail , card)
-                                    loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                                    animateCard(movieDetailRoot, cardOfPersonDetail, card)
+                                    loadPersonProfileIntentSubject?.onNext(
+                                        DetailIntent.LoadUserProfileIntent(
+                                            data?.id!!
+                                        )
+                                    )
                                     // Call for Api
                                 }?.addTo(compositeDisposable)
-                        }
-                        else {
-                            animateCard(movieDetailRoot , cardOfPersonDetail , card!!)
-                            loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                        } else {
+                            animateCard(movieDetailRoot, cardOfPersonDetail, card!!)
+                            loadPersonProfileIntentSubject?.onNext(
+                                DetailIntent.LoadUserProfileIntent(
+                                    data?.id!!
+                                )
+                            )
                             // Call for Api
                         }
                     }
@@ -208,20 +226,28 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                     color: Int?
                 ) {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        youtubePlayerManager?.loadVideo(data?.key!! , 0.0f)
+                        youtubePlayerManager?.loadVideo(data?.key!!, 0.0f)
                         if (cardOfYoutubeVideoPlayer?.visibility == View.VISIBLE) {
-                            returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , card!! ,200)
+                            returnCardToOriginPosition(
+                                movieDetailRoot,
+                                cardOfYoutubeVideoPlayer,
+                                card!!,
+                                200
+                            )
                             Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
                                 ?.subscribeOn(AndroidSchedulers.mainThread())
                                 ?.observeOn(AndroidSchedulers.mainThread())
                                 ?.subscribe {
-                                    animateCard(movieDetailRoot , cardOfYoutubeVideoPlayer , card)
-                                    loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
+                                    animateCard(movieDetailRoot, cardOfYoutubeVideoPlayer, card)
+                                    loadPersonProfileIntentSubject?.onNext(
+                                        DetailIntent.LoadUserProfileIntent(
+                                            data?.id!!
+                                        )
+                                    )
                                     // Call for Api
                                 }?.addTo(compositeDisposable)
-                        }
-                        else {
-                            animateCard(movieDetailRoot , cardOfYoutubeVideoPlayer , card!!)
+                        } else {
+                            animateCard(movieDetailRoot, cardOfYoutubeVideoPlayer, card!!)
                             // Call for Api
                         }
                     }
@@ -232,9 +258,8 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     }
 
-    private fun initializeYoutubeVideo (){
-        youtube_player_view?.
-        initialize(object : YouTubePlayerListener{
+    private fun initializeYoutubeVideo() {
+        youtube_player_view?.initialize(object : YouTubePlayerListener {
             override fun onApiChange(youTubePlayer: YouTubePlayer) {
 
             }
@@ -288,52 +313,73 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         })
     }
 
-    private fun configureViewListeners (){
+    private fun configureViewListeners() {
         navigateBackFab?.setOnClickListener {
             if (cardOfPopularDetail?.isGone == false) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
-            }
-
-            else if (cardOfPersonDetail?.isGone == false) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
-            }
-            else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
-            }
-            else {
+                returnCardToOriginPosition(movieDetailRoot, cardOfPopularDetail, movieView, 650)
+            } else if (cardOfPersonDetail?.isGone == false) {
+                returnCardToOriginPosition(movieDetailRoot, cardOfPersonDetail, movieView, 650)
+            } else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
+                returnCardToOriginPosition(
+                    movieDetailRoot,
+                    cardOfDeleteMovieFromFavourite,
+                    movieDetailFavouriteButton,
+                    650
+                )
+            } else {
                 finish()
             }
         }
         cardOfPopularDetail?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
+                returnCardToOriginPosition(movieDetailRoot, cardOfPopularDetail, movieView, 650)
             }
         }
         cardOfPersonDetail?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
+                returnCardToOriginPosition(movieDetailRoot, cardOfPersonDetail, movieView, 650)
             }
         }
         cardOfDeleteMovieFromFavourite?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
+                returnCardToOriginPosition(
+                    movieDetailRoot,
+                    cardOfDeleteMovieFromFavourite,
+                    movieDetailFavouriteButton,
+                    650
+                )
             }
         }
         closeVideoFab?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 youtubePlayerManager?.pause()
-                returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
+                returnCardToOriginPosition(
+                    movieDetailRoot,
+                    cardOfYoutubeVideoPlayer,
+                    movieView,
+                    650
+                )
             }
         }
         cardOfYoutubeVideoPlayer?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 youtubePlayerManager?.pause()
-                returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
+                returnCardToOriginPosition(
+                    movieDetailRoot,
+                    cardOfYoutubeVideoPlayer,
+                    movieView,
+                    650
+                )
             }
         }
         cancelDeletButton?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
+                returnCardToOriginPosition(
+                    movieDetailRoot,
+                    cardOfDeleteMovieFromFavourite,
+                    movieDetailFavouriteButton,
+                    650
+                )
             }
         }
         confirmDeletButton?.setOnClickListener {
@@ -345,10 +391,18 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
                     650
                 )
                 makeFavouriteTheme()
-                MovieCoordinator.openDeleteSnackbar(
-                    movieDetailRoot,
-                    movieDetailResponse?.original_title
+                MovieCoordinator.openFlashbarSnackbar(
+                    this,
+                    " \n\n\n\n" +
+
+                            movieDetailResponse?.original_title!! + "\n" +
+                            "\n" ,
+                    " ${movieDetailResponse?.title} has been Deleted successfully ," +
+                            "you go to favourite screen to show all movies that you liked it",
+                    R.drawable.fail_gradient ,
+                    R.drawable.ic_broken_heart
                 )
+
                 removeMovieFromFavouriteIntentSubject?.onNext(
                     DetailIntent.RemoveMovieFromFavouriteIntent(
                         movieDetailResponse?.id!!
@@ -359,40 +413,67 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         }
         goToDetailOfMovieDetailDetailButton?.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                returnCardToOriginPositionWithNavigationAction(movieDetailRoot , cardOfPopularDetail , movieView)
+                returnCardToOriginPositionWithNavigationAction(
+                    movieDetailRoot,
+                    cardOfPopularDetail,
+                    movieView
+                )
             }
         }
         movieDetailFavouriteButton?.setOnClickListener {
             if (isExistInFavourite == false) {
                 makeUnfavouriteTheme()
-                MovieCoordinator.openAddedSnackbar(
-                    movieDetailRoot,
-                    movieDetailResponse?.original_title
+                MovieCoordinator.openFlashbarSnackbar(
+                    this,
+                    " \n\n\n\n" +
+
+                            movieDetailResponse?.original_title!! + "\n" +
+                            "\n" ,
+                     "${movieDetailResponse?.title} has been added successfully , you go to favourite screen to show all movies that you liked it",
+                    R.drawable.success_gradient ,
+                    R.drawable.ic_heart
                 )
+
                 addMovieToFavouriteIntentSubject?.onNext(
                     DetailIntent.AddMovieToFavouriteIntent(
                         movieDetailResponse!!
                     )
                 )
                 isExistInFavourite = true
-            }
-            else {
+            } else {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     if (cardOfDeleteMovieFromFavourite?.visibility == View.VISIBLE) {
                         deleteImageLoadingDetail?.showVisibilty()
-                        movieDeletePoster?.loadImage(movieDetailResponse?.poster_path , movieDetailResponse?.original_title ,deleteImageLoadingDetail )
-                        returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton!! ,200)
+                        movieDeletePoster?.loadImage(
+                            movieDetailResponse?.poster_path,
+                            movieDetailResponse?.original_title,
+                            deleteImageLoadingDetail
+                        )
+                        returnCardToOriginPosition(
+                            movieDetailRoot,
+                            cardOfDeleteMovieFromFavourite,
+                            movieDetailFavouriteButton!!,
+                            200
+                        )
                         Observable.intervalRange(0, 100, 250, 0, TimeUnit.MILLISECONDS)
                             ?.subscribeOn(AndroidSchedulers.mainThread())
                             ?.observeOn(AndroidSchedulers.mainThread())
                             ?.subscribe {
-                                animateCard(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton)
+                                animateCard(
+                                    movieDetailRoot,
+                                    cardOfDeleteMovieFromFavourite,
+                                    movieDetailFavouriteButton
+                                )
                                 //loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
                                 // Call for Api
                             }?.addTo(compositeDisposable)
                     } else {
-                        animateCard(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton!!)
-                        Glide.with(this)?.load( imageApiPoster + movieDetailResponse?.poster_path)
+                        animateCard(
+                            movieDetailRoot,
+                            cardOfDeleteMovieFromFavourite,
+                            movieDetailFavouriteButton!!
+                        )
+                        Glide.with(this)?.load(imageApiPoster + movieDetailResponse?.poster_path)
                             ?.circleCrop()
                             ?.into(movieDeletePoster)
                         //loadPersonProfileIntentSubject?.onNext(DetailIntent.LoadUserProfileIntent(data?.id!!))
@@ -404,12 +485,12 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         }
     }
 
-    private fun loadExtraData () {
+    private fun loadExtraData() {
         movieId = intent?.extras?.getInt(MOVIE_ID_kEY)
         movieDetailResponse = intent?.extras?.getParcelable(MOVIE_DETAIL_ID_kEY)
     }
 
-    private fun manageExtendedFabStatus (){
+    private fun manageExtendedFabStatus() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             movieDetailScrollView?.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                 if (scrollY > oldScrollY) {
@@ -423,7 +504,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         }
     }
 
-    private fun executeLoadAllData (){
+    private fun executeLoadAllData() {
         isMovieExistInFavouriteIntentSubject?.onNext(
             DetailIntent.IsMovieExistInDatabaseIntent(
                 movieId!!
@@ -547,7 +628,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         if (state?.movieVideos != null) {
             bindMovieVideosResponseToView(state?.movieVideos!!)
         }
-        if(state?.userProfile != null){
+        if (state?.userProfile != null) {
             bindUserProfileResposneToView(state?.userProfile!!)
         }
     }
@@ -570,32 +651,37 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     override fun onBackPressed() {
         if (cardOfPopularDetail?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
-        }
-
-        else if (cardOfPersonDetail?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
-        }
-
-        else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
-        }
-
-        else if (cardOfYoutubeVideoPlayer?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
+            returnCardToOriginPosition(movieDetailRoot, cardOfPopularDetail, movieView, 650)
+        } else if (cardOfPersonDetail?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot, cardOfPersonDetail, movieView, 650)
+        } else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
+            returnCardToOriginPosition(
+                movieDetailRoot,
+                cardOfDeleteMovieFromFavourite,
+                movieDetailFavouriteButton,
+                650
+            )
+        } else if (cardOfYoutubeVideoPlayer?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot, cardOfYoutubeVideoPlayer, movieView, 650)
             youtube_player_view?.release()
-        }
-
-        else {
+        } else {
             this?.finish()
         }
     }
 
     private fun bindMovieDetailResponseToView(movieDetail: MovieDetailResponse) {
 
-        movieDetailBackgroundImageView?.loadImageAsBackground(movieDetail?.backdrop_path , movieDetail?.original_title , detailBackgroundImageLoading)
+        movieDetailBackgroundImageView?.loadImageAsBackground(
+            movieDetail?.backdrop_path,
+            movieDetail?.original_title,
+            detailBackgroundImageLoading
+        )
 
-        movieDetailPosterImageView?.loadImage(movieDetail?.poster_path , movieDetail?.title , detailPosterImageLoading)
+        movieDetailPosterImageView?.loadImage(
+            movieDetail?.poster_path,
+            movieDetail?.title,
+            detailPosterImageLoading
+        )
 
         movieDetailTitle?.setText(movieDetail?.original_title)
 
@@ -645,16 +731,19 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
         }
     }
 
-    private fun bindUserProfileResposneToView (personResponse: PersonResponse){
-        personImagePosterDetail?.loadImage(personResponse?.profilePath , personResponse?.name , personImageLoadingDetail)
+    private fun bindUserProfileResposneToView(personResponse: PersonResponse) {
+        personImagePosterDetail?.loadImage(
+            personResponse?.profilePath,
+            personResponse?.name,
+            personImageLoadingDetail
+        )
         personCardNameDetail?.setText(personResponse?.name)
         personCardBioGrahyDetail?.setText(personResponse?.biography)
         personCardPlaceOfBearth?.setText(personResponse?.placeOfBirth)
         personCardDateOfBearth?.setText(personResponse?.birthday)
-        if(personResponse?.gender == 2){
+        if (personResponse?.gender == 2) {
             maleImageView?.setBackgroundResource(R.drawable.selected_gender)
-        }
-        else {
+        } else {
             femaleImageView?.setBackgroundResource(R.drawable.selected_gender)
         }
 
@@ -673,7 +762,11 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     }
 
     private fun bindMovieDetailToPopularCard(movie: Result) {
-        popularImagePosterDetail?.loadImage(movie?.poster_path , movie?.title ,popularImageLoadingDetail )
+        popularImagePosterDetail?.loadImage(
+            movie?.poster_path,
+            movie?.title,
+            popularImageLoadingDetail
+        )
         popularCardNameDetail?.setText(movie?.title)
         popularCardDetailDetail?.setText(movie?.overview)
 
@@ -682,17 +775,18 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     override fun onStop() {
         super.onStop()
         if (cardOfPopularDetail?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfPopularDetail , movieView ,650)
-        }
-
-        else if (cardOfPersonDetail?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfPersonDetail , movieView ,650)
-        }
-        else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfDeleteMovieFromFavourite , movieDetailFavouriteButton ,650)
-        }
-        else if (cardOfYoutubeVideoPlayer?.isGone == false) {
-            returnCardToOriginPosition(movieDetailRoot , cardOfYoutubeVideoPlayer , movieView ,650)
+            returnCardToOriginPosition(movieDetailRoot, cardOfPopularDetail, movieView, 650)
+        } else if (cardOfPersonDetail?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot, cardOfPersonDetail, movieView, 650)
+        } else if (cardOfDeleteMovieFromFavourite?.isGone == false) {
+            returnCardToOriginPosition(
+                movieDetailRoot,
+                cardOfDeleteMovieFromFavourite,
+                movieDetailFavouriteButton,
+                650
+            )
+        } else if (cardOfYoutubeVideoPlayer?.isGone == false) {
+            returnCardToOriginPosition(movieDetailRoot, cardOfYoutubeVideoPlayer, movieView, 650)
 
         }
         compositeDisposable?.dispose()
@@ -700,7 +794,11 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPositionWithNavigationAction(layoutRoot : ViewGroup , card : View , adapterView : View) {
+    private fun returnCardToOriginPositionWithNavigationAction(
+        layoutRoot: ViewGroup,
+        card: View,
+        adapterView: View
+    ) {
         android.transition.TransitionManager.beginDelayedTransition(
             layoutRoot,
             getTransform(card, movieView, 650)
@@ -729,7 +827,7 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     // hide adapter item and show our Card Animation
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public fun animateCard( layoutRoot : ViewGroup , card : View , adapterView : View) {
+    public fun animateCard(layoutRoot: ViewGroup, card: View, adapterView: View) {
         movieView = adapterView
         android.transition.TransitionManager.beginDelayedTransition(
             layoutRoot,
@@ -742,7 +840,12 @@ class MovieDetailActivity : AppCompatActivity(), MviView<DetailIntent, DetailSta
 
     // close card and show item of recyclerview
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun returnCardToOriginPosition(layoutRoot : ViewGroup , card : View , adapterView : View , duration: Long) {
+    private fun returnCardToOriginPosition(
+        layoutRoot: ViewGroup,
+        card: View,
+        adapterView: View,
+        duration: Long
+    ) {
         android.transition.TransitionManager.beginDelayedTransition(
             layoutRoot,
             getTransform(card, adapterView, duration)

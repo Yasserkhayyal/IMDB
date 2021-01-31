@@ -1,5 +1,10 @@
 package com.morse.movie.utils
 
+import androidx.datastore.preferences.core.preferencesKey
+
+public const val userDataStoreNameKey ="APP-INFO"
+public val LANGUAGE_KEY = preferencesKey<String>("languageKey")
+public val MODE_KEY = preferencesKey<String>("modeKey")
 const val MOVIE_TYPE = "movieType"
 const val MOVIE_ID_kEY = "movieId"
 const val MOVIE_DETAIL_ID_kEY = "movieDetailId"
@@ -17,6 +22,10 @@ const val movieVideos = "movie/{movie_id}/videos?api_key=$apiKey"
 const val emptyImagePlaceHolder ="https://ui-avatars.com/api/?size=128?bold=true&background=D72027&color=FFFFFF&name="
 const val youtubeVideos = "https://www.youtube.com/watch?v=" // use Key not id
 const val youtubeThumbnailImage = "https://i3.ytimg.com/vi/"
+public const val en ="en"
+public const val ar ="ar"
+public const val light ="Light"
+public const val dark ="Dark"
 //-------------------------------UnUsed--------------------------------------------------------------------------------
 const val personProfile = "person/{person_id}?api_key=$apiKey&language=en-US"
 const val popularTv = "tv/popular?api_key=$apiKey&language=en-US"
